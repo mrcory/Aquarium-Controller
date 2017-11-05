@@ -165,9 +165,9 @@ if (ledUpdate == 1) { //Write LED Output
   analogWrite(ledPinB, map(ledB, 0, 255, 0, ledP)); //Set power blue
   analogWrite(ledPinW, map(ledW, 0, 255, 0, ledP)); //Set power white
   if (debug > 0) {Serial.println("Output Update")}; //If debug enabled say when updated
+  ledUpdate = 0; //Don't analogwrite unless needed
 }
 
-  ledUpdate = 0; //Don't analogwrite unless needed
 
 }
 
