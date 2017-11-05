@@ -102,34 +102,27 @@ void setup() {
   cmdAdd("colorSet", colorSet);
 
   
-  
+  //Create Alarms and Timers
   Alarm.alarmRepeat(8, 30, 0, turnOn); //Turn on led
   Alarm.alarmRepeat(21, 30, 0, turnOff); //Turn off led
   Alarm.alarmRepeat(0,0,0,updateTime); //Update Arduino time at midnight
-
   Alarm.timerRepeat(tempTime,tempUpdate); //Call temp update
 
-
+  //Do Some Setup
   ledP = ledPMin; //Set power to minimum
   fadeStep = (ledPT / (fadeTime * 60.0)); //Set fade step based on time
-
-  
-  //Init Various
   rtc.begin(); //Initialize rtc
   timeNow = rtc.now(); //Set time
   sensors.begin(); //Start sensor lib
   
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address (CHECK THIS)
 
-  //Draw Logo
+  //Draw Version
   display.setCursor(10,10); //Set text position
   display.print("Controller Version: ");
   display.print(ver);
   //delay(1500);
   display.clearDisplay(); //Clear logo
-
-  //DateTime now = rtc.now(); //Update time
-  //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); // set time to Saturday 8:29:00am Jan 1 2011
 
   if (debug == 0) {Serial.println("Debug disabled. (Just a reminder.)"); }
   tempUpdate(); //Update temp and display it
@@ -165,44 +158,13 @@ void loop() {
   }
 
 
-    
-if (ledUpdate == 1) {
-    analogWrite(ledPinR, map(ledR, 0, 255, 0, ledP)); //Set power red
-    analogWrite(ledPinG, map(ledG, 0, 255, 0, ledP)); //Set power green
-    analogWrite(ledPinB, map(ledB, 0, 255, 0, ledP)); //Set power blue
-    analogWrite(ledPinW, map(ledW, 0, 255, 0, ledP)); //Set power white
-    Serial.println("Output Update");
-}
 
-if (debug > 0) {
-  if (debug == 1) { //Debug information Set 1
-    Serial.println();
-    Serial.print(hour());
-    Serial.print(":");
-    Serial.print(minute());
-    Serial.print(":");
-    Serial.print(second());
-    Serial.print(" ");
-    Serial.print("Power State: ");
-    Serial.print(ledState);
-    Serial.println(" ");
-  }
-
-  if (debug == 2) { //Debug Info lvl 2
-    Serial.print("Red "); Serial.print(map(ledR, 0, 255, 0, ledP));
-    Serial.print(" Green "); Serial.print(map(ledG, 0, 255, 0, ledP));
-    Serial.print(" Blue "); Serial.print(map(ledB, 0, 255, 0, ledP));
-    Serial.print(" White "); Serial.print(map(ledW, 0, 255, 0, ledP));
-    Serial.print(" Power "); Serial.println(ledP);
-  }
-
-  if (debug == 3) {
-    Serial.print("Fade Steps ");
-    Serial.print(fadeStep);
-    Serial.print(" Temp ");
-    Serial.println(temp);
-  }
-
+if (ledUpdate == 1) { //Write LED Output
+  analogWrite(ledPinR, map(ledR, 0, 255, 0, ledP)); //Set power red
+  analogWrite(ledPinG, map(ledG, 0, 255, 0, ledP)); //Set power green
+  analogWrite(ledPinB, map(ledB, 0, 255, 0, ledP)); //Set power blue
+  analogWrite(ledPinW, map(ledW, 0, 255, 0, ledP)); //Set power white
+  if (debug > 0) {Serial.println("Output Update")}; //If debug enabled say when updated
 }
 
   ledUpdate = 0; //Don't analogwrite unless needed
@@ -298,4 +260,39 @@ void colorSet(int arg_cnt, char **args) {
     ledState = cmdStr2Num(args[6],10);
   }
 }
+
+//Debug Function
+void debugFunc() {
+  if (debug > 0) {
+    if (debug == 1) { //Debug information Set 1
+      Serial.println();
+      Serial.print(hour());
+      Serial.print(":");
+      Serial.print(minute());
+      Serial.print(":");
+      Serial.print(second());
+      Serial.print(" ");
+      Serial.print("Power State: ");
+      Serial.print(ledState);
+      Serial.println(" ");
+    }
+  
+    if (debug == 2) { //Debug Info lvl 2
+      Serial.print("Red "); Serial.print(map(ledR, 0, 255, 0, ledP));
+      Serial.print(" Green "); Serial.print(map(ledG, 0, 255, 0, ledP));
+      Serial.print(" Blue "); Serial.print(map(ledB, 0, 255, 0, ledP));
+      Serial.print(" White "); Serial.print(map(ledW, 0, 255, 0, ledP));
+      Serial.print(" Power "); Serial.println(ledP);
+    }
+  
+    if (debug == 3) {
+      Serial.print("Fade Steps ");
+      Serial.print(fadeStep);
+      Serial.print(" Temp ");
+      Serial.println(temp);
+    }
+
+}
+}
+
 
