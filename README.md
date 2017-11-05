@@ -16,4 +16,20 @@ Features:
     
   Display
     
-    temperature display
+    Temperature display
+
+  Other
+	
+	Controllable via serial monitor
+
+
+
+
+Commands:
+
+	ledr <val> | 0-255
+	ledg <val> | 0-255
+	ledb <val> | 0-255
+	ledw <val> | 0-255
+	colorset <R val> <G val> <B val> <W val> <Brightness val> <LED State <val> | 0-255, 0-255, 0-255, 0-255, 0-255, 0-1
+	

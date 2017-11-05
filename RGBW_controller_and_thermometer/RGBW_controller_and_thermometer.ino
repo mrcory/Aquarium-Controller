@@ -289,11 +289,13 @@ void ledWhiteUpdate(int arg_cnt, char **args) {
 }
 
 void colorSet(int arg_cnt, char **args) {
-  ledR = cmdStr2Num(args[1],10);
-  ledG = cmdStr2Num(args[2],10);
-  ledB = cmdStr2Num(args[3],10);
-  ledW = cmdStr2Num(args[4],10);
-  ledP = cmdStr2Num(args[5],10);
-  ledState = cmdStr2Num(args[6],10);
+  if (arg_cnt >= 7) {
+    ledR = cmdStr2Num(args[1],10);
+    ledG = cmdStr2Num(args[2],10);
+    ledB = cmdStr2Num(args[3],10);
+    ledW = cmdStr2Num(args[4],10);
+    ledP = cmdStr2Num(args[5],10);
+    ledState = cmdStr2Num(args[6],10);
+  }
 }
 
