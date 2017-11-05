@@ -17,7 +17,7 @@
    Todo:
    Add button controls
 */
-const float ver = 0.1; //Program Version
+const String ver = "0.1-pre"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -61,7 +61,7 @@ const int ONE_WIRE_BUS = 12; //Data wire pin
 const int displayAddress = 0x3D; //Display i2c address
 
 
-//Colors (0-255)
+//Colors (0-255) Set the initial color.
 int ledPT = 255; //Intensity target 1-255 adjust this
 int ledR = 255;
 int ledG = 255;
