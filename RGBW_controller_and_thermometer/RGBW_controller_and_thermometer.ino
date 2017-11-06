@@ -17,18 +17,24 @@
    Todo:
    Add button controls
 */
+
+// BOF preprocessor bug prevent - insert me on top of your arduino-code
+#if 1
+__asm volatile ("nop");
+#endif
+
 const String ver = "0.1-pre"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
 #include <RTClib.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Cmd.h>
+
+
 
 
 
@@ -43,11 +49,11 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
-int debug = 0; //Print some debug stuff (0-3)
+int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
-float temp;
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
+
 
 
 
@@ -57,7 +63,6 @@ const int ledPinG = 4;
 const int ledPinB = 6;
 const int ledPinW = 8; //White channel
 const int tempPin = 10; //DS18B20 pin
-const int ONE_WIRE_BUS = 12; //Data wire pin
 const int displayAddress = 0x3D; //Display i2c address
 
 
@@ -75,8 +80,7 @@ const int tempTime = 10; //Temp update interval in seconds
 const float fadeTime = 30; //Fade time in minutes 
 
 
-OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
-DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas Temperature.
+
 
 //Color presets (R,G,B,W)
 const int colorWhite[4] {255,255,255,0}; //White without 4th channel
@@ -86,8 +90,12 @@ const int colorOvercast[4] {201,226,255,0};
 const int colorBlacklight[4] {167,0,255,0};
 const int colorMoon[4] {151,147,148,0}; //Test
 
+//Include other files
+#include "temp.h" //Tempurature functions and variables
+#include "debug.h" //Debug functions sdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
 void setup() {
+  
   Serial.begin(9600);
   cmdInit(&Serial);
 
@@ -124,7 +132,6 @@ void setup() {
   //delay(1500);
   display.clearDisplay(); //Clear logo
 
-  if (debug == 0) {Serial.println("Debug disabled. (Just a reminder.)"); }
   tempUpdate(); //Update temp and display it
 }
 
@@ -164,7 +171,7 @@ if (ledUpdate == 1) { //Write LED Output
   analogWrite(ledPinG, map(ledG, 0, 255, 0, ledP)); //Set power green
   analogWrite(ledPinB, map(ledB, 0, 255, 0, ledP)); //Set power blue
   analogWrite(ledPinW, map(ledW, 0, 255, 0, ledP)); //Set power white
-  if (debug > 0) {Serial.println("Output Update")}; //If debug enabled say when updated
+  if (debugLVL > 0) {Serial.println("Output Update");}; //If debug enabled say when updated
   ledUpdate = 0; //Don't analogwrite unless needed
 }
 
@@ -197,24 +204,12 @@ void updateTime() { //Update time from rtc
     setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
 }
 
-void tempUpdate() { //Update temp and display
-  sensors.requestTemperatures(); //Get temp reading
-  temp = sensors.getTempFByIndex(0); //Set temp from first sensor
 
-  //Display
-  display.clearDisplay(); //Clean the Screen
-  display.setCursor(5,5); //Set cursor location
-  display.setTextSize(5); //Make it large
-  display.print("Temperature: ");
-  display.print(temp);
-  display.print("°F");
-  display.setTextSize(1); //Now, turn it back down
-}
 
 void debugUpdate(int arg_cnt, char **args) { //Update debug value in serial monitor
-    debug = cmdStr2Num(args[1],10);
+    debugLVL = cmdStr2Num(args[1],10);
     Serial.print("Debug changed to ");
-    Serial.println(debug);
+    Serial.println(debugLVL);
     
 }
 
@@ -261,38 +256,18 @@ void colorSet(int arg_cnt, char **args) {
   }
 }
 
-//Debug Function
-void debugFunc() {
-  if (debug > 0) {
-    if (debug == 1) { //Debug information Set 1
-      Serial.println();
-      Serial.print(hour());
-      Serial.print(":");
-      Serial.print(minute());
-      Serial.print(":");
-      Serial.print(second());
-      Serial.print(" ");
-      Serial.print("Power State: ");
-      Serial.print(ledState);
-      Serial.println(" ");
-    }
-  
-    if (debug == 2) { //Debug Info lvl 2
-      Serial.print("Red "); Serial.print(map(ledR, 0, 255, 0, ledP));
-      Serial.print(" Green "); Serial.print(map(ledG, 0, 255, 0, ledP));
-      Serial.print(" Blue "); Serial.print(map(ledB, 0, 255, 0, ledP));
-      Serial.print(" White "); Serial.print(map(ledW, 0, 255, 0, ledP));
-      Serial.print(" Power "); Serial.println(ledP);
-    }
-  
-    if (debug == 3) {
-      Serial.print("Fade Steps ");
-      Serial.print(fadeStep);
-      Serial.print(" Temp ");
-      Serial.println(temp);
-    }
+    void displayUpdate() {
 
-}
+      if (tempEnabled) {
+        //Update temperature display
+        display.clearDisplay(); //Clean the Screen
+        display.setCursor(5,5); //Set cursor location
+        display.setTextSize(5); //Make it large
+        display.print("Temperature: ");
+        display.print(temp);
+        display.print("°F");
+        display.setTextSize(1); //Now, turn it back down
+    }
 }
 
 
