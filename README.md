@@ -1,4 +1,4 @@
-# Arduino Aquarium Controller
+# Aquarium-Controller
 4 Channel led controller and aquarium info display.
 
 This is a project for my aquirium. It is a 4 channel (RGBW) controller and thermometer.
@@ -25,6 +25,7 @@ Features:
 	Controllable via serial monitor
 
 Hardware Used
+
 	x1 Arduino Mega 2560
 	x4 IRLB8743PBF
 	x4 10Kohm Resistors
