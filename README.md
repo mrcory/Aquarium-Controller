@@ -24,7 +24,16 @@ Features:
 	
 	Controllable via serial monitor
 
-
+Hardware Used
+	x1 Arduino Mega 2560
+	x4 IRLB8743PBF
+	x4 10Kohm Resistors
+	x1 DS3231 RTC
+	x1 DS18B20 (Waterproof)
+	x1 I2C OLED SSD1306 (128x64)
+	x1 Whatever Case (I will be 3d printing one after internal hardware is final.)
+	(More to be listed)
+	
 
 
 Commands:
