@@ -92,7 +92,7 @@ const int colorMoon[4] {151,147,148,0}; //Test
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-#include "debug.h" //Debug functions sdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+#include "debug.h" //Debug functions
 
 void setup() {
   
@@ -215,7 +215,6 @@ void debugUpdate(int arg_cnt, char **args) { //Update debug value in serial moni
 
 void ledRedUpdate(int arg_cnt, char **args) {
     ledR = cmdStr2Num(args[1],10);
-    //Serial.println(cmdStr2Num(args[1],10));
     Serial.print("Red Updated to ");
     Serial.println(ledR);
     ledUpdate = 1;
@@ -223,7 +222,6 @@ void ledRedUpdate(int arg_cnt, char **args) {
 
 void ledBlueUpdate(int arg_cnt, char **args) {
     ledB = cmdStr2Num(args[1],10);
-    //Serial.println(cmdStr2Num(args[1],10));
     Serial.print("Blue Updated to ");
     Serial.println(ledB);
     ledUpdate = 1;
@@ -231,7 +229,6 @@ void ledBlueUpdate(int arg_cnt, char **args) {
 
 void ledGreenUpdate(int arg_cnt, char **args) {
     ledG = cmdStr2Num(args[1],10);
-    //Serial.println(cmdStr2Num(args[1],10));
     Serial.print("Green Updated to ");
     Serial.println(ledG);
     ledUpdate = 1;
@@ -239,7 +236,6 @@ void ledGreenUpdate(int arg_cnt, char **args) {
 
 void ledWhiteUpdate(int arg_cnt, char **args) {
     ledW = cmdStr2Num(args[1],10);
-    //Serial.println(cmdStr2Num(args[1],10));
     Serial.print("White Updated to ");
     Serial.println(ledW);
     ledUpdate = 1;
