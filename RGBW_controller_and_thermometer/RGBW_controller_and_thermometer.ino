@@ -154,12 +154,13 @@ void displayUpdate() { //Update info display
   display.clearDisplay(); //Clean the Screen
 
   if (tempEnabled) { //Add Temperature to Display
-    //Update temperature display
-    display.setCursor(5, 5); //Set cursor location
-    display.setTextSize(5); //Make it large
-    display.print("Temperature: ");
-    display.print(temp);
-    display.print("°F");
-    display.setTextSize(1); //Now, turn it back down
+    
+  //Update temperature display
+  display.setCursor(5, 5); //Set cursor location
+  display.setTextSize(5); //Make it large
+  display.print("Temperature: ");
+  display.print(temp);
+  display.print("°F");
+  display.setTextSize(1); //Now, turn it back down
   }
 }

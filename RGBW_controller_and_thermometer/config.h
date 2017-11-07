@@ -1,3 +1,7 @@
+/*
+ * Variables for configureing various things.
+ */
+
 //Pin Connections
 const int ledPinR = 2;
 const int ledPinG = 4;

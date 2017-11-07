@@ -15,13 +15,4 @@ DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas T
 void tempUpdate() { //Update temp and display
   sensors.requestTemperatures(); //Get temp reading
   temp = sensors.getTempFByIndex(0); //Set temp from first sensor
-
-  /*Display
-  display.clearDisplay(); //Clean the Screen
-  display.setCursor(5,5); //Set cursor location
-  display.setTextSize(5); //Make it large
-  display.print("Temperature: ");
-  display.print(temp);
-  display.print("°F");
-  display.setTextSize(1); //Now, turn it back down*/
 }
