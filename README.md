@@ -43,7 +43,7 @@ Commands:
 	ledg <val> | 0-255
 	ledb <val> | 0-255
 	ledw <val> | 0-255
-	colorset <R val> <G val> <B val> <W val> <Brightness val> <LED State <val> | 0-255, 0-255, 0-255, 0-255, 0-255, 0-1
+	(Broken) colorset <R val> <G val> <B val> <W val> <Brightness val> <LED State <val> | 0-255, 0-255, 0-255, 0-255, 0-255, 0-1
 
 Usage Info:
 
