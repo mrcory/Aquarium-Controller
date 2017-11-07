@@ -31,3 +31,10 @@ void debugFunc() {
 
 }
 }
+
+void debugUpdate(int arg_cnt, char **args) { //Update debug value in serial monitor
+  debugLVL = cmdStr2Num(args[1], 10);
+  Serial.print("Debug changed to ");
+  Serial.println(debugLVL);
+
+}
