@@ -51,4 +51,4 @@ Usage Info:
 	
 Just some functions
 
-        darHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
+        drawHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
