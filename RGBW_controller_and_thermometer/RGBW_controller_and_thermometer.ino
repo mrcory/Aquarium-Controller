@@ -115,16 +115,12 @@ void loop() {
   cmdPoll();
   timeNow = rtc.now(); //Update time
 
-
-
-  //Adjust power to target +
-  if (ledState == 1 && ledPT > ledP) {
+  if (ledState == 1 && ledPT > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;
     ledUpdate = 1;
   }
 
-  //Adjust power to target -
-  if (ledState == 0 && ledPMin < ledP) {
+  if (ledState == 0 && ledPMin < ledP) { //Adjust power to target -
     ledP = ledP - fadeStep;
     ledUpdate = 1;
   }
@@ -161,15 +157,14 @@ void displayUpdate() { //Update info display
   display.clearDisplay(); //Clean the Screen
 
   if (tempEnabled) { //Add Temperature to Display
-    
-  //Update temperature display
-  display.setCursor(0, 0); //Set cursor location
-  display.setTextSize(1);
-  display.print(tempUnit);
-  display.print(" ");
-  display.setTextSize(3); //Make it large
-  display.println(temp);
-  
+    //Update temperature display
+    display.setCursor(0, 0); //Set cursor location
+    display.setTextSize(1);
+    display.print(tempUnit);
+    display.print(" "); //Just a space
+    display.setTextSize(3); //Make it large
+    display.println(temp);
   }
-   display.display();
+  
+   display.display(); //Put the stuff on the display
 }
