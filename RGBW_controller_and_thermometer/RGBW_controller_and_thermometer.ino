@@ -33,7 +33,7 @@ const String ver = "0.1-pre"; //Program Version
 
 
 //i2c device stuff
-const int OLED_RESET = 4;
+#define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 RTC_DS3231 rtc; //Declare RTC (?)
 
@@ -90,12 +90,17 @@ void setup() {
   rtc.begin(); //Initialize rtc
   timeNow = rtc.now(); //Set time
   sensors.begin(); //Start sensor lib
+  
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address (CHECK THIS)
 
   //Draw Version
-  display.setCursor(10, 10); //Set text position
-  display.print("Controller Version: ");
+  display.clearDisplay();
+  display.setCursor(0,0); //Set text position
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.println("Controller Version: ");
   display.print(ver);
+  display.display();
   delay(1500); //Show verision for a bit
   display.clearDisplay(); //Clear logo
   tempUpdate(); //Update temp
@@ -104,6 +109,8 @@ void setup() {
 
 //Loop runs once per second
 void loop() {
+  debugFunc();
+  displayUpdate();
   Alarm.delay(1000);
   cmdPoll();
   timeNow = rtc.now(); //Update time
@@ -156,11 +163,13 @@ void displayUpdate() { //Update info display
   if (tempEnabled) { //Add Temperature to Display
     
   //Update temperature display
-  display.setCursor(5, 5); //Set cursor location
-  display.setTextSize(5); //Make it large
-  display.print("Temperature: ");
-  display.print(temp);
-  display.print("°F");
-  display.setTextSize(1); //Now, turn it back down
+  display.setCursor(0, 0); //Set cursor location
+  display.setTextSize(1);
+  display.print(tempUnit);
+  display.print(" ");
+  display.setTextSize(3); //Make it large
+  display.println(temp);
+  
   }
+   display.display();
 }

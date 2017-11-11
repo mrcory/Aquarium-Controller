@@ -2,13 +2,17 @@
  * Variables for configureing various things.
  */
 
+//Temperature Settings
+boolean tempEnabled = true;
+String tempUnit = "F"; //What unit do you want? (C or F)
+
 //Pin Connections
 const int ledPinR = 2;
 const int ledPinG = 4;
 const int ledPinB = 6;
 const int ledPinW = 8; //White channel
 const int tempPin = 10; //DS18B20 pin
-const int displayAddress = 0x3D; //Display i2c address
+const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 
 //Colors (0-255) Set the initial color.
