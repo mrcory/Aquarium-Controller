@@ -56,3 +56,8 @@ void colorChange(int colorSet[5]) {
   ledW = colorSet[3];
   ledUpdate = 1;
 }
+
+void screenChange(int arg_cnt, char **args) {
+  screenPage = cmdStr2Num[1];
+}
+

@@ -1,6 +1,8 @@
 
 const int barLocX = 0; //Where to start drawing the bars X
 const int barLocY = 42; //Where to start drawing the bars Y
+int screenPage = 0; //What page to be displayed on the screen
+
 
 
 void drawHBar(int locX,int locY,int height,int width,int percent) { //Draw a progrss bar
@@ -16,10 +18,29 @@ void drawHBar(int locX,int locY,int height,int width,int percent) { //Draw a pro
 
 }
 
+void ledStatus() { //Show LED value bars
+  display.drawChar(0,barLocY,'R',WHITE,BLACK,1); //Bar label
+  drawHBar(0,barLocY+8,3,25,map(ledR,0,255,0,100)); //Testing progress bar
+
+  display.drawChar(30,barLocY,'G',WHITE,BLACK,1); //Bar label
+  drawHBar(30,barLocY+8,3,25,map(ledG,0,255,0,100)); //Testing progress bar
+
+  display.drawChar(60,barLocY,'B',WHITE,BLACK,1); //Bar label
+  drawHBar(60,barLocY+8,3,25,map(ledB,0,255,0,100)); //Testing progress bar
+
+  display.drawChar(90,barLocY,'W',WHITE,BLACK,1); //Bar label
+  drawHBar(90,barLocY+8,3,25,map(ledW,0,255,0,100)); //Testing progress bar
+
+  display.drawChar(0,barLocY+15,'P',WHITE,BLACK,1);
+  drawHBar(9,barLocY+18,3,128,map(ledP,0,255,0,100));
+}
+
 void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
 
+
+if (screenPage == 0) {
   if (tempEnabled) { //Add Temperature to Display
     //Update temperature display
     display.setCursor(0, 0); //Set cursor location
@@ -39,21 +60,16 @@ void displayUpdate() { //Update info display
   display.print(timeNow.minute());
   display.print(":");
   display.print(timeNow.second());
-  
-  display.drawChar(0,barLocY,'R',WHITE,BLACK,1); //Bar label
-  drawHBar(0,barLocY+8,3,25,map(ledR,0,255,0,100)); //Testing progress bar
 
-  display.drawChar(30,barLocY,'G',WHITE,BLACK,1); //Bar label
-  drawHBar(30,barLocY+8,3,25,map(ledG,0,255,0,100)); //Testing progress bar
+  display.setCursor(0,24);
+  display.setTextSize(1);
+  display.print("Next: ");
+  display.print(nextTime[0]);
+  display.print(":");
+  display.print(nextTime[1]);
+  ledStatus();
+}
 
-  display.drawChar(60,barLocY,'B',WHITE,BLACK,1); //Bar label
-  drawHBar(60,barLocY+8,3,25,map(ledB,0,255,0,100)); //Testing progress bar
-
-  display.drawChar(90,barLocY,'W',WHITE,BLACK,1); //Bar label
-  drawHBar(90,barLocY+8,3,25,map(ledW,0,255,0,100)); //Testing progress bar
-
-  display.drawChar(0,barLocY+15,'P',WHITE,BLACK,1);
-  drawHBar(9,barLocY+18,3,128,map(ledP,0,255,0,100));
   display.display(); //Put the stuff on the display
 }
 

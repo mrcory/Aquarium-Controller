@@ -45,6 +45,7 @@ int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
+int nextTime[] = {0,0,0};
 
 
 
@@ -60,8 +61,8 @@ const int colorMoon[4] {151, 147, 148, 0}; //Test
 //Include other files
 #include "temp.h" //Tempurature functions and variables
 #include "debug.h" //Debug functions
-#include "commands.h" //Functions for the commands below
 #include "screen.h"
+#include "commands.h" //Functions for the commands below
 
 void setup() {
 
@@ -78,6 +79,7 @@ void setup() {
   cmdAdd("ledon", turnOn);
   cmdAdd("ledoff", turnOff);
   cmdAdd("colorSet", colorSet);
+  cmdAdd("screen", screenChange);
 
 
   //Create Alarms and Timers

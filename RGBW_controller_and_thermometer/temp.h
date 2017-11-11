@@ -8,7 +8,7 @@
 
 const int ONE_WIRE_BUS = 12; //Data wire pin
 float temp;
-int tNeg = 0;
+int tNeg = 0; //0 is positive 1 means negative temp
 
 OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas Temperature.
