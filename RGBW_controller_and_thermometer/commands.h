@@ -38,9 +38,14 @@ void colorSet(int arg_cnt, char **args) {
 }
 
 void turnOn() {
+  int oldPage = screenPage;
   ledState = 1;
   ledUpdate = 1;
   Serial.println("State turn on");
+  screenPage = 2;
+  displayUpdate();
+  Alarm.delay(1000);
+  screenPage = oldPage;
 }
 
 void turnOff() {
@@ -60,5 +65,6 @@ void colorChange(int colorSet[5]) {
 
 void screenChange(int arg_cnt, char **args) {
   screenPage = cmdStr2Num(args[1],10);
+  if (args[2] == "tt") { Serial.print("It sees text.");}
 }
 

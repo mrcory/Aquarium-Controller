@@ -23,10 +23,10 @@ const String ver = "0.1-pre"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
-#include "libs\RTClib\RTClib.h"
+#include <RTClib.h>
 #include <Wire.h>
 #include <SPI.h>
-#include "libs\Adafruit-GFX-Library\Adafruit_GFX.h"
+#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Cmd.h>
 #include "config.h" //Config file
@@ -45,7 +45,6 @@ int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-int nextTime[] = {0,0,0};
 int screenPage = 0; //What page to be displayed on the screen
 
 
@@ -69,9 +68,10 @@ void setup() {
 
   Serial.begin(9600);
   cmdInit(&Serial);
+  updateTime();
 
   //Add Commands
-  cmdAdd("ledr", ledRedUpdate);
+  cmdAdd("ledR", ledRedUpdate);
   cmdAdd("ledw", ledWhiteUpdate);
   cmdAdd("ledg", ledGreenUpdate);
   cmdAdd("ledb", ledBlueUpdate);
@@ -116,7 +116,7 @@ void setup() {
 void loop() {
   debugFunc();
   displayUpdate();
-  Alarm.delay(1000);
+  Alarm.delay(500);
   cmdPoll();
   timeNow = rtc.now(); //Update time
 
@@ -157,6 +157,8 @@ void updateTime() { //Update time from rtc
   
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
+
+  Alarm.delay(500);
 }
 
 
