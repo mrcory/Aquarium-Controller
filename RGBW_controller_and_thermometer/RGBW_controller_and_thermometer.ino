@@ -32,6 +32,7 @@ const String ver = "0.1-pre"; //Program Version
 #include "config.h" //Config file
 
 
+
 //i2c device stuff
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -60,6 +61,7 @@ const int colorMoon[4] {151, 147, 148, 0}; //Test
 #include "temp.h" //Tempurature functions and variables
 #include "debug.h" //Debug functions
 #include "commands.h" //Functions for the commands below
+#include "screen.h"
 
 void setup() {
 
@@ -148,23 +150,11 @@ void loop() {
 
 
 void updateTime() { //Update time from rtc
+  //rtc.adjust(DateTime(timeNow.year(), timeNow.month(), timeNow.day(), timeNow.hour()-1, timeNow.minute(), timeNow.second()));
+  
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
-}
-
-void displayUpdate() { //Update info display
-
-  display.clearDisplay(); //Clean the Screen
-
-  if (tempEnabled) { //Add Temperature to Display
-    //Update temperature display
-    display.setCursor(0, 0); //Set cursor location
-    display.setTextSize(1);
-    display.print(tempUnit);
-    display.print(" "); //Just a space
-    display.setTextSize(3); //Make it large
-    display.println(temp);
-  }
   
-   display.display(); //Put the stuff on the display
 }
+
+

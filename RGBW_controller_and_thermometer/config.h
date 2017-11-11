@@ -1,6 +1,8 @@
 /*
  * Variables for configureing various things.
  */
+//Time
+int DST = 1; //Set 1 for DST
 
 //Temperature Settings
 boolean tempEnabled = true;
