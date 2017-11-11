@@ -67,10 +67,8 @@ if (screenPage == 0) { //Screen 0 display
 
   display.setCursor(0,24);
   display.setTextSize(1);
-  display.print("Next: ");
-  display.print(nextTime[0]);
-  display.print(":");
-  display.print(nextTime[1]);
+  display.print("On :  "); display.print(timeOn[0]);display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
+  display.print("Off: "); display.print(timeOff[0]);display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
   ledStatus();
 }
 
