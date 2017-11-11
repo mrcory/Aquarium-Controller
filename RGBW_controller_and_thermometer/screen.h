@@ -65,6 +65,7 @@ if (screenPage == 0) { //Screen 0 display
   display.print(":");
   display.print(timeNow.second());
 
+  //Display on and off times
   display.setCursor(0,24);
   display.setTextSize(1);
   display.print("On :  "); display.print(timeOn[0]);display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);

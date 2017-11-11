@@ -23,10 +23,10 @@ const String ver = "0.1-pre"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
-#include <RTClib.h>
+#include "libs\RTClib\RTClib.h"
 #include <Wire.h>
 #include <SPI.h>
-#include <Adafruit_GFX.h>
+#include "libs\Adafruit-GFX-Library\Adafruit_GFX.h"
 #include <Adafruit_SSD1306.h>
 #include <Cmd.h>
 #include "config.h" //Config file
