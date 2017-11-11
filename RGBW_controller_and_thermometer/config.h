@@ -28,7 +28,7 @@ int ledW = 255; //White
 float fadeStep = 5; //Increase/Decrease per step
 const int ledPMin = 0; //Minimum led power output 0-255
 const int tempTime = 10; //Temp update interval in seconds
-const float fadeTime = 30; //Fade time in minutes
+const float fadeTime = 1; //Fade time in minutes
 
 //Light on/off times
 int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>

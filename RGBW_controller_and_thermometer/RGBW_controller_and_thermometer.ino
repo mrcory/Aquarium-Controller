@@ -154,7 +154,6 @@ void updateTime() { //Update time from rtc
   
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
-  
 }
 
 
