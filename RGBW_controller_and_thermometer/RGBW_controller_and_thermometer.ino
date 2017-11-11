@@ -46,6 +46,7 @@ DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int nextTime[] = {0,0,0};
+int screenPage = 0; //What page to be displayed on the screen
 
 
 

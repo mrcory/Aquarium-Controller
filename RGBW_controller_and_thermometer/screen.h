@@ -1,7 +1,7 @@
 
 const int barLocX = 0; //Where to start drawing the bars X
 const int barLocY = 42; //Where to start drawing the bars Y
-int screenPage = 0; //What page to be displayed on the screen
+
 
 
 
@@ -20,15 +20,19 @@ void drawHBar(int locX,int locY,int height,int width,int percent) { //Draw a pro
 
 void ledStatus() { //Show LED value bars
   display.drawChar(0,barLocY,'R',WHITE,BLACK,1); //Bar label
+  display.setCursor(7,barLocY); display.print(ledR); //Display value digits
   drawHBar(0,barLocY+8,3,25,map(ledR,0,255,0,100)); //Testing progress bar
 
   display.drawChar(30,barLocY,'G',WHITE,BLACK,1); //Bar label
+  display.setCursor(37,barLocY); display.print(ledB); //Display value digits
   drawHBar(30,barLocY+8,3,25,map(ledG,0,255,0,100)); //Testing progress bar
 
   display.drawChar(60,barLocY,'B',WHITE,BLACK,1); //Bar label
+  display.setCursor(67,barLocY); display.print(ledB); //Display value digits
   drawHBar(60,barLocY+8,3,25,map(ledB,0,255,0,100)); //Testing progress bar
 
   display.drawChar(90,barLocY,'W',WHITE,BLACK,1); //Bar label
+  display.setCursor(97,barLocY); display.print(ledW); //Display value digits
   drawHBar(90,barLocY+8,3,25,map(ledW,0,255,0,100)); //Testing progress bar
 
   display.drawChar(0,barLocY+15,'P',WHITE,BLACK,1);
@@ -40,7 +44,7 @@ void displayUpdate() { //Update info display
   display.clearDisplay(); //Clean the Screen
 
 
-if (screenPage == 0) {
+if (screenPage == 0) { //Screen 0 display
   if (tempEnabled) { //Add Temperature to Display
     //Update temperature display
     display.setCursor(0, 0); //Set cursor location
