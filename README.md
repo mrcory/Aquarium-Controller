@@ -49,3 +49,6 @@ Usage Info:
 
 	Set values under "//Pin Connections", "//Colors", and "//Various Configs".
 	
+Just some functions
+
+        darHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
