@@ -8,6 +8,7 @@
 
 const int ONE_WIRE_BUS = 12; //Data wire pin
 float temp;
+int tNeg = 0;
 
 OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas Temperature.
@@ -22,5 +23,5 @@ void tempUpdate() { //Update temp and display
     temp = sensors.getTempCByIndex(0);}//Set temp from first sensor
   
   
-  if (temp < 0) {temp = temp * -1;} //If negative temp (like error) make it positive so it will fit on the display.
+  if (temp < 0) {tNeg = 1;temp = temp * -1;} else {tNeg = 0;} //If negative temp (like error) make it positive so it will fit on the display.
 }

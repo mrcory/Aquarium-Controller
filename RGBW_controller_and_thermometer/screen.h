@@ -24,8 +24,9 @@ void displayUpdate() { //Update info display
     //Update temperature display
     display.setCursor(0, 0); //Set cursor location
     display.setTextSize(1);
-    display.print(tempUnit);
-    display.print(" "); //Just a space
+    display.println(tempUnit);
+    if (tNeg == 1) {display.print(" -");} //If temp negative add a minus sign
+    display.setCursor(10,0);
     display.setTextSize(3); //Make it large
     display.println(temp);
   }
