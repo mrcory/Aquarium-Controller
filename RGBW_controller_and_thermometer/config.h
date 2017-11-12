@@ -16,14 +16,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 
 
 //Colors (0-255) Set the initial color.
-//int ledC[4] = 255; //Intensity target 1-255 adjust this
 int ledC[5] = {255,255,255,255,255}; //Red, Green, Blue, White, Target Brightness (All vals 0-255)
-/* Depriciated
-int ledR = 255; //Red
-int ledG = 255; //Green
-int ledB = 255; //Blue
-int ledW = 255; //White
-*/
 
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step

@@ -80,8 +80,8 @@ void setup() {
 
 
   //Create Alarms and Timers
-  Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], ledPower); //Turn on led
-  Alarm.alarmRepeat(timeOff[0], timeOff[1], timeOff[2], ledPower); //Turn off led
+  Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], timerOn); //Turn on led
+  Alarm.alarmRepeat(timeOff[0], timeOff[1], timeOff[2], timerOff); //Turn off led
   Alarm.alarmRepeat(0, 0, 0, updateTime); //Update Arduino time at midnight
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
