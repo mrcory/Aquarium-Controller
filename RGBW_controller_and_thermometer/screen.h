@@ -19,7 +19,6 @@ void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a
 }
 
 void ledStatus() { //Show LED value bars
-  display.setTextSize(1);
   display.drawChar(0, barLocY, 'R', WHITE, BLACK, 1); //Bar label
   display.setCursor(8, barLocY); display.print(ledC[0]); //Display value digits
   drawHBar(0, barLocY + 8, 3, 25, map(ledC[0], 0, 255, 0, 100)); //Testing progress bar
@@ -48,7 +47,7 @@ void displayUpdate() { //Update info display
   display.clearDisplay(); //Clean the Screen
 
 
-  if (screenPage == 1) { //Screen 0 display
+  if (screenPage == 0) { //Screen 0 display
     if (tempEnabled) { //Add Temperature to Display
       //Update temperature display
       display.setCursor(0, 0); //Set cursor location
@@ -71,19 +70,15 @@ void displayUpdate() { //Update info display
     display.print(":");
     display.print(timeNow.second());
 
-    ledStatus(); //Show LED status bars
-
-if (enableTimer) {
     //Display on and off times
     display.setCursor(0, 24);
     display.setTextSize(1);
     display.print("On :  "); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
     display.print("Off: "); display.print(timeOff[0]); display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
+    ledStatus();
   }
-}
 
-
-  if (screenPage == 0) {
+  if (screenPage == 1) {
     display.setCursor(0, 0);
     display.setTextSize(1);
     display.println();
@@ -110,7 +105,6 @@ if (enableTimer) {
     if (ledState == 0) {
       display.print("LED OFF");
     }
-  ledStatus(); //Show LED status bars
   }
 
   display.display(); //Put the stuff on the display

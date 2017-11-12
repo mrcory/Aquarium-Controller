@@ -18,12 +18,6 @@ void ledPower() {
   screenPage = oldPage; //Restore old page location
 }
 
-void ledPowerNow() { //Instant on/off
-  if (ledState == 1) {ledP = 0;} //Changing to off, tun power to 0
-  if (ledState == 0) {ledP = 255;} //Changint to on, turn power to 255
-  ledPower(); //Runs regular ledPower() command (We are just skipping the fade)
-}
-
 void colorChange(int colorSet[5]) {
   ledC[0] = colorSet[0];
   ledC[1] = colorSet[1];
@@ -38,9 +32,8 @@ void screenChange(int arg_cnt, char **args) {
 }
 
 //Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
-//Check if timer is enabled, if not make no change
-void timerOn() { if (ledState == 1 && enableTimer) {ledState = 0; ledPower();}}
-void timerOff() { if (ledState == 0 && enableTimer) {ledState = 1; ledPower();}}
+void timerOn() { if (ledState == 1) {ledState = 0;} if (ledState != 2) {ledPower();}}
+void timerOff() { if (ledState == 0) {ledState = 1;} if (ledState != 2) {ledPower();}}
 
 void ledChange(int arg_cnt, char **args) {
   if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel

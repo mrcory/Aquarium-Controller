@@ -14,19 +14,11 @@ Features:
     
     On/off timer
     
-    Fade timer
-	
-	RTC support
-	
-	Manual only mode
+    Fade timer (With RTC support)
     
   Display
     
     Temperature display
-	
-	Channel, Desired Brightness, Current Brightness (Bar Display)
-	
-	Shows the on and off times. (If enabled)
 
   Other
 	
@@ -51,7 +43,7 @@ Commands:
 	led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
 	
 	ledpower | Turn leds on and off
-	ledpowernow | Turn leds on and off instantly
+	(Broken) ledpowernow | Turn leds on and off instantly
 	
 	screen <val> | Change screen display
 
@@ -59,6 +51,6 @@ Usage Info:
 
 	Set values under "//Pin Connections", "//Colors", and "//Various Configs".
 	
-Just some functions (Just for reference)
+Just some functions
 
-	drawHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
+        drawHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
