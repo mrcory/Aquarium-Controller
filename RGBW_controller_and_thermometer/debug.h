@@ -13,15 +13,15 @@ void debugFunc() {
       Serial.print(ledState);
       Serial.println(" ");
     }
-  
+
     if (debugLVL == 2) { //Debug Info lvl 2
-      Serial.print("Red "); Serial.print(map(ledR, 0, 255, 0, ledP));
-      Serial.print(" Green "); Serial.print(map(ledG, 0, 255, 0, ledP));
-      Serial.print(" Blue "); Serial.print(map(ledB, 0, 255, 0, ledP));
-      Serial.print(" White "); Serial.print(map(ledW, 0, 255, 0, ledP));
+      Serial.print("Red "); Serial.print(map(ledC[0], 0, 255, 0, ledP));
+      Serial.print(" Green "); Serial.print(map(ledC[1], 0, 255, 0, ledP));
+      Serial.print(" Blue "); Serial.print(map(ledC[2], 0, 255, 0, ledP));
+      Serial.print(" White "); Serial.print(map(ledC[3], 0, 255, 0, ledP));
       Serial.print(" Power "); Serial.println(ledP);
     }
-  
+
     if (debugLVL == 3) {
       Serial.print("Fade Steps ");
       Serial.print(fadeStep);
@@ -29,7 +29,7 @@ void debugFunc() {
       Serial.println(temp);
     }
 
-}
+  }
 }
 
 void debugUpdate(int arg_cnt, char **args) { //Update debug value in serial monitor

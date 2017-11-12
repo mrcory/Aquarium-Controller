@@ -71,15 +71,12 @@ void setup() {
   updateTime();
 
   //Add Commands
-  cmdAdd("ledR", ledRedUpdate);
-  cmdAdd("ledw", ledWhiteUpdate);
-  cmdAdd("ledg", ledGreenUpdate);
-  cmdAdd("ledb", ledBlueUpdate);
   cmdAdd("color", colorChange);
   cmdAdd("debug", debugUpdate);
   cmdAdd("ledpower", ledPower);
   cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
+  cmdAdd("led", ledChange);
 
 
   //Create Alarms and Timers
@@ -90,16 +87,20 @@ void setup() {
 
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum
-  if (fadeTime > 0) {fadeStep = (ledPT / (fadeTime * 60.0));} else {fadeStep = 255;} //Make fadeStep from fadeTime or make it instant (255)
+  if (fadeTime > 0) {
+    fadeStep = (ledPT / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
+  } else {
+    fadeStep = 255;
+  }
   rtc.begin(); //Initialize rtc
   timeNow = rtc.now(); //Set time
   sensors.begin(); //Start sensor lib
-  
+
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address (CHECK THIS)
 
   //Draw Version
   display.clearDisplay();
-  display.setCursor(0,0); //Set text position
+  display.setCursor(0, 0); //Set text position
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.println("Controller Version: ");
@@ -140,12 +141,13 @@ void loop() {
 
 
   if (ledUpdate == 1) { //Write LED Output
-    analogWrite(ledPinR, map(ledR, 0, 255, 0, ledP)); //Set power red
-    analogWrite(ledPinG, map(ledG, 0, 255, 0, ledP)); //Set power green
-    analogWrite(ledPinB, map(ledB, 0, 255, 0, ledP)); //Set power blue
-    analogWrite(ledPinW, map(ledW, 0, 255, 0, ledP)); //Set power white
+    analogWrite(ledPinR, map(ledC[0], 0, 255, 0, ledP)); //Set power red
+    analogWrite(ledPinG, map(ledC[1], 0, 255, 0, ledP)); //Set power green
+    analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
+    analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     if (debugLVL > 0) {
-    Serial.println("Output Update");} //If debug enabled say when updated
+      Serial.println("Output Update");
+    } //If debug enabled say when updated
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 }
@@ -153,7 +155,7 @@ void loop() {
 
 void updateTime() { //Update time from rtc
   //rtc.adjust(DateTime(timeNow.year(), timeNow.month(), timeNow.day(), timeNow.hour()-1, timeNow.minute(), timeNow.second()));
-  
+
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
 
