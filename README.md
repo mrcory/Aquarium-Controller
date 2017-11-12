@@ -39,11 +39,13 @@ Hardware Used
 
 Commands:
 
-	ledr <val> | 0-255
-	ledg <val> | 0-255
-	ledb <val> | 0-255
-	ledw <val> | 0-255
-	(Broken) colorset <R val> <G val> <B val> <W val> <Brightness val> <LED State <val> | 0-255, 0-255, 0-255, 0-255, 0-255, 0-1
+	led <val> <val2> | <val> 0=Red 1=Green 2=Blue 3=White 4=Brightness <val2> 0-255 (Set individually)
+	led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
+	
+	ledpower | Turn leds on and off
+	(Broken) ledpowernow | Turn leds on and off instantly
+	
+	screen <val> | Change screen display
 
 Usage Info:
 
