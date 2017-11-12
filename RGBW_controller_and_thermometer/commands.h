@@ -31,9 +31,9 @@ void screenChange(int arg_cnt, char **args) {
   Serial.print(args[1]);
 }
 
-//Timer led finctions
-void timerOn() { if (ledState == 0) {ledState = 1;}}
-void timerOff() { if (ledState == 1) {ledState = 0;}}
+//Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
+void timerOn() { if (ledState == 1) {ledState = 0;} if (ledState != 2) {ledPower();}}
+void timerOff() { if (ledState == 0) {ledState = 1;} if (ledState != 2) {ledPower();}}
 
 void ledChange(int arg_cnt, char **args) {
   if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel

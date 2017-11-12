@@ -40,7 +40,7 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-int ledState = 0; //0 for turning off, 1 for turning on
+//ledState moved to config
 int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
