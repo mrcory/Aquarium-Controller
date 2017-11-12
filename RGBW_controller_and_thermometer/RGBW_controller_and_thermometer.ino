@@ -88,7 +88,7 @@ void setup() {
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum
   if (fadeTime > 0) {
-    fadeStep = (ledPT / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
+    fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
   } else {
     fadeStep = 255;
   }
@@ -120,7 +120,7 @@ void loop() {
   cmdPoll();
   timeNow = rtc.now(); //Update time
 
-  if (ledState == 1 && ledPT > ledP) { //Adjust power to target +
+  if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;
     ledUpdate = 1;
   }
@@ -131,8 +131,8 @@ void loop() {
   }
 
   //If ledP oversteps power target, set value to power target
-  if (ledState == 1 && ledP > ledPT) {
-    ledP = ledPT;
+  if (ledState == 1 && ledP > ledC[4]) {
+    ledP = ledC[4];
   }
 
   if (ledState == 0 && ledP <= ledPMin) {

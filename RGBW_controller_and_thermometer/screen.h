@@ -36,7 +36,10 @@ void ledStatus() { //Show LED value bars
   drawHBar(90, barLocY + 8, 3, 25, map(ledC[3], 0, 255, 0, 100)); //Testing progress bar
 
   display.drawChar(0, barLocY + 15, 'P', WHITE, BLACK, 1);
-  drawHBar(9, barLocY + 18, 3, 128, map(ledP, 0, 255, 0, 100));
+  drawHBar(9, barLocY + 18, 3, 51, map(ledP, 0, 255, 0, 100));
+
+  display.drawChar(65, barLocY + 15, 'B', WHITE, BLACK, 1);
+  drawHBar(74, barLocY + 18, 3, 51, map(ledC[4], 0, 255, 0, 100));
 }
 
 void displayUpdate() { //Update info display

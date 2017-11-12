@@ -26,13 +26,14 @@ void colorChange(int colorSet[5]) {
   ledUpdate = 1;
 }
 
-
 void screenChange(int arg_cnt, char **args) {
   screenPage = cmdStr2Num(args[1],10);
   Serial.print(args[1]);
 }
 
 void ledChange(int arg_cnt, char **args) {
-  ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);
+  if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
+  if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}
+  //if (arg_cnt >= 6) {ledC[4] = cmdStr2Num(args[6],10);}
 }
 
