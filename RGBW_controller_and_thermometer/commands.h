@@ -38,34 +38,12 @@ void colorSet(int arg_cnt, char **args) {
 }
 
 void ledPower() {
-  int oldPafe = screenPage; //Store old page location
+  int oldPage = screenPage; //Store old page location
   if (ledState == 0) {ledState = 1;} else {ledState = 0;} //Chang between on and off
-  ledUpdate = 1 //There has been a change, update analogWrite
+  ledUpdate = 1; //There has been a change, update analogWrite
   screenPage = 2; //Chang page to "LED ON(OFF)"
   displayUpdate(); Alarm.delay(1000); //Update and display for 1 second
   screenPage = oldPage; //Restore old page location
-}
-
-void turnOn() {
-  int oldPage = screenPage;
-  ledState = 1;
-  ledUpdate = 1;
-  Serial.println("State turn on");
-  screenPage = 2;
-  displayUpdate();
-  Alarm.delay(1000);
-  screenPage = oldPage;
-}
-
-void turnOff() {
-  int oldPage = screenPage;
-  ledState = 0;
-  ledUpdate = 1;
-  Serial.println("State turn off");
-  screenPage = 2;
-  displayUpdate();
-  Alarm.delay(1000);
-  screenPage = oldPage;
 }
 
 void colorChange(int colorSet[5]) {
