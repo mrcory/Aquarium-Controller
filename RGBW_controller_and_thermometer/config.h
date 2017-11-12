@@ -6,7 +6,7 @@
 boolean tempEnabled = true;
 String tempUnit = "F"; //What unit do you want? (C or F)
 
-//Pin Connections
+//Pin Connections 
 const int ledPinR = 2; //Red
 const int ledPinG = 4; //Green
 const int ledPinB = 6; //Blue
@@ -23,7 +23,7 @@ float fadeStep = 5; //Increase/Decrease per step
 const int ledPMin = 0; //Minimum led power output 0-255
 const int tempTime = 10; //Temp update interval in seconds
 const float fadeTime = 30; //Fade time in minutes
-int ledState = 0; //0 for turning off, 1 for turning on, 2 for manual control only
+boolean enableTimer = true; //Disable or enable timer
 
 //Light on/off times
 int timeOn[3] = {8, 30, 0}; //Set time to turn on (24 hour time) <hour, minute, second>
