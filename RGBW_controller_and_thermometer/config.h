@@ -7,7 +7,7 @@ boolean tempEnabled = true;
 String tempUnit = "F"; //What unit do you want? (C or F)
 
 //Pin Connections 
-const int ledPinR = 2; //Red
+const int ledPinR = 2; //Red 
 const int ledPinG = 4; //Green
 const int ledPinB = 6; //Blue
 const int ledPinW = 8; //White channel

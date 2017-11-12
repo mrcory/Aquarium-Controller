@@ -1,4 +1,4 @@
-//Debug Function
+//Debug Function 
 void debugFunc() {
   if (debugLVL > 0) {
     if (debugLVL == 1) { //Debug information Set 1
