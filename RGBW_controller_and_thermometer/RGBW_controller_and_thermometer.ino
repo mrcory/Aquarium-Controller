@@ -40,12 +40,12 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-//ledState moved to config
+int ledState = 0; //0 for turning off, 1 for turning on
 int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-int screenPage = 0; //What page to be displayed on the screen
+int screenPage = 1; //What page to be displayed on the screen
 
 
 
@@ -74,6 +74,7 @@ void setup() {
   cmdAdd("color", colorChange);
   cmdAdd("debug", debugUpdate);
   cmdAdd("ledpower", ledPower);
+  cmdAdd("ledpowernow", ledPowerNow);
   cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
