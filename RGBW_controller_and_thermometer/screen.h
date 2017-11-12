@@ -94,7 +94,8 @@ if (screenPage == 1) {
 if (screenPage == 2) {
   display.setCursor(0,0);
   display.setTextSize(3);
-  display.print("LED ON");
+  if (ledState == 1) {display.print("LED ON");}
+  if (ledState == 0) {display.print("LED OFF");}
 }
   display.display(); //Put the stuff on the display
 }

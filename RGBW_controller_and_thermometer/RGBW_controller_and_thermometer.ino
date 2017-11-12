@@ -77,8 +77,7 @@ void setup() {
   cmdAdd("ledb", ledBlueUpdate);
   cmdAdd("color", colorChange);
   cmdAdd("debug", debugUpdate);
-  cmdAdd("ledon", turnOn);
-  cmdAdd("ledoff", turnOff);
+  cmdAdd("ledpower", ledPower);
   cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
 
