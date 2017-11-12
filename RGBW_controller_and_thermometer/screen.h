@@ -75,6 +75,7 @@ if (screenPage == 0) { //Screen 0 display
 
 if (screenPage == 1) {
       display.setCursor(0,0);
+      display.setTextSize(1);
       display.println();
       display.print(hour());
       display.print(":");
