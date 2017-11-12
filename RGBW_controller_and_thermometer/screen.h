@@ -80,8 +80,7 @@ if (screenPage == 1) {
       display.print(":");
       display.print(minute());
       display.print(":");
-      display.print(second());
-      display.print(" ");
+      display.println(second());
       display.print("Power State: ");
       display.print(ledState);
       display.println(" ");
@@ -97,6 +96,7 @@ if (screenPage == 2) {
   if (ledState == 1) {display.print("LED ON");}
   if (ledState == 0) {display.print("LED OFF");}
 }
+
   display.display(); //Put the stuff on the display
 }
 
