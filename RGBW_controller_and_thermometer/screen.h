@@ -1,5 +1,5 @@
  
-void drawHBar(char locX, int locY, int height, int width, int percent) { //Draw a progrss bar
+void drawHBar(char locX, char locY, char height, char width, char percent) { //Draw a progrss bar
   int aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, WHITE); //Draw lower outline of progress bar

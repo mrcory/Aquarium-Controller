@@ -85,7 +85,6 @@ void setup() {
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
-  display.setTextColor(WHITE); //Set text color so it is visible
   ledP = ledPMin; //Set power to minimum
   if (fadeTime > 0) {
     fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
@@ -98,6 +97,7 @@ void setup() {
   sensors.begin(); //Start sensor lib
 
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
+  display.setTextColor(WHITE); //Set text color so it is visible
 
 }
 
