@@ -41,11 +41,11 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-int ledState = 0; //0 for turning off, 1 for turning on
+char ledState = 0; //0 for turning off, 1 for turning on
 DateTime timeNow; //Hold time
-int ledUpdate = 1;
+char ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-int screenPage = 1; //What page to be displayed on the screen
+char screenPage = 1; //What page to be displayed on the screen
 
 
 

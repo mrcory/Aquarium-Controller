@@ -1,6 +1,6 @@
  
-void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
-  int aLocX = map(percent, 1, 100, 1, width);
+void drawHBar(char locX, char locY, char height, char width, char percent) { //Draw a progrss bar
+  char aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, WHITE); //Draw lower outline of progress bar
 
@@ -12,7 +12,7 @@ void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a
 
 }
 
-void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
+void ledStatus(char _X, char _Y) { //Show LED value bars <location X, location Y>
   display.setTextSize(1);
   display.drawChar(_X, _Y, 'R', WHITE, BLACK, 1); //Bar label
   display.setCursor(_X+8, _Y); display.print(ledC[0]); //Display value digits
