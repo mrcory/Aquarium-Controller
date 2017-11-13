@@ -105,7 +105,6 @@ void setup() {
 
 //Loop runs once per second
 void loop() {
-  sensors.requestTemperatures();
   displayUpdate();
   Alarm.delay(500);
   cmdPoll();
