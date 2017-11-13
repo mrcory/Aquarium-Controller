@@ -1,10 +1,4 @@
  
-const int barLocX = 0; //Where to start drawing the bars X
-const int barLocY = 42; //Where to start drawing the bars Y
-
-
-
-
 void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
   int aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
@@ -18,29 +12,29 @@ void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a
 
 }
 
-void ledStatus() { //Show LED value bars
+void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
   display.setTextSize(1);
-  display.drawChar(0, barLocY, 'R', WHITE, BLACK, 1); //Bar label
-  display.setCursor(8, barLocY); display.print(ledC[0]); //Display value digits
-  drawHBar(0, barLocY + 8, 3, 25, map(ledC[0], 0, 255, 0, 100)); //Testing progress bar
+  display.drawChar(_X, _Y, 'R', WHITE, BLACK, 1); //Bar label
+  display.setCursor(_X+8, _Y); display.print(ledC[0]); //Display value digits
+  drawHBar(_X,_Y + 8, 3, 25, map(ledC[0], 0, 255, 0, 100)); //Testing progress bar
 
-  display.drawChar(30, barLocY, 'G', WHITE, BLACK, 1); //Bar label
-  display.setCursor(38, barLocY); display.print(ledC[1]); //Display value digits
-  drawHBar(30, barLocY + 8, 3, 25, map(ledC[1], 0, 255, 0, 100)); //Testing progress bar
+  display.drawChar(_X+30,_Y, 'G', WHITE, BLACK, 1); //Bar label
+  display.setCursor(_X+38, _Y); display.print(ledC[1]); //Display value digits
+  drawHBar(_X+30,_Y + 8, 3, 25, map(ledC[1], 0, 255, 0, 100)); //Testing progress bar
 
-  display.drawChar(60, barLocY, 'B', WHITE, BLACK, 1); //Bar label
-  display.setCursor(68, barLocY); display.print(ledC[2]); //Display value digits
-  drawHBar(60, barLocY + 8, 3, 25, map(ledC[2], 0, 255, 0, 100)); //Testing progress bar
+  display.drawChar(_X+60,_Y, 'B', WHITE, BLACK, 1); //Bar label
+  display.setCursor(_X+68,_Y); display.print(ledC[2]); //Display value digits
+  drawHBar(_X+60,_Y+ 8, 3, 25, map(ledC[2], 0, 255, 0, 100)); //Testing progress bar
 
-  display.drawChar(90, barLocY, 'W', WHITE, BLACK, 1); //Bar label
-  display.setCursor(98, barLocY); display.print(ledC[3]); //Display value digits
-  drawHBar(90, barLocY + 8, 3, 25, map(ledC[3], 0, 255, 0, 100)); //Testing progress bar
+  display.drawChar(_X+90,_Y, 'W', WHITE, BLACK, 1); //Bar label
+  display.setCursor(_X+98,_Y); display.print(ledC[3]); //Display value digits
+  drawHBar(_X+90,_Y + 8, 3, 25, map(ledC[3], 0, 255, 0, 100)); //Testing progress bar
 
-  display.drawChar(0, barLocY + 15, 'P', WHITE, BLACK, 1);
-  drawHBar(9, barLocY + 18, 3, 51, map(ledP, 0, 255, 0, 100));
+  display.drawChar(0,_Y + 15, 'P', WHITE, BLACK, 1);
+  drawHBar(_X+9,_Y + 18, 3, 51, map(ledP, 0, 255, 0, 100));
 
-  display.drawChar(65, barLocY + 15, 'B', WHITE, BLACK, 1);
-  drawHBar(74, barLocY + 18, 3, 51, map(ledC[4], 0, 255, 0, 100));
+  display.drawChar(_X+65,_Y + 15, 'B', WHITE, BLACK, 1);
+  drawHBar(_X+74,_Y + 18, 3, 51, map(ledC[4], 0, 255, 0, 100));
 }
 
 void displayUpdate() { //Update info display
@@ -71,7 +65,7 @@ void displayUpdate() { //Update info display
     display.print(":");
     display.print(timeNow.second());
 
-    ledStatus(); //Show LED status bars
+    ledStatus(0,42); //Show LED status bars
 
 if (enableTimer) {
     //Display on and off times
@@ -110,7 +104,7 @@ if (enableTimer) {
     if (ledState == 0) {
       display.print("LED OFF");
     }
-  ledStatus(); //Show LED status bars
+  ledStatus(0,42); //Show LED status bars
   }
 
   display.display(); //Put the stuff on the display
