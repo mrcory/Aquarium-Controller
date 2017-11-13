@@ -91,11 +91,12 @@ void setup() {
   } else {
     fadeStep = 255;
   }
+  
   rtc.begin(); //Initialize rtc
   timeNow = rtc.now(); //Set time
   sensors.begin(); //Start sensor lib
 
-  display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address (CHECK THIS)
+  display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
 
 }
 
@@ -137,8 +138,6 @@ void loop() {
 
 
 void updateTime() { //Update time from rtc
-  //rtc.adjust(DateTime(timeNow.year(), timeNow.month(), timeNow.day(), timeNow.hour()-1, timeNow.minute(), timeNow.second()));
-
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
 
