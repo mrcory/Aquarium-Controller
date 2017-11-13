@@ -89,6 +89,8 @@ if (enableTimer) {
     display.print("Power State: ");
     display.print(ledState);
     display.println(" ");
+    display.print("Versnion: ");
+    display.println(ver);
 
     display.setCursor(0, 44);
     display.print("RGBW Aquarium Controller by: Cory McGahee");
