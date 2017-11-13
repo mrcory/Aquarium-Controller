@@ -6,7 +6,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-const int ONE_WIRE_BUS = 12; //Data wire pin
+const int ONE_WIRE_BUS = tempPin; //Data wire pin
 float temp;
 int tNeg = 0; //0 is positive 1 means negative temp
 

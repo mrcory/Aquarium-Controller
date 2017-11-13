@@ -99,10 +99,13 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
   display.setTextColor(WHITE); //Set text color so it is visible
 
+  tempUpdate(); //Update temp
+
 }
 
 //Loop runs once per second
 void loop() {
+  sensors.requestTemperatures();
   displayUpdate();
   Alarm.delay(500);
   cmdPoll();
