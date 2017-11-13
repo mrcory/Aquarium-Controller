@@ -42,7 +42,6 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
-int debugLVL = 0; //Print some debug stuff (0-3)
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
@@ -61,7 +60,6 @@ const int colorMoon[4] {151, 147, 148, 0}; //Test
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-#include "debug.h" //Debug functions
 #include "screen.h"
 #include "commands.h" //Functions for the commands below
 
@@ -73,7 +71,6 @@ void setup() {
 
   //Add Commands
   cmdAdd("color", colorChange);
-  cmdAdd("debug", debugUpdate);
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
   cmdAdd("colorSet", colorSet);
@@ -116,7 +113,6 @@ void setup() {
 
 //Loop runs once per second
 void loop() {
-  debugFunc();
   displayUpdate();
   Alarm.delay(500);
   cmdPoll();
@@ -147,9 +143,6 @@ void loop() {
     analogWrite(ledPinG, map(ledC[1], 0, 255, 0, ledP)); //Set power green
     analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
-    if (debugLVL > 0) {
-      Serial.println("Output Update");
-    } //If debug enabled say when updated
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 }

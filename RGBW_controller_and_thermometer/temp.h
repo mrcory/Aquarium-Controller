@@ -25,7 +25,7 @@ void tempUpdate() { //Update temp and display
 
 
   if (temp < 0) {
-    tNeg = 1;  //If negative temp (like error) make it positive so it will fit on the display.
+    tNeg = 1;  //If negative temp make it positive so it will fit on the display.
     temp = temp * -1;
   } else {
     tNeg = 0;

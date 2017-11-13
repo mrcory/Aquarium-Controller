@@ -1,4 +1,7 @@
 //Debug Function 
+//Moved info to screen
+//No longer used
+
 void debugFunc() {
   if (debugLVL > 0) {
     if (debugLVL == 1) { //Debug information Set 1
