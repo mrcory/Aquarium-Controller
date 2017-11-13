@@ -41,11 +41,11 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-char ledState = 0; //0 for turning off, 1 for turning on
+int ledState = 0; //0 for turning off, 1 for turning on
 DateTime timeNow; //Hold time
-char ledUpdate = 1;
+int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-char screenPage = 1; //What page to be displayed on the screen
+int screenPage = 1; //What page to be displayed on the screen
 
 
 
@@ -85,6 +85,7 @@ void setup() {
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
+  display.setTextColor(WHITE); //Set text color so it is visible
   ledP = ledPMin; //Set power to minimum
   if (fadeTime > 0) {
     fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)

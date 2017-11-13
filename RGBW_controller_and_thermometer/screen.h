@@ -1,6 +1,6 @@
  
-void drawHBar(char locX, char locY, char height, char width, char percent) { //Draw a progrss bar
-  char aLocX = map(percent, 1, 100, 1, width);
+void drawHBar(char locX, int locY, int height, int width, int percent) { //Draw a progrss bar
+  int aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, WHITE); //Draw lower outline of progress bar
 
@@ -40,12 +40,12 @@ void ledStatus(char _X, char _Y) { //Show LED value bars <location X, location Y
 void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
+  display.setCursor(0, 0); //Set cursor location
 
 
-  if (screenPage == 1) { //Screen 0 display
+  if (screenPage == 1) { //Screen 1 display
     if (tempEnabled) { //Add Temperature to Display
       //Update temperature display
-      display.setCursor(0, 0); //Set cursor location
       display.setTextSize(1);
       display.println(tempUnit);
       if (tNeg == 1) {
@@ -78,7 +78,6 @@ if (enableTimer) {
 
 
   if (screenPage == 0) {
-    display.setCursor(0, 0);
     display.setTextSize(1);
     display.println();
     display.print(hour());
