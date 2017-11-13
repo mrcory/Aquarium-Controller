@@ -20,7 +20,7 @@
 */
 
 
-const String ver = "0.1-pre"; //Program Version
+const String ver = "-pre"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -96,7 +96,6 @@ void setup() {
   sensors.begin(); //Start sensor lib
 
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address (CHECK THIS)
-
 
 }
 
