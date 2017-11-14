@@ -100,6 +100,8 @@ void setup() {
   display.setTextColor(WHITE); //Set text color so it is visible
 
   tempUpdate(); //Update temp
+  tempHi = temp; //Set highest
+  tempLo = temp; //Set lowest
 
 }
 
