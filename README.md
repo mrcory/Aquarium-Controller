@@ -19,6 +19,8 @@ Features:
   Display
     
     Temperature display
+	
+	Show max and minimum temperature recorded
 
   Other
 	
