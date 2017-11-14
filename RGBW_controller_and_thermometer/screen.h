@@ -49,19 +49,17 @@ void displayUpdate() { //Update info display
       display.setTextSize(1);
       display.println(tempUnit);
       if (tNeg == 1) {
-        display.print(" -"); //If temp negative add a minus sign
+        display.print("-"); //If temp negative add a minus sign
       }
-      display.setCursor(10, 0);
+      display.setCursor(8, 0);
       display.setTextSize(3); //Make it large
       display.print(temp,1);
 
       display.setTextSize(1);
-      display.setCursor(104,0);
-      display.print("H ");
-      display.print(tempHi,0);
-      display.setCursor(104,8);
-      display.print("L ");
-      display.print(tempLo,0);
+      display.setCursor(97,0);
+      display.print(tempHi,1);
+      display.setCursor(97,8);
+      display.print(tempLo,1);
       
       
     }

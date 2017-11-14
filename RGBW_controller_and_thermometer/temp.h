@@ -25,6 +25,13 @@ void tempUpdate() { //Update temp and display
     temp = sensors.getTempCByIndex(0);
   }//Set temp from first sensor
 
+  //Figure low and high
+  if (tempHi <= temp) {
+    tempHi = temp;
+    }
+  if (tempLo >= temp) {
+    tempLo = temp;
+    }
 
   if (temp < 0) {
     tNeg = 1;  //If negative temp make it positive so it will fit on the display.
@@ -33,7 +40,5 @@ void tempUpdate() { //Update temp and display
     tNeg = 0;
   }
 
-  //Figure low and high
-  if (tempHi < temp) {tempHi = (int)temp;}
-  if (tempLo > temp) {tempLo = (int)temp;}
+
 }
