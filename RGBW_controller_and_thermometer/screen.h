@@ -53,7 +53,17 @@ void displayUpdate() { //Update info display
       }
       display.setCursor(10, 0);
       display.setTextSize(3); //Make it large
-      display.println(temp);
+      display.print(temp,1);
+
+      display.setTextSize(1);
+      display.setCursor(104,0);
+      display.print("H ");
+      display.print(tempHi,0);
+      display.setCursor(104,8);
+      display.print("L ");
+      display.print(tempLo,0);
+      
+      
     }
 
     //Display Time on screen

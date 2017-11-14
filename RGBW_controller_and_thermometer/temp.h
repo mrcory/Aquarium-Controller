@@ -8,6 +8,8 @@
 
 const int ONE_WIRE_BUS = tempPin; //Data wire pin
 float temp;
+float tempHi; //Max temp recorded
+float tempLo; //Lowest temp recorded
 int tNeg = 0; //0 is positive 1 means negative temp
 
 OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
@@ -30,4 +32,8 @@ void tempUpdate() { //Update temp and display
   } else {
     tNeg = 0;
   }
+
+  //Figure low and high
+  if (tempHi < temp) {tempHi = (int)temp;}
+  if (tempLo > temp) {tempLo = (int)temp;}
 }
