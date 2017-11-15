@@ -74,11 +74,11 @@ void displayUpdate() { //Update info display
     //Display Time on screen
     display.setTextSize(1);
     display.setCursor(80, 24);
-    display.print(timeNow.hour());
+    display.print(hour());
     display.print(":");
-    display.print(timeNow.minute());
+    display.print(minute());
     display.print(":");
-    display.print(timeNow.second());
+    display.print(second());
 
     ledStatus(0,42); //Show LED status bars
 
@@ -123,11 +123,11 @@ if (enableTimer) {
   ledStatus(0,42); //Show LED status bars
   }
 
-    if (screenPage == 4) {
+ /*   if (screenPage == 4) {
     display.setCursor(0,0);
     menuDisplay();
     drawArrow(0,(arrowPos*8)+10);
-  }
+  }*/
 
   display.display(); //Put the stuff on the display
 

@@ -16,7 +16,7 @@ void menuDisplay() {
   display.print("Menu  Pos: ");
   display.print(arrowPos);
   display.print(" Menu: ");
-  displa.println(menuPage);
+  display.println(menuPage);
   
 
   if (enter) {menuPage = arrowPos;enter=false;arrowPos=0;}
