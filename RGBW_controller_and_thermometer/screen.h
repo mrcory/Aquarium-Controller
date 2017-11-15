@@ -37,10 +37,17 @@ void ledStatus(char _X, char _Y) { //Show LED value bars <location X, location Y
   drawHBar(_X+74,_Y + 18, 3, 51, map(ledC[4], 0, 255, 0, 100));
 }
 
+void drawArrow(int _X,int _Y) {
+  display.drawLine(_X,_Y,_X+10,_Y,WHITE); //Arrow Body
+  display.drawLine(_X+10,_Y,_X-5,_Y-3,WHITE); //Arrow Point 1
+  display.drawLine(_X+10,_Y,_X-5,_Y+3,WHITE); //Arrow Point 2
+}
+
 void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
   display.setCursor(0, 0); //Set cursor location
+  display.setTextSize(1);
 
 
   if (screenPage == 1) { //Screen 1 display
@@ -116,7 +123,15 @@ if (enableTimer) {
   ledStatus(0,42); //Show LED status bars
   }
 
+    if (screenPage == 4) {
+    display.setCursor(0,0);
+    menuDisplay();
+    drawArrow(0,(arrowPos*8)+10);
+  }
+
   display.display(); //Put the stuff on the display
+
+
 }
 
 
