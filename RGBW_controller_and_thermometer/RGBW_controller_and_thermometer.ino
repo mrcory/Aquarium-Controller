@@ -41,7 +41,7 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-int ledState = 0; //0 for turning off, 1 for turning on
+int ledState = 1; //0 for turning off, 1 for turning on
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
@@ -68,8 +68,12 @@ const int colorMoon[4] {151, 147, 148, 0}; //Test
 #include "commands.h" //Functions for the commands below
 
 
-void setup() {
+AlarmID_t ledTimerOn;
+AlarmID_t ledTimerOff;
+AlarmID_t updateClock;
 
+void setup() {
+  //setSyncProvider(rtc.now);
   Serial.begin(9600);
   cmdInit(&Serial);
   updateTime();
@@ -85,13 +89,15 @@ void setup() {
   cmdAdd("up", up);
   cmdAdd("dn", dn);
   cmdAdd("en", enterButton);
+  cmdAdd("on",timerOn);
+  cmdAdd("off",timerOff);
  
 
 
   //Create Alarms and Timers
-  Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], timerOn); //Turn on led
-  Alarm.alarmRepeat(timeOff[0], timeOff[1], timeOff[2], timerOff); //Turn off led
-  Alarm.alarmRepeat(0, 0, 0, updateTime); //Update Arduino time at midnight
+  ledTimerOn = Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], timerOn); //Turn on led
+  ledTimerOff = Alarm.alarmRepeat(23,12,0, timerOff); //Turn off led
+  updateClock = Alarm.alarmRepeat(0, 0, 0, updateTime); //Update Arduino time at midnight
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
@@ -113,6 +119,7 @@ void setup() {
   tempHi = temp; //Set highest
   tempLo = temp; //Set lowest
 
+  updateTime();
 }
 
 //Loop runs once per second
@@ -150,15 +157,17 @@ void loop() {
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
   }
+
+
 }
 
 
 void updateTime() { //Update time from rtc
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
-
-  Alarm.delay(500);
-  //enter = false;
+  Alarm.enable(ledTimerOn);
+  Alarm.enable(ledTimerOff);
+  Alarm.enable(updateClock);
 }
 
 

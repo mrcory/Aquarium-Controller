@@ -26,5 +26,5 @@ int fadeTime = 10; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 
 //Light on/off times
-int timeOn[3] = {8, 30, 0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff[3] = {21, 30, 0}; //Set time off (24 hour time) <hour, minute, second>
+int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>
+int timeOff[3] = {23,0,0}; //Set time off (24 hour time) <hour, minute, second>
