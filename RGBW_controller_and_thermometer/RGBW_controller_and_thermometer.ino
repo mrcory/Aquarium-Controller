@@ -58,15 +58,10 @@ const int colorOvercast[4] {201, 226, 255, 0};
 const int colorBlacklight[4] {167, 0, 255, 0};
 const int colorMoon[4] {151, 147, 148, 0}; //Test
 
- //Input
-  boolean enter = false;
-
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-#include "menu.h"
 #include "screen.h"
 #include "commands.h" //Functions for the commands below
-
 
 void setup() {
 
@@ -81,11 +76,6 @@ void setup() {
   cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
-  
-  cmdAdd("up", up);
-  cmdAdd("dn", dn);
-  cmdAdd("en", enterButton);
- 
 
 
   //Create Alarms and Timers
@@ -117,7 +107,6 @@ void setup() {
 
 //Loop runs once per second
 void loop() {
-  
   displayUpdate();
   Alarm.delay(500);
   cmdPoll();
@@ -158,7 +147,6 @@ void updateTime() { //Update time from rtc
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
 
   Alarm.delay(500);
-  //enter = false;
 }
 
 
