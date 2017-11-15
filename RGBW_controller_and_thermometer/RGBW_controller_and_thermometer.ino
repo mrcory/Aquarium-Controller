@@ -92,12 +92,13 @@ void setup() {
   cmdAdd("on",timerOn);
   cmdAdd("off",timerOff);
  
-
+  setTime(21, 18, 45, 9, 27, 17);
 
   //Create Alarms and Timers
-  ledTimerOn = Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], timerOn); //Turn on led
-  ledTimerOff = Alarm.alarmRepeat(23,12,0, timerOff); //Turn off led
-  updateClock = Alarm.alarmRepeat(0, 0, 0, updateTime); //Update Arduino time at midnight
+  Alarm.alarmRepeat(timeOnHour, timeOnMinute, timeOnSecond,timerOn); //Turn on led
+  Alarm.alarmRepeat( timeOffHour, timeOffMinute, timeOffSecond,test); //Turn off led
+  
+  Alarm.alarmRepeat(0,0,0,updateTime); //Update Arduino time at midnight
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
@@ -119,16 +120,15 @@ void setup() {
   tempHi = temp; //Set highest
   tempLo = temp; //Set lowest
 
-  updateTime();
+  //setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
 }
 
 //Loop runs once per second
 void loop() {
-  
   displayUpdate();
   Alarm.delay(500);
   cmdPoll();
-  timeNow = rtc.now(); //Update time
+  //timeNow = rtc.now(); //Update time
 
   if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;
@@ -165,9 +165,6 @@ void loop() {
 void updateTime() { //Update time from rtc
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
-  Alarm.enable(ledTimerOn);
-  Alarm.enable(ledTimerOff);
-  Alarm.enable(updateClock);
 }
 
 

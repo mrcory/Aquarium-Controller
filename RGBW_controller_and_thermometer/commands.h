@@ -38,8 +38,9 @@ void screenChange(int arg_cnt, char **args) {
 
 //Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
 //Check if timer is enabled, if not make no change
-void timerOn() { if (ledState == 0 && enableTimer) {ledPower();ledState = 1;}}
-void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;}}
+void timerOn() { if (ledState == 0 && enableTimer) {ledPower();ledState = 1;Serial.println("Turn On");}}
+void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
+void test() {Serial.println("TEST");}
 
 void ledChange(int arg_cnt, char **args) {
   if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel

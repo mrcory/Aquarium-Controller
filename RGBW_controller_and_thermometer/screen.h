@@ -86,7 +86,7 @@ if (enableTimer) {
     //Display on and off times
     display.setCursor(0, 24);
     display.setTextSize(1);
-    display.print("On :  "); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
+    display.print("On : "); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
     display.print("Off: "); display.print(timeOff[0]); display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
   }
 }

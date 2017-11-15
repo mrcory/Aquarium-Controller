@@ -25,6 +25,18 @@ const int tempTime = 3; //Temp update interval in seconds
 int fadeTime = 10; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 
-//Light on/off times
-int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff[3] = {23,0,0}; //Set time off (24 hour time) <hour, minute, second>
+
+//You must set alarm times below as timealarm won't accept values from an array
+//Light on/off times for display only
+const int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>
+const int timeOff[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
+
+//On
+int timeOnHour = 8;
+int timeOnMinute = 30;
+int timeOnSecond = 0;
+
+//Off
+int timeOffHour = 20;
+int timeOffMinute = 0;
+int timeOffSecond = 0;
