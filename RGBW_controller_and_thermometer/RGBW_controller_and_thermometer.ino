@@ -1,3 +1,5 @@
+
+
 /*LED Controller for Aquarium
    by: Cory McGahee
    Free for non-commercial use only.
@@ -20,9 +22,9 @@
 
 const String ver = "-pre"; //Program Version
 
-#include <RTClib.h>
 #include <TimeLib.h>
 #include <TimeAlarms.h>
+#include <RTClib.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
@@ -39,7 +41,7 @@ RTC_DS3231 rtc; //Declare RTC (?)
 
 
 //Internal Variables
-int ledState = 1; //0 for turning off, 1 for turning on
+int ledState = 0; //0 for turning off, 1 for turning on
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
@@ -61,14 +63,12 @@ const int colorMoon[4] {151, 147, 148, 0}; //Test
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-//#include "menu.h"
+#include "menu.h"
 #include "screen.h"
 #include "commands.h" //Functions for the commands below
 
 
 void setup() {
-
-  while (!Serial) ; // wait for Arduino Serial Monitor
 
   Serial.begin(9600);
   cmdInit(&Serial);
@@ -82,12 +82,11 @@ void setup() {
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
   
-//  cmdAdd("up", up);
-//  cmdAdd("dn", dn);
-//  cmdAdd("en", enterButton);
-  cmdAdd("on",timerOn);
-  cmdAdd("off",timerOff);
+  cmdAdd("up", up);
+  cmdAdd("dn", dn);
+  cmdAdd("en", enterButton);
  
+
 
   //Create Alarms and Timers
   Alarm.alarmRepeat(timeOn[0], timeOn[1], timeOn[2], timerOn); //Turn on led
@@ -104,8 +103,8 @@ void setup() {
   }
   
   rtc.begin(); //Initialize rtc
+  timeNow = rtc.now(); //Set time
   sensors.begin(); //Start sensor lib
-  updateTime(); //Set time
 
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
   display.setTextColor(WHITE); //Set text color so it is visible
@@ -120,7 +119,7 @@ void setup() {
 void loop() {
   
   displayUpdate();
-  Alarm.delay(0);
+  Alarm.delay(500);
   cmdPoll();
   timeNow = rtc.now(); //Update time
 
@@ -157,6 +156,9 @@ void loop() {
 void updateTime() { //Update time from rtc
   timeNow = rtc.now();
   setTime(timeNow.hour(), timeNow.minute(), timeNow.second(), timeNow.month(), timeNow.day(), timeNow.year());
+
+  Alarm.delay(500);
+  //enter = false;
 }
 
 
