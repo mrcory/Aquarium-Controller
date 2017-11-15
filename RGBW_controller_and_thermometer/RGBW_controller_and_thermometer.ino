@@ -91,13 +91,11 @@ void setup() {
   cmdAdd("en", enterButton);
   cmdAdd("on",timerOn);
   cmdAdd("off",timerOff);
- 
-  setTime(21, 18, 45, 9, 27, 17);
+
 
   //Create Alarms and Timers
   Alarm.alarmRepeat(timeOnHour, timeOnMinute, timeOnSecond,timerOn); //Turn on led
-  Alarm.alarmRepeat( timeOffHour, timeOffMinute, timeOffSecond,test); //Turn off led
-  
+  Alarm.alarmRepeat( timeOffHour, timeOffMinute, timeOffSecond,timerOff); //Turn off led
   Alarm.alarmRepeat(0,0,0,updateTime); //Update Arduino time at midnight
   Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
