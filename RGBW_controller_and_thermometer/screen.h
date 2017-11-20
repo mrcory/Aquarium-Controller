@@ -133,8 +133,3 @@ if (enableTimer) {
 
 
 }
-
-
-
-
-

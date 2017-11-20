@@ -41,7 +41,6 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 boolean DST = false;
-boolean DSTold = DST;
 
 //Color presets (R,G,B,W)
 const int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
@@ -157,7 +156,7 @@ void timeUpdate() { //Update time and reset alarms
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
 }
 
-void DSTset() {
+void DSTset() { //Set DST
   
   if (DST) {
     DST = false;

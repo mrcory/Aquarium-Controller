@@ -44,7 +44,6 @@ void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Ser
 void ledChange(int arg_cnt, char **args) {
   if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
   if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}
-  //if (arg_cnt >= 6) {ledC[4] = cmdStr2Num(args[6],10);}
 }
 
 
