@@ -1,3 +1,12 @@
+/* Commands for the sketch
+ *  led <val> <val2> | <val> 0=Red 1=Green 2=Blue 3=White 4=Brightness <val2> 0-255 (Set individually)
+ *  led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
+ *  ledpower | Turn leds on and off
+ *  ledpowernow | Turn leds on and off instantly
+ *  screen <val> | Change screen displa
+ *  
+ */
+
 void colorSet(int arg_cnt, char **args) {
   if (arg_cnt >= 7) {
     ledC[0] = cmdStr2Num(args[1], 10);
@@ -44,7 +53,6 @@ void ledChange(int arg_cnt, char **args) { //First argument will me the command 
   if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
                                                                              //<val> <val2> | <val> 0=Red 1=Green 2=Blue 3=White 4=Brightness <val2> 0-255
   if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
-                                                                                        //<val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255]
   ledUpdate = 1;
 }
 
@@ -66,6 +74,8 @@ void configSave() { //Save config
  EEPROM.put(i,fadeTime);
  i += sizeof(fadeTime);
  Serial.print("Config Saved");
+ Serial.print(" Size: ");
+ Serial.println(i);
 }
 
 void configLoad() { //Load config
@@ -82,7 +92,9 @@ void configLoad() { //Load config
  i += sizeof(enableTimer);
  EEPROM.get(i,fadeTime);
  i += sizeof(fadeTime);
- Serial.println("Config Loaded");
+ Serial.print("Config Loaded");
+ Serial.print(" Size: ");
+ Serial.println(i);
 }
 
 void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually
