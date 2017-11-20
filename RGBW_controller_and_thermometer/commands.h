@@ -45,6 +45,7 @@ void ledChange(int arg_cnt, char **args) { //First argument will me the command 
                                                                              //<val> <val2> | <val> 0=Red 1=Green 2=Blue 3=White 4=Brightness <val2> 0-255
   if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
                                                                                         //<val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255]
+  ledUpdate = 1;
 }
 
 
