@@ -47,11 +47,5 @@ void ledChange(int arg_cnt, char **args) {
   //if (arg_cnt >= 6) {ledC[4] = cmdStr2Num(args[6],10);}
 }
 
-void DSTset() {
-  if (DST) {
-    DST = false;}
-  else {
-    DST = true;
-  }
-}
+
 

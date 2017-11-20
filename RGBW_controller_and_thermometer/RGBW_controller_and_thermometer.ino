@@ -40,7 +40,7 @@ DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
-boolean DST;
+boolean DST = false;
 
 //Color presets (R,G,B,W)
 const int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
@@ -142,7 +142,11 @@ void loop() {
 
 void timeUpdate() { //Update time and reset alarms
   timeNow = RTC.now(); //Set time
-  setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
+  if (!DST) {
+    setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
+  } else {
+    setTime(timeNow.hour()+1,timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
+  }
   
   Alarm.free(LedOn);
   LedOn =  LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
@@ -150,5 +154,16 @@ void timeUpdate() { //Update time and reset alarms
   LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
   Alarm.free(TimeUpdate);
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
+}
+
+void DSTset() {
+  if (DST) {
+    DST = false;}
+    Serial.println("DST Disabled");
+  else {
+    DST = true;
+    Serial.println("DST Enabled");
+  }
+  timeUpdate();
 }
 
