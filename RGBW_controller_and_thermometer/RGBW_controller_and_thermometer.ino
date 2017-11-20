@@ -41,6 +41,7 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 boolean DST = false;
+boolean DSTold = DST;
 
 //Color presets (R,G,B,W)
 const int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
@@ -79,11 +80,11 @@ void setup() {
   cmdAdd("dst",DSTset);
 
 
-  //Create Alarms and Timers
- LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
- LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
- TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
-  Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
+//Create Alarms and Timers
+LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
+LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
+TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
+Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum
@@ -157,13 +158,15 @@ void timeUpdate() { //Update time and reset alarms
 }
 
 void DSTset() {
+  
   if (DST) {
-    DST = false;}
+    DST = false;
     Serial.println("DST Disabled");
+    }
   else {
     DST = true;
     Serial.println("DST Enabled");
-  }
+    }
   timeUpdate();
 }
 
