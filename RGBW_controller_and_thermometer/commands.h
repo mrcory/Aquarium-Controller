@@ -21,7 +21,7 @@ void ledPower() {
   int oldPage = screenPage; //Store old page location
   if (ledState == 0) {ledState = 1;} else {ledState = 0;} //Chang between on and off
   ledUpdate = 1; //There has been a change, update analogWrite
-  screenPage = 2; //Chang page to "LED ON(OFF)"
+  screenPage = 2; //Change page to "LED ON(OFF)"
   displayUpdate(); Alarm.delay(1000); //Update and display for 1 second
   screenPage = oldPage; //Restore old page location
 }
@@ -72,6 +72,8 @@ void configSave() { //Save config
  i += sizeof(enableTimer);
  EEPROM.put(i,fadeTime);
  i += sizeof(fadeTime);
+ EEPROM.put(i,tempUnit);
+ i += sizeof(tempUnit);
  Serial.print("Config Saved");
  Serial.print(" Size: ");
  Serial.println(i);
@@ -91,6 +93,8 @@ void configLoad() { //Load config
  i += sizeof(enableTimer);
  EEPROM.get(i,fadeTime);
  i += sizeof(fadeTime);
+ EEPROM.get(i,tempUnit);
+ i += sizeof(tempUnit);
  Serial.print("Config Loaded");
  Serial.print(" Size: ");
  Serial.println(i);

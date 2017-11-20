@@ -4,7 +4,7 @@
 
 //Temperature Settings
 boolean tempEnabled = true; //Are you using a temp probe?
-String tempUnit = "F"; //What unit do you want? (C or F)
+char tempUnit = 'F'; //What unit do you want? (C or F)
 
 //Pin Connections 
 const PROGMEM int ledPinR = 2; //Red 
@@ -22,7 +22,7 @@ int ledC[5] = {255,255,255,255,255}; //Red, Green, Blue, White, Target Brightnes
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 const PROGMEM int ledPMin = 0; //Minimum led power output 0-255
 const PROGMEM int tempTime = 2; //Temp update interval in seconds
-int fadeTime = 10; //Fade time in minutes
+int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 

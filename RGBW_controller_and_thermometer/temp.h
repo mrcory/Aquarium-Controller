@@ -18,10 +18,10 @@ DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas T
 void tempUpdate() { //Update temp and display
   sensors.requestTemperatures(); //Get temp reading
 
-  if (tempUnit == "F") {//Set to Fahrenheit
+  if (tempUnit == 'F') {//Set to Fahrenheit
     temp = sensors.getTempFByIndex(0);
   }//Set temp from first sensor
-  else if (tempUnit == "C") { //Set to Celsius if C or something else
+  else if (tempUnit == 'C') { //Set to Celsius if C or something else
     temp = sensors.getTempCByIndex(0);
   }//Set temp from first sensor
 
