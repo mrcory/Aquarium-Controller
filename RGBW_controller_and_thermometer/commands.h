@@ -25,10 +25,9 @@ void ledPowerNow() { //Instant on/off
 }
 
 void colorChange(int colorSet[5]) {
-  ledC[0] = colorSet[0];
-  ledC[1] = colorSet[1];
-  ledC[2] = colorSet[2];
-  ledC[3] = colorSet[3];
+  for (int i=0;i<5;i++){
+    ledC[i] = colorSet[i];
+  }
   ledUpdate = 1;
 }
 
@@ -48,5 +47,48 @@ void ledChange(int arg_cnt, char **args) { //First argument will me the command 
                                                                                         //<val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255]
 }
 
+
+
+void configSave() { //Save config
+ EEPROM.write(0,1);
+ int i=5;
+ EEPROM.put(i,ledC);
+ i += sizeof(ledC);
+ EEPROM.put(i,timeOn);
+ i += sizeof(timeOn);
+ EEPROM.put(i,timeOff);
+ i += sizeof(timeOff);
+ EEPROM.put(i,DST);
+ i += sizeof(DST);
+ EEPROM.put(i,enableTimer);
+ i += sizeof(enableTimer);
+ EEPROM.put(i,fadeTime);
+ i += sizeof(fadeTime);
+ //EEPROM.put(i,tempUnit);
+ Serial.print("Config Saved");
+}
+
+void configLoad() { //Load config
+ int i = 5;
+ EEPROM.get(i,ledC);
+ i += sizeof(ledC);
+ EEPROM.get(i,timeOn);
+ i += sizeof(timeOn);
+ EEPROM.get(i,timeOff);
+ i += sizeof(timeOff);
+ EEPROM.get(i,DST);
+ i += sizeof(DST);
+ EEPROM.get(i,enableTimer);
+ i += sizeof(enableTimer);
+ EEPROM.get(i,fadeTime);
+ i += sizeof(fadeTime);
+ //EEPROM.get(i,tempUnit);
+ Serial.println("Config Loaded");
+}
+
+void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually
+    EEPROM.write(0,0);
+    Serial.println("Config Cleared");
+  }
 
 

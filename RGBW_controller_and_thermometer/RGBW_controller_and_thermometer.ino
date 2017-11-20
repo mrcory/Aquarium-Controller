@@ -28,6 +28,7 @@ const String ver = "-pre"; //Program Version
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Cmd.h>
+#include <EEPROM.h>
 #include "config.h" //Config file
 
 //i2c device stuff
@@ -40,14 +41,15 @@ DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
+int configSaved;
 
 //Color presets (R,G,B,W) To me used with the colorChange() function via Serial
-const int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
-const int colorWhiteFull[4] {255, 255, 255, 255}; //white with 4th channel
-const int colorHighNoon[4] {255, 255, 251, 0};
-const int colorOvercast[4] {201, 226, 255, 0};
-const int colorBlacklight[4] {167, 0, 255, 0};
-const int colorMoon[4] {151, 147, 148, 0}; 
+const PROGMEM int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
+const PROGMEM int colorWhiteFull[4] {255, 255, 255, 255}; //white with 4th channel
+const PROGMEM int colorHighNoon[4] {255, 255, 251, 0};
+const PROGMEM int colorOvercast[4] {201, 226, 255, 0};
+const PROGMEM int colorBlacklight[4] {167, 0, 255, 0};
+const PROGMEM int colorMoon[4] {151, 147, 148, 0}; 
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
@@ -65,6 +67,12 @@ void setup() {
   timeNow = RTC.now(); //Hold time
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
 
+  if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
+    Serial.print("Saved ");
+    configLoad();
+
+  }
+
   //Add Commands
   cmdAdd("color", colorChange);
   cmdAdd("ledpower", ledPower);
@@ -76,6 +84,9 @@ void setup() {
   cmdAdd("off",timerOff);
   cmdAdd("temprst",tempRngRst);
   cmdAdd("dst",DSTset);
+  cmdAdd("save",configSave);
+  cmdAdd("load",configLoad);
+  cmdAdd("configclear",configClear);
 
 
 //Create Alarms and Timers
