@@ -38,7 +38,9 @@ void tempUpdate() { //Update temp and display
     temp = temp * -1;
   } else {
     tNeg = 0;
+  }}
+
+  void tempRngRst() {
+    tempHi = temp;
+    tempLo = temp;
   }
-
-
-}
