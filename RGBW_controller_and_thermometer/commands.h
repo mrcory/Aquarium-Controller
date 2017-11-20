@@ -65,7 +65,6 @@ void configSave() { //Save config
  i += sizeof(enableTimer);
  EEPROM.put(i,fadeTime);
  i += sizeof(fadeTime);
- //EEPROM.put(i,tempUnit);
  Serial.print("Config Saved");
 }
 
@@ -83,7 +82,6 @@ void configLoad() { //Load config
  i += sizeof(enableTimer);
  EEPROM.get(i,fadeTime);
  i += sizeof(fadeTime);
- //EEPROM.get(i,tempUnit);
  Serial.println("Config Loaded");
 }
 
