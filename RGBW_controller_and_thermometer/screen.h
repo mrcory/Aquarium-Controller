@@ -105,6 +105,9 @@ if (enableTimer) {
     display.println(" ");
     display.print("Versnion: ");
     display.println(ver);
+    if (EEPROM.read(0) == 1) { //If position 0 is 1 then there is a saved config
+      display.println("Config Saved");
+    }
 
     display.setCursor(0, 44);
     display.print("RGBW Aquarium Controller by: Cory McGahee");
@@ -123,11 +126,6 @@ if (enableTimer) {
   ledStatus(0,42); //Show LED status bars
   }
 
-/*    if (screenPage == 4) {
-    display.setCursor(0,0);
-    menuDisplay();
-    drawArrow(0,(arrowPos*8)+10);
-  }*/
 
   display.display(); //Put the stuff on the display
 
