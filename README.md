@@ -6,6 +6,16 @@ I am currently running this on a Mega 2560.
 
 Fritzing picture is for my current circut design.
 
+Libraries Used:
+	#include <TimeLib.h>
+	#include <TimeAlarms.h>
+	#include <Wire.h>
+	#include <DS3231.h>
+	#include <SPI.h>
+	#include <Adafruit_GFX.h>
+	#include <Adafruit_SSD1306.h>
+	#include <Cmd.h>
+
 Features:
   
   LED Controller
