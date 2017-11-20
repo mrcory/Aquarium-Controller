@@ -39,8 +39,8 @@ void ledStatus(char _X, char _Y) { //Show LED value bars <location X, location Y
 
 void drawArrow(int _X,int _Y) {
   display.drawLine(_X,_Y,_X+10,_Y,WHITE); //Arrow Body
-  display.drawLine(_X+10,_Y,_X-5,_Y-3,WHITE); //Arrow Point 1
-  display.drawLine(_X+10,_Y,_X-5,_Y+3,WHITE); //Arrow Point 2
+  display.drawLine(_X+10,_Y,_X+5,_Y-3,WHITE); //Arrow Point 1
+  display.drawLine(_X+10,_Y,_X+5,_Y+3,WHITE); //Arrow Point 2
 }
 
 void displayUpdate() { //Update info display
@@ -54,19 +54,19 @@ void displayUpdate() { //Update info display
     if (tempEnabled) { //Add Temperature to Display
       //Update temperature display
       display.setTextSize(1);
-      display.println(tempUnit);
+      display.println(tempUnit); //Display the current temp unit
       if (tNeg == 1) {
         display.print("-"); //If temp negative add a minus sign
       }
-      display.setCursor(8, 0);
+      display.setCursor(8, 0); //Set cursor position
       display.setTextSize(3); //Make it large
-      display.print(temp,1);
+      display.print(temp,1); //Display temp with 1 decimal place
 
-      display.setTextSize(1);
-      display.setCursor(97,0);
-      display.print(tempHi,1);
-      display.setCursor(97,8);
-      display.print(tempLo,1);
+      display.setTextSize(1); //Reset cursor size for safety
+      display.setCursor(97,0); //Set cursor position
+      display.print(tempHi,1); //Display tempHi with 1 decimal place
+      display.setCursor(97,8); //Set cursor position
+      display.print(tempLo,1); //Display tempLo with 1 decimal place
       
       
     }

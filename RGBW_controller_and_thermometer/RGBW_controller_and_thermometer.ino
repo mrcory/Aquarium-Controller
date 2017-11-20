@@ -31,7 +31,7 @@ const String ver = "-pre"; //Program Version
 #include "config.h" //Config file
 
 //i2c device stuff
-Adafruit_SSD1306 display(4);
+Adafruit_SSD1306 display(4); //display_reset
 RTClib RTC; //Declare RTC
 
 //Internal Variables
@@ -40,31 +40,30 @@ DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
-boolean DST = false;
 
-//Color presets (R,G,B,W)
+//Color presets (R,G,B,W) To me used with the colorChange() function via Serial
 const int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
 const int colorWhiteFull[4] {255, 255, 255, 255}; //white with 4th channel
 const int colorHighNoon[4] {255, 255, 251, 0};
 const int colorOvercast[4] {201, 226, 255, 0};
 const int colorBlacklight[4] {167, 0, 255, 0};
-const int colorMoon[4] {151, 147, 148, 0}; //Test
+const int colorMoon[4] {151, 147, 148, 0}; 
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-#include "screen.h"
+#include "screen.h" //Screen functions
 #include "commands.h" //Functions for the commands below
 
-AlarmID_t LedOn;
-AlarmID_t LedOff;
-AlarmID_t TimeUpdate;
+AlarmID_t LedOn; //Define LedOn alarm
+AlarmID_t LedOff; //Define LedOff alarm
+AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
 void setup() {
   Wire.begin();
   Serial.begin(9600);
   cmdInit(&Serial);
-  timeNow = RTC.now(); //Set time
-  setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
+  timeNow = RTC.now(); //Hold time
+  setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
 
   //Add Commands
   cmdAdd("color", colorChange);
@@ -82,15 +81,15 @@ void setup() {
 //Create Alarms and Timers
 LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
 LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
-TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
+TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
 Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum
-  if (fadeTime > 0) {
+  if (fadeTime > 0) { //If a fadetime has been set solve for fadeStep to match it
     fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
   } else {
-    fadeStep = 255;
+    fadeStep = 255; //If fateTime is set to 0 then just turn on and off completely
   }
   
   
@@ -105,9 +104,9 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
 //Loop runs once per second
 void loop() {
-  displayUpdate();
+  displayUpdate(); //Draw the screen for the display
   Alarm.delay(500);
-  cmdPoll();
+  cmdPoll(); //Poll for commands via Serial
 
   if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;
@@ -141,31 +140,31 @@ void loop() {
 }
 
 void timeUpdate() { //Update time and reset alarms
-  timeNow = RTC.now(); //Set time
-  if (!DST) {
+  timeNow = RTC.now(); //Grab time from RTC
+  if (!DST) { //If DST false set time
     setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
-  } else {
+  } else { //If DST true set time hour+1
     setTime(timeNow.hour()+1,timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
   }
   
-  Alarm.free(LedOn);
+  Alarm.free(LedOn); //Free alarm so we can recreate it with a new time (or the same)
   LedOn =  LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
-  Alarm.free(LedOff);
+  Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
   LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
-  Alarm.free(TimeUpdate);
+  Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
 }
 
 void DSTset() { //Set DST
   
-  if (DST) {
+  if (DST) { //If DST currently enable then disable it
     DST = false;
-    Serial.println("DST Disabled");
+    Serial.println("DST Disabled"); //Confirm via serial
     }
-  else {
+  else { //If DST current disabled the enable it
     DST = true;
-    Serial.println("DST Enabled");
+    Serial.println("DST Enabled"); //Confir via Serial
     }
-  timeUpdate();
+  timeUpdate(); //Update time and recreate alarms
 }
 
