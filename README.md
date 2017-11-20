@@ -55,7 +55,7 @@ Commands:
 	led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
 	
 	ledpower | Turn leds on and off
-	(Broken) ledpowernow | Turn leds on and off instantly
+	ledpowernow | Turn leds on and off instantly
 	
 	screen <val> | Change screen display
 
