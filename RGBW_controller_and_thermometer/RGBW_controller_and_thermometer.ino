@@ -4,21 +4,17 @@
    This header must be included in all distributions.
    Original GitHub Upload: 11/6/2017
    Credits:
-   Several presets from http://planetpixelemporium.com/tutorialpages/light.html
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
-
-   Done:
-   Get temp
-   Get time
-   Fixed fadetime
-   Display temp
-
-   Todo:
+todo:
    Add button controls
 */
 
 
+<<<<<<< HEAD
 const String ver = "1.0"; //Program Version
+=======
+const String ver = "1.1"; //Program Version
+>>>>>>> Dev
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -27,7 +23,7 @@ const String ver = "1.0"; //Program Version
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <Cmd.h>
+#include <Cmd.h> //Comment out when not enabling Serial commands
 #include <EEPROM.h>
 #include "config.h" //Config file
 
@@ -43,14 +39,6 @@ float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
 
-//Color presets (R,G,B,W) To me used with the colorChange() function via Serial
-const PROGMEM int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
-const PROGMEM int colorWhiteFull[4] {255, 255, 255, 255}; //white with 4th channel
-const PROGMEM int colorHighNoon[4] {255, 255, 251, 0};
-const PROGMEM int colorOvercast[4] {201, 226, 255, 0};
-const PROGMEM int colorBlacklight[4] {167, 0, 255, 0};
-const PROGMEM int colorMoon[4] {151, 147, 148, 0}; 
-
 //Include other files
 #include "temp.h" //Tempurature functions and variables
 #include "screen.h" //Screen functions
@@ -63,31 +51,28 @@ AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  cmdInit(&Serial);
   timeNow = RTC.now(); //Hold time
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print("Saved ");
+    Serial.print(F("Saved "));
     configLoad();
-
   }
 
+#if defined (serialCommands) //If not defined then don't create commands
+
+  cmdInit(&Serial);
   //Add Commands
-  cmdAdd("color", colorChange);
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
-  cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
-  cmdAdd("on",timerOn);
-  cmdAdd("off",timerOff);
   cmdAdd("temprst",tempRngRst);
   cmdAdd("dst",DSTset);
   cmdAdd("save",configSave);
   cmdAdd("load",configLoad);
   cmdAdd("configclear",configClear);
-
+#endif
 
 //Create Alarms and Timers
 LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
@@ -117,7 +102,10 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 void loop() {
   displayUpdate(); //Draw the screen for the display
   Alarm.delay(500);
-  cmdPoll(); //Poll for commands via Serial
+  
+  #if defined (serialCommands)
+    cmdPoll(); //Poll for commands via Serial
+  #endif
 
   if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;
@@ -170,12 +158,14 @@ void DSTset() { //Set DST
   
   if (DST) { //If DST currently enable then disable it
     DST = false;
-    Serial.println("DST Disabled"); //Confirm via serial
+    Serial.println(F("DST Disabled")); //Confirm via serial
     }
   else { //If DST current disabled the enable it
     DST = true;
-    Serial.println("DST Enabled"); //Confir via Serial
+    Serial.println(F("DST Enabled")); //Confir via Serial
     }
   timeUpdate(); //Update time and recreate alarms
 }
+
+
 
