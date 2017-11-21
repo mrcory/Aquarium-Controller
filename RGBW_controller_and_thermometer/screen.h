@@ -67,8 +67,12 @@ void displayUpdate() { //Update info display
       display.print(tempHi,1); //Display tempHi with 1 decimal place
       display.setCursor(97,8); //Set cursor position
       display.print(tempLo,1); //Display tempLo with 1 decimal place
-      
-      
+
+      if (tempWarn == "Hi" || tempWarn == "Lo") {
+        display.setCursor(80,32);
+        display.print("!Temp ");
+        display.print(tempWarn);
+      }
     }
 
     //Display Time on screen

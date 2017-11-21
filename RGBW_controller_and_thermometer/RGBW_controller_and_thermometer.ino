@@ -80,8 +80,6 @@ void setup() {
   cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
-  cmdAdd("on",timerOn);
-  cmdAdd("off",timerOff);
   cmdAdd("temprst",tempRngRst);
   cmdAdd("dst",DSTset);
   cmdAdd("save",configSave);
@@ -178,4 +176,6 @@ void DSTset() { //Set DST
     }
   timeUpdate(); //Update time and recreate alarms
 }
+
+
 

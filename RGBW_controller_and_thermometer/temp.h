@@ -11,6 +11,7 @@ float temp;
 float tempHi; //Max temp recorded
 float tempLo; //Lowest temp recorded
 int tNeg = 0; //0 is positive 1 means negative temp
+String tempWarn = "Hi";
 
 OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 DallasTemperature sensors(&oneWire); //// Pass our oneWire reference to Dallas Temperature.
@@ -38,9 +39,19 @@ void tempUpdate() { //Update temp and display
     temp = temp * -1;
   } else {
     tNeg = 0;
-  }}
+  }
+
+    //Check if temp out of safe range
+    if (temp >= tempWarnHi) { 
+      tempWarn = "Hi";
+    }
+    if (temp <= tempWarnLo) {
+      tempWarn = "Lo";
+    } 
+}
 
   void tempRngRst() {
     tempHi = temp;
     tempLo = temp;
   }
+

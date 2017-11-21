@@ -1,4 +1,5 @@
 /* Commands for the sketch
+ *  You can call these via Serial
  *  led <val> <val2> | <val> 0=Red 1=Green 2=Blue 3=White 4=Brightness <val2> 0-255 (Set individually)
  *  led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
  *  ledpower | Turn leds on and off
