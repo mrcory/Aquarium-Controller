@@ -18,7 +18,7 @@
 */
 
 
-const String ver = "-pre"; //Program Version
+const String ver = "1.1-dev"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
