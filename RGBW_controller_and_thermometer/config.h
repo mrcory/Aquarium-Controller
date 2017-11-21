@@ -10,12 +10,12 @@ int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
 
 
 //Pin Connections 
-const PROGMEM int ledPinR = 2; //Red 
-const PROGMEM int ledPinG = 4; //Green
-const PROGMEM int ledPinB = 6; //Blue
-const PROGMEM int ledPinW = 8; //White channel
-const PROGMEM int tempPin = 11; //DS18B20 pin
-const PROGMEM int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
+const int ledPinR = 2; //Red 
+const int ledPinG = 4; //Green
+const int ledPinB = 6; //Blue
+const int ledPinW = 8; //White channel
+const int tempPin = 11; //DS18B20 pin
+const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 
 //Colors (0-255) Set the initial color.
@@ -23,8 +23,8 @@ int ledC[5] = {255,255,255,255,255}; //Red, Green, Blue, White, Target Brightnes
 
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
-const PROGMEM int ledPMin = 0; //Minimum led power output 0-255
-const PROGMEM int tempTime = 2; //Temp update interval in seconds
+const int ledPMin = 0; //Minimum led power output 0-255
+const int tempTime = 2; //Temp update interval in seconds
 int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
