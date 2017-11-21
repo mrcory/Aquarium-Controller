@@ -1,3 +1,4 @@
+#define colon ':'
  
 void drawHBar(char locX, char locY, char height, char width, char percent) { //Draw a progrss bar
   int aLocX = map(percent, 1, 100, 1, width);
@@ -56,7 +57,7 @@ void displayUpdate() { //Update info display
       display.setTextSize(1);
       display.println(tempUnit); //Display the current temp unit
       if (tNeg == 1) {
-        display.print("-"); //If temp negative add a minus sign
+        display.print(F("-")); //If temp negative add a minus sign
       }
       display.setCursor(8, 0); //Set cursor position
       display.setTextSize(3); //Make it large
@@ -79,9 +80,9 @@ void displayUpdate() { //Update info display
     display.setTextSize(1);
     display.setCursor(80, 24);
     display.print(hour());
-    display.print(":");
+    display.print(colon);
     display.print(minute());
-    display.print(":");
+    display.print(colon);
     display.print(second());
 
     ledStatus(0,42); //Show LED status bars
@@ -90,8 +91,8 @@ if (enableTimer) {
     //Display on and off times
     display.setCursor(0, 24);
     display.setTextSize(1);
-    display.print(F("On : ")); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
-    display.print(F("Off: ")); display.print(timeOff[0]); display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
+    display.print(F("On : ")); display.print(timeOn[0]); display.print(colon); display.print(timeOn[1]); display.print(colon); display.println(timeOn[2]);
+    display.print(F("Off: ")); display.print(timeOff[0]); display.print(colon); display.print(timeOff[1]); display.print(colon); display.print(timeOff[2]);
   }
 }
 
@@ -100,9 +101,9 @@ if (enableTimer) {
     display.setTextSize(1);
     display.println();
     display.print(hour());
-    display.print(":");
+    display.print(colon);
     display.print(minute());
-    display.print(":");
+    display.print(colon);
     display.println(second());
     display.print(F("Power State: "));
     display.print(ledState);
