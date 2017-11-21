@@ -7,16 +7,6 @@
  *  screen <val> | Change screen display
  */
 
-void colorSet(int arg_cnt, char **args) {
-  if (arg_cnt >= 7) {
-    ledC[0] = cmdStr2Num(args[1], 10);
-    ledC[1] = cmdStr2Num(args[2], 10);
-    ledC[2] = cmdStr2Num(args[3], 10);
-    ledC[3] = cmdStr2Num(args[4], 10);
-    ledP = cmdStr2Num(args[5], 10);
-    ledState = cmdStr2Num(args[6], 10);
-  }
-}
 
 void ledPower() {
   int oldPage = screenPage; //Store old page location

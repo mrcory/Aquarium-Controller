@@ -6,14 +6,7 @@
    Credits:
    Several presets from http://planetpixelemporium.com/tutorialpages/light.html
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
-
-   Done:
-   Get temp
-   Get time
-   Fixed fadetime
-   Display temp
-
-   Todo:
+todo:
    Add button controls
 */
 
@@ -76,7 +69,6 @@ void setup() {
   cmdAdd("color", colorChange);
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
-  cmdAdd("colorSet", colorSet);
   cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
   cmdAdd("temprst",tempRngRst);
