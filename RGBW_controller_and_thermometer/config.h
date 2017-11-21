@@ -5,8 +5,8 @@
 //Temperature Settings
 boolean tempEnabled = true; //Are you using a temp probe?
 char tempUnit = 'F'; //What unit do you want? (C or F)
-int tempWarnHi = 100; //High temp warning. (Set with the same unit as above)
-int tempWarnLo = 60; //Low temp warning. (Set with the same unit as above)
+int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
+int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
 
 
 //Pin Connections 

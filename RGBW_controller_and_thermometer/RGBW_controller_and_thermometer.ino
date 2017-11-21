@@ -70,7 +70,6 @@ void setup() {
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print("Saved ");
     configLoad();
-
   }
 
   //Add Commands
