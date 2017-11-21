@@ -19,7 +19,7 @@ const PROGMEM String ver = "1.1-dev"; //Program Version
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <Cmd.h>
+#include <Cmd.h> //Comment out when not enabling Serial commands
 #include <EEPROM.h>
 #include "config.h" //Config file
 
@@ -47,7 +47,6 @@ AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  cmdInit(&Serial);
   timeNow = RTC.now(); //Hold time
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
 
@@ -56,6 +55,9 @@ void setup() {
     configLoad();
   }
 
+#if defined (serialCommands) //If not defined then don't create commands
+
+  cmdInit(&Serial);
   //Add Commands
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
@@ -66,7 +68,7 @@ void setup() {
   cmdAdd("save",configSave);
   cmdAdd("load",configLoad);
   cmdAdd("configclear",configClear);
-
+#endif
 
 //Create Alarms and Timers
 LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
@@ -96,7 +98,10 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 void loop() {
   displayUpdate(); //Draw the screen for the display
   Alarm.delay(500);
-  cmdPoll(); //Poll for commands via Serial
+  
+  #if defined (serialCommands)
+    cmdPoll(); //Poll for commands via Serial
+  #endif
 
   if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
     ledP = ledP + fadeStep;

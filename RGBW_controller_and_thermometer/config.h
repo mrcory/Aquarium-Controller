@@ -32,3 +32,7 @@ boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 //Light on/off times for display only
 int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>
 int timeOff[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
+
+//Comment out to disable Serial commands (Save a little space) Good for non-Mega boards
+//Also Comment out "#include <Cmd.h>" in the main .ino
+#define serialCommands

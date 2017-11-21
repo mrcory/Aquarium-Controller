@@ -17,30 +17,30 @@ void ledPower() {
   screenPage = oldPage; //Restore old page location
 }
 
+//Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
+//Check if timer is enabled, if not make no change
+void timerOn() { if (ledState == 0 && enableTimer) {ledPower();ledState = 1;Serial.println("Turn On");}}
+void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
+
+
 void ledPowerNow() { //Instant on/off
   if (ledState == 1) {ledP = 0;} //Changing to off, tun power to 0
   if (ledState == 0) {ledP = 255;} //Changint to on, turn power to 255
   ledPower(); //Runs regular ledPower() command (We are just skipping the fade)
 }
 
-
-void screenChange(int arg_cnt, char **args) {
-  screenPage = cmdStr2Num(args[1],10);
-}
-
-//Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
-//Check if timer is enabled, if not make no change
-void timerOn() { if (ledState == 0 && enableTimer) {ledPower();ledState = 1;Serial.println("Turn On");}}
-void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
-
-//Serial command "led"
-void ledChange(int arg_cnt, char **args) { //First argument will me the command name 
-  if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
-  if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
-  ledUpdate = 1;
-}
-
-
+#ifdef serialCommands
+  void screenChange(int arg_cnt, char **args) {
+    screenPage = cmdStr2Num(args[1],10);
+  }
+  
+  //Serial command "led"
+  void ledChange(int arg_cnt, char **args) { //First argument will me the command name 
+    if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
+    if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
+    ledUpdate = 1;
+  }
+#endif
 
 void configSave() { //Save config
  EEPROM.write(0,1);
