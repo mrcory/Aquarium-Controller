@@ -10,11 +10,9 @@ todo:
 */
 
 
-<<<<<<< HEAD
-const String ver = "1.0"; //Program Version
-=======
+
 const String ver = "1.1"; //Program Version
->>>>>>> Dev
+
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
