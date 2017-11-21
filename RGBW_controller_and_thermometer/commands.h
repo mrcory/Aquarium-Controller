@@ -23,12 +23,6 @@ void ledPowerNow() { //Instant on/off
   ledPower(); //Runs regular ledPower() command (We are just skipping the fade)
 }
 
-void colorChange(int colorSet[5]) {
-  for (int i=0;i<5;i++){
-    ledC[i] = colorSet[i];
-  }
-  ledUpdate = 1;
-}
 
 void screenChange(int arg_cnt, char **args) {
   screenPage = cmdStr2Num(args[1],10);
@@ -86,14 +80,14 @@ void configLoad() { //Load config
  i += sizeof(fadeTime);
  EEPROM.get(i,tempUnit);
  i += sizeof(tempUnit);
- Serial.print("Config Loaded");
- Serial.print(" Size: ");
+ Serial.print(F("Config Loaded"));
+ Serial.print(F(" Size: "));
  Serial.println(i);
 }
 
 void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually
     EEPROM.write(0,0);
-    Serial.println("Config Cleared");
+    Serial.println(F("Config Cleared"));
   }
 
 

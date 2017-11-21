@@ -4,14 +4,13 @@
    This header must be included in all distributions.
    Original GitHub Upload: 11/6/2017
    Credits:
-   Several presets from http://planetpixelemporium.com/tutorialpages/light.html
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
 todo:
    Add button controls
 */
 
 
-const String ver = "1.1-dev"; //Program Version
+const PROGMEM String ver = "1.1-dev"; //Program Version
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -36,14 +35,6 @@ float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
 
-//Color presets (R,G,B,W) To me used with the colorChange() function via Serial
-const PROGMEM int colorWhite[4] {255, 255, 255, 0}; //White without 4th channel
-const PROGMEM int colorWhiteFull[4] {255, 255, 255, 255}; //white with 4th channel
-const PROGMEM int colorHighNoon[4] {255, 255, 251, 0};
-const PROGMEM int colorOvercast[4] {201, 226, 255, 0};
-const PROGMEM int colorBlacklight[4] {167, 0, 255, 0};
-const PROGMEM int colorMoon[4] {151, 147, 148, 0}; 
-
 //Include other files
 #include "temp.h" //Tempurature functions and variables
 #include "screen.h" //Screen functions
@@ -61,12 +52,11 @@ void setup() {
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print("Saved ");
+    Serial.print(F("Saved "));
     configLoad();
   }
 
   //Add Commands
-  cmdAdd("color", colorChange);
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
   cmdAdd("screen", screenChange);
@@ -159,11 +149,11 @@ void DSTset() { //Set DST
   
   if (DST) { //If DST currently enable then disable it
     DST = false;
-    Serial.println("DST Disabled"); //Confirm via serial
+    Serial.println(F("DST Disabled")); //Confirm via serial
     }
   else { //If DST current disabled the enable it
     DST = true;
-    Serial.println("DST Enabled"); //Confir via Serial
+    Serial.println(F("DST Enabled")); //Confir via Serial
     }
   timeUpdate(); //Update time and recreate alarms
 }

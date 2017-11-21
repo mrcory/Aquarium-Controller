@@ -46,7 +46,7 @@ void drawArrow(int _X,int _Y) {
 void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
-  display.setCursor(0, 0); //Set cursor location
+  display.setCursor(0,0); //Set cursor location
   display.setTextSize(1);
 
 
@@ -68,9 +68,9 @@ void displayUpdate() { //Update info display
       display.setCursor(97,8); //Set cursor position
       display.print(tempLo,1); //Display tempLo with 1 decimal place
 
-      if (tempWarn == "Hi" || tempWarn == "Lo") {
+      if (tempWarn == F("Hi") || tempWarn == F("Lo")) {
         display.setCursor(80,32);
-        display.print("!Temp ");
+        display.print(F("!Temp "));
         display.print(tempWarn);
       }
     }
@@ -90,8 +90,8 @@ if (enableTimer) {
     //Display on and off times
     display.setCursor(0, 24);
     display.setTextSize(1);
-    display.print("On : "); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
-    display.print("Off: "); display.print(timeOff[0]); display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
+    display.print(F("On : ")); display.print(timeOn[0]); display.print(":"); display.print(timeOn[1]); display.print(":"); display.println(timeOn[2]);
+    display.print(F("Off: ")); display.print(timeOff[0]); display.print(":"); display.print(timeOff[1]); display.print(":"); display.print(timeOff[2]);
   }
 }
 
@@ -104,17 +104,17 @@ if (enableTimer) {
     display.print(minute());
     display.print(":");
     display.println(second());
-    display.print("Power State: ");
+    display.print(F("Power State: "));
     display.print(ledState);
     display.println(" ");
-    display.print("Versnion: ");
+    display.print(F("Version: "));
     display.println(ver);
     if (EEPROM.read(0) == 1) { //If position 0 is 1 then there is a saved config
-      display.println("Config Saved");
+      display.println(F("Config Saved"));
     }
 
     display.setCursor(0, 44);
-    display.print("RGBW Aquarium Controller by: Cory McGahee");
+    display.print(F("RGBW Aquarium Controller by: Cory McGahee"));
 
   }
 
@@ -122,10 +122,9 @@ if (enableTimer) {
     display.setCursor(0, 0);
     display.setTextSize(3);
     if (ledState == 1) {
-      display.print("LED ON");
-    }
-    if (ledState == 0) {
-      display.print("LED OFF");
+      display.print(F("LED ON"));
+    } else {
+      display.print(F("LED OFF"));
     }
   ledStatus(0,42); //Show LED status bars
   }
