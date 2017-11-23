@@ -22,6 +22,7 @@ const String ver = "1.2"; //Program Version
 #include <Cmd.h> //Comment out when not enabling Serial commands
 #include <EEPROM.h>
 #include "config.h" //Config file
+#include "airtemp.h"
 
 //i2c device stuff
 Adafruit_SSD1306 display(4); //display_reset
@@ -34,6 +35,7 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
+float airTemp; //Hold temp from RTC
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables

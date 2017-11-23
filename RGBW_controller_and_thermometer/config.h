@@ -16,6 +16,7 @@ const int ledPinB = 6; //Blue
 const int ledPinW = 8; //White channel
 const int tempPin = 11; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
+const int DS3231_I2C_ADDRESS = 0x68; //RTC Address
 
 
 //Colors (0-255) Set the initial color.

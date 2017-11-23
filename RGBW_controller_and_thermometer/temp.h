@@ -15,8 +15,11 @@ String tempWarn;
 OneWire oneWire(tempPin); // Create OneWire instance for temp sensor
 DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Temperature.
 
+
+
 void tempUpdate() { //Update temp and display
   sensors.requestTemperatures(); //Get temp reading
+  airTemp = RTCtemp(); //Get air temp from the RTC
 
   if (tempUnit == 'F') {//Set to Fahrenheit
     temp = sensors.getTempFByIndex(0);
@@ -53,4 +56,5 @@ void tempUpdate() { //Update temp and display
     tempHi = temp;
     tempLo = temp;
   }
+
 

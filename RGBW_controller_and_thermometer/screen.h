@@ -113,6 +113,8 @@ if (enableTimer) {
     if (EEPROM.read(0) == 1) { //If position 0 is 1 then there is a saved config
       display.println(F("Config Saved"));
     }
+    display.print(F("Air Temp: "));
+    display.println(airTemp); //Display temp from RTC
 
     display.setCursor(0, 44);
     display.print(F("RGBW Aquarium Controller by: Cory McGahee"));
