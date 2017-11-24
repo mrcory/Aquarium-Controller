@@ -10,7 +10,7 @@ todo:
 */
 
 
-const String ver = "1.1"; //Program Version 
+const String ver = "1.11"; //Program Version 
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -90,7 +90,9 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
   display.setTextColor(WHITE); //Set text color so it is visible
 
+  delay(250); //Give some time for the temp probe to start
   tempUpdate(); //Update temp
+  delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
 }
 
