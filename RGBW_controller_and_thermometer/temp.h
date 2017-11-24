@@ -15,6 +15,31 @@ String tempWarn;
 OneWire oneWire(tempPin); // Create OneWire instance for temp sensor
 DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Temperature.
 
+void tempCheck() {
+  //Figure low and high and check if temp is out of set range
+  if (tempHi <= temp) {
+    tempHi = temp;
+    if (temp >= tempWarnHi) {
+      tempWarn = "Hi";
+    }
+    }
+    
+  if (tempLo >= temp) {
+    tempLo = temp;
+    if (temp <= tempWarnLo) {
+      tempWarn = "Lo";
+    }
+    }
+
+  if (temp < 0) {
+    tNeg = 1;  //If negative temp make it positive so it will fit on the display.
+    temp = temp * -1;
+  } else {
+    tNeg = 0;
+  }
+
+}
+
 void tempUpdate() { //Update temp and display
   sensors.requestTemperatures(); //Get temp reading
 
@@ -25,29 +50,10 @@ void tempUpdate() { //Update temp and display
     temp = sensors.getTempCByIndex(0);
   }//Set temp from first sensor
 
-  //Figure low and high
-  if (tempHi <= temp) {
-    tempHi = temp;
-    }
-  if (tempLo >= temp) {
-    tempLo = temp;
-    }
-
-  if (temp < 0) {
-    tNeg = 1;  //If negative temp make it positive so it will fit on the display.
-    temp = temp * -1;
-  } else {
-    tNeg = 0;
-  }
-
-    //Check if temp out of safe range
-    if (temp >= tempWarnHi) { 
-      tempWarn = "Hi";
-    }
-    if (temp <= tempWarnLo) {
-      tempWarn = "Lo";
-    } 
+  tempCheck();
 }
+
+
 
   void tempRngRst() {
     tempHi = temp;
