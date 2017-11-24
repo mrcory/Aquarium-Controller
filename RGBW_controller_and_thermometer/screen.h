@@ -104,8 +104,8 @@ if (enableTimer) {
     display.print(colon);
     display.print(minute());
     display.print(colon);
-    display.println(second());
-    display.print(F("Power State: "));
+    display.print(second());
+    display.print(F("   State: "));
     display.print(ledState);
     display.println(" ");
     display.print(F("Version: "));
