@@ -24,7 +24,7 @@ int ledC[5] = {255,255,255,255,255}; //Red, Green, Blue, White, Target Brightnes
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 const int ledPMin = 0; //Minimum led power output 0-255
-const int tempTime = 2; //Temp update interval in seconds
+const int tempTime = 3; //Temp update interval in seconds
 int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial

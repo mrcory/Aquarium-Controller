@@ -28,7 +28,7 @@ Adafruit_SSD1306 display(4); //display_reset
 RTClib RTC; //Declare RTC
 
 //Internal Variables
-int ledState = 0; //0 for turning off, 1 for turning on
+int ledState = 1; //0 for turning off, 1 for turning on
 DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
