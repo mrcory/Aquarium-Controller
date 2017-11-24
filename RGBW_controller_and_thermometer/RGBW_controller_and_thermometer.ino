@@ -99,7 +99,7 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 //Loop runs once per second
 void loop() {
   displayUpdate(); //Draw the screen for the display
-  Alarm.delay(250);
+  Alarm.delay(500);
   
   #if defined (serialCommands)
     cmdPoll(); //Poll for commands via Serial
