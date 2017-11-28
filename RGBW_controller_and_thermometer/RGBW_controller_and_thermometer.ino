@@ -10,7 +10,7 @@ todo:
 */
 
 
-const String ver = "1.11"; //Program Version 
+const String ver = "1.12"; //Program Version 
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
