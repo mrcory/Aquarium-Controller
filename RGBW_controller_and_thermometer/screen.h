@@ -61,7 +61,11 @@ void displayUpdate() { //Update info display
       }
       display.setCursor(8, 0); //Set cursor position
       display.setTextSize(3); //Make it large
-      display.print(temp,1); //Display temp with 1 decimal place
+      if (temp < 100) {
+        display.print(temp,1); //Display temp with 1 decimal place
+      } else {
+        display.print("!Err");
+      }
 
       display.setTextSize(1); //Reset cursor size for safety
       display.setCursor(97,0); //Set cursor position

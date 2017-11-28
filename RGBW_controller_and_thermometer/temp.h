@@ -25,6 +25,8 @@ void tempUpdate() { //Update temp and display
     temp = sensors.getTempCByIndex(0);
   }//Set temp from first sensor
 
+  temp = temp + tempOffset; //Apply temperature offset
+
   //Figure low and high
   if (tempHi <= temp) {
     tempHi = temp;
