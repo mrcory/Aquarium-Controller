@@ -7,32 +7,38 @@ boolean tempEnabled = true; //Are you using a temp probe?
 char tempUnit = 'F'; //What unit do you want? (C or F)
 int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
 int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
-
+const int tempOffset = 0; //Just for testing
 
 //Pin Connections 
 const int ledPinR = 2; //Red 
 const int ledPinG = 4; //Green
 const int ledPinB = 6; //Blue
 const int ledPinW = 8; //White channel
-const int tempPin = 11; //DS18B20 pin
+const int tempPin = 10; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
-const int DS3231_I2C_ADDRESS = 0x68; //RTC Address
+
+int timerMode = 1; //Set to 1 for only using time1(On/Off) Set to 2 for double timer mode.
 
 
 //Colors (0-255) Set the initial color.
-int ledC[5] = {255,255,255,255,255}; //Red, Green, Blue, White, Target Brightness (All vals 0-255)
+             //Red Grn Blu Wht Pwr
+int ledC[5] = {255,255,200,255,125}; //Red, Green, Blue, White, Target Brightness (All vals 0-255)
 
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 const int ledPMin = 0; //Minimum led power output 0-255
-const int tempTime = 2; //Temp update interval in seconds
+const int tempTime = 4; //Temp update interval in seconds
 int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 
-//Light on/off times for display only
-int timeOn[3] = {8,30,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
+//Light on/off
+  //Timer 1
+int timeOn1[3] = {8,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
+int timeOff1[3] = {15,0,0}; //Set time off (24 hour time) <hour, minute, second>
+  //Timer 2
+int timeOn2[3] = {8,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
+int timeOff2[3] = {15,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
 //Comment out to disable Serial commands (Save a little space) Good for non-Mega boards
 //Also Comment out "#include <Cmd.h>" in the main .ino

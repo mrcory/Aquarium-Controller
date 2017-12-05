@@ -61,7 +61,11 @@ void displayUpdate() { //Update info display
       }
       display.setCursor(8, 0); //Set cursor position
       display.setTextSize(3); //Make it large
-      display.print(temp,1); //Display temp with 1 decimal place
+      if (temp < 100) {
+        display.print(temp,1); //Display temp with 1 decimal place
+      } else {
+        display.print("!Err");
+      }
 
       display.setTextSize(1); //Reset cursor size for safety
       display.setCursor(97,0); //Set cursor position
@@ -91,8 +95,8 @@ if (enableTimer) {
     //Display on and off times
     display.setCursor(0, 24);
     display.setTextSize(1);
-    display.print(F("On : ")); display.print(timeOn[0]); display.print(colon); display.print(timeOn[1]); display.print(colon); display.println(timeOn[2]);
-    display.print(F("Off: ")); display.print(timeOff[0]); display.print(colon); display.print(timeOff[1]); display.print(colon); display.print(timeOff[2]);
+    //display.print(F("On : ")); display.print(timeOn[0]); display.print(colon); display.print(timeOn[1]); display.print(colon); display.println(timeOn[2]);
+    //display.print(F("Off: ")); display.print(timeOff[0]); display.print(colon); display.print(timeOff[1]); display.print(colon); display.print(timeOff[2]);
   }
 }
 
@@ -104,17 +108,15 @@ if (enableTimer) {
     display.print(colon);
     display.print(minute());
     display.print(colon);
-    display.print(second());
-    display.print(F("   State: "));
+    display.println(second());
+    display.print(F("Power State: "));
     display.print(ledState);
     display.println(" ");
-    display.print(F("Version: "));
+    display.print(F("Version: ")); 
     display.println(ver);
     if (EEPROM.read(0) == 1) { //If position 0 is 1 then there is a saved config
       display.println(F("Config Saved"));
     }
-    display.print(F("Air Temp: "));
-    display.println(airTemp); //Display temp from RTC
 
     display.setCursor(0, 44);
     display.print(F("RGBW Aquarium Controller by: Cory McGahee"));

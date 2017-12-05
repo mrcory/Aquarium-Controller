@@ -10,7 +10,7 @@ todo:
 */
 
 
-const String ver = "1.2"; //Program Version 
+const String ver = "1.13-dev"; //Program Version 
 
 #include <TimeLib.h>
 #include <TimeAlarms.h>
@@ -22,7 +22,6 @@ const String ver = "1.2"; //Program Version
 #include <Cmd.h> //Comment out when not enabling Serial commands
 #include <EEPROM.h>
 #include "config.h" //Config file
-#include "airtemp.h"
 
 //i2c device stuff
 Adafruit_SSD1306 display(4); //display_reset
@@ -35,7 +34,6 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
-float airTemp; //Hold temp from RTC
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
@@ -44,6 +42,8 @@ float airTemp; //Hold temp from RTC
 
 AlarmID_t LedOn; //Define LedOn alarm
 AlarmID_t LedOff; //Define LedOff alarm
+AlarmID_t LedOn2;
+AlarmID_t LedOff2;
 AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
 void setup() {
@@ -51,6 +51,7 @@ void setup() {
   Serial.begin(9600);
   timeNow = RTC.now(); //Hold time
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
+  setTime(16,13,0,11,25,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -73,9 +74,12 @@ void setup() {
 #endif
 
 //Create Alarms and Timers
-LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
-LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
-TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
+LedOn = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn); //Turn on led
+LedOff = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
+//Timer 2
+LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn);
+LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff);
+//TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
 Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
@@ -92,7 +96,9 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
   display.setTextColor(WHITE); //Set text color so it is visible
 
+  delay(250); //Give some time for the temp probe to start
   tempUpdate(); //Update temp
+  delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
 }
 
@@ -145,11 +151,21 @@ void timeUpdate() { //Update time and reset alarms
   }
   
   Alarm.free(LedOn); //Free alarm so we can recreate it with a new time (or the same)
-  LedOn =  LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
+  LedOn = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn); //Turn on led
   Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
-  LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
+  LedOff = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
   Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
+
+  if (timerMode == 2) { //If double timer mode is enabled
+    if (timeOn1 != timeOn2 || timeOff1 != timeOff2) { //If timers are not set for the same time
+      Alarm.free(LedOn2); //Free alarm so we can recreate it with a new time (or the same)
+      LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn); //Turn on led
+      Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
+      LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff); //Turn off led
+      Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
+   }
+  }
 }
 
 void DSTset() { //Set DST
