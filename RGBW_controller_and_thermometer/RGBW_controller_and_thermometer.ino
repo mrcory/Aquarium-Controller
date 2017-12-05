@@ -52,7 +52,7 @@ void setup() {
   Serial.begin(9600);
   timeNow = RTC.now(); //Hold time
   //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
-  setTime(19,28,0,12,4,17);
+  setTime(19,54,0,12,4,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));

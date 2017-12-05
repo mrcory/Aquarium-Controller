@@ -23,7 +23,7 @@ int timerMode = 2; //Set to 1 for only using time1(On/Off) Set to 2 for double t
 //Colors (0-255) Set the initial color.
              //Red Grn Blu Wht Pwr
 int ledC[5] = {255,255,200,255,125}; //Red, Green, Blue, White, Target Brightness (All vals 0-255)
-int ledC2[5] = {225,150,137,100,175}; //Same as above, but for timer2
+int ledC2[5] = {225,150,75,100,175}; //Same as above, but for timer2
 
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
