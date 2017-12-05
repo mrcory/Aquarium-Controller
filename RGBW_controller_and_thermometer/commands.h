@@ -10,16 +10,22 @@
 
 void ledPower() {
   int oldPage = screenPage; //Store old page location
-  if (ledState == 0) {ledState = 1;} else {ledState = 0;} //Chang between on and off
+  if (ledState == 0) {ledState = 1;} else {ledState = 0;} //Change between on and off
   ledUpdate = 1; //There has been a change, update analogWrite
   screenPage = 2; //Change page to "LED ON(OFF)"
-  displayUpdate(); Alarm.delay(1000); //Update and display for 1 second
+  displayUpdate(); Alarm.delay(500); //Update and display for 1 second
   screenPage = oldPage; //Restore old page location
 }
 
 //Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
 //Check if timer is enabled, if not make no change
-void timerOn() { if (ledState == 0 && enableTimer) {ledPower();ledState = 1;Serial.println("Turn On");}}
+void timerOn1() {
+  if (ledState == 0 && enableTimer) {
+    for (int i=0;i<=5;i++) {ledC[i] = ledHold[i];}
+    ledPower();ledState = 1;Serial.println("Turn On 1");
+  }
+}
+void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println("Turn On 2");}}
 void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
 
 

@@ -25,7 +25,7 @@ const String ver = "1.13-dev"; //Program Version
 
 //i2c device stuff
 Adafruit_SSD1306 display(4); //display_reset
-RTClib RTC; //Declare RTC
+RTClib RTC; //Declare "RTC" for calls
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
@@ -34,14 +34,15 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
+int ledHold[5];
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
 #include "screen.h" //Screen functions
 #include "commands.h" //Functions for the commands below
 
-AlarmID_t LedOn; //Define LedOn alarm
-AlarmID_t LedOff; //Define LedOff alarm
+AlarmID_t LedOn1; //Define LedOn alarm
+AlarmID_t LedOff1; //Define LedOff alarm
 AlarmID_t LedOn2;
 AlarmID_t LedOff2;
 AlarmID_t TimeUpdate; //Define TimeUpdate alarm
@@ -50,13 +51,15 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   timeNow = RTC.now(); //Hold time
-  setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
-  setTime(16,13,0,11,25,17);
+  //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
+  setTime(19,28,0,12,4,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
     configLoad();
   }
+
+  for (int i=0;i<=5;i++) {ledHold[i] = ledC[i];} //Save ledC for grabbing later
 
 #if defined (serialCommands) //If not defined then don't create commands
 
@@ -74,10 +77,10 @@ void setup() {
 #endif
 
 //Create Alarms and Timers
-LedOn = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn); //Turn on led
-LedOff = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
+LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
+LedOff1 = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
 //Timer 2
-LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn);
+LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn2);
 LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff);
 //TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
 Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
@@ -150,18 +153,18 @@ void timeUpdate() { //Update time and reset alarms
     setTime(timeNow.hour()+1,timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
   }
   
-  Alarm.free(LedOn); //Free alarm so we can recreate it with a new time (or the same)
-  LedOn = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn); //Turn on led
-  Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
-  LedOff = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
+  Alarm.free(LedOn1); //Free alarm so we can recreate it with a new time (or the same)
+  LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
+  Alarm.free(LedOff1); //Free alarm so we can recreate it with a new time (or the same)
+  LedOff1 = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
   Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
 
   if (timerMode == 2) { //If double timer mode is enabled
     if (timeOn1 != timeOn2 || timeOff1 != timeOff2) { //If timers are not set for the same time
       Alarm.free(LedOn2); //Free alarm so we can recreate it with a new time (or the same)
-      LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn); //Turn on led
-      Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
+      LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn2); //Turn on led
+      Alarm.free(LedOff2); //Free alarm so we can recreate it with a new time (or the same)
       LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff); //Turn off led
       Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
    }
