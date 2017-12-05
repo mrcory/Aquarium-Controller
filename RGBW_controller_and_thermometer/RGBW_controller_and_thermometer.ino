@@ -42,8 +42,6 @@ int configSaved;
 
 AlarmID_t LedOn; //Define LedOn alarm
 AlarmID_t LedOff; //Define LedOff alarm
-AlarmID_t LedOn2;
-AlarmID_t LedOff2;
 AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
 void setup() {
@@ -51,7 +49,6 @@ void setup() {
   Serial.begin(9600);
   timeNow = RTC.now(); //Hold time
   setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
-  setTime(16,13,0,11,25,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -76,10 +73,7 @@ void setup() {
 //Create Alarms and Timers
 LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
 LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
-//Timer 2
-LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn);
-LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff);
-//TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
+TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
 Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
@@ -151,21 +145,11 @@ void timeUpdate() { //Update time and reset alarms
   }
   
   Alarm.free(LedOn); //Free alarm so we can recreate it with a new time (or the same)
-  LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
+  LedOn =  LedOn = Alarm.alarmRepeat(timeOn[0],timeOn[1],timeOn[3],timerOn); //Turn on led
   Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
   LedOff = Alarm.alarmRepeat(timeOff[0],timeOff[1],timeOff[2],timerOff); //Turn off led
   Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
   TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
-
-  if (timerMode == 2) { //If double timer mode is enabled
-    if (timeOn1 != timeOn2 || timeOff1 != timeOff2) { //If timers are not set for the same time
-      Alarm.free(LedOn2); //Free alarm so we can recreate it with a new time (or the same)
-      LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn); //Turn on led
-      Alarm.free(LedOff); //Free alarm so we can recreate it with a new time (or the same)
-      LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff); //Turn off led
-      Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
-   }
-  }
 }
 
 void DSTset() { //Set DST

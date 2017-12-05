@@ -17,8 +17,6 @@ const int ledPinW = 8; //White channel
 const int tempPin = 10; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
-timerMode = 1; //Set to 1 for only using time1(On/Off) Set to 2 for double timer mode.
-
 
 //Colors (0-255) Set the initial color.
              //Red Grn Blu Wht Pwr
@@ -32,13 +30,9 @@ int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 
-//Light on/off
-  //Timer 1
-int timeOn1[3] = {8,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff1[3] = {15,0,0}; //Set time off (24 hour time) <hour, minute, second>
-  //Timer 2
-int timeOn2[3] = {8,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff2[3] = {15,0,0}; //Set time off (24 hour time) <hour, minute, second>
+//Light on/off times for display only
+int timeOn[3] = {8,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
+int timeOff[3] = {15,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
 //Comment out to disable Serial commands (Save a little space) Good for non-Mega boards
 //Also Comment out "#include <Cmd.h>" in the main .ino
