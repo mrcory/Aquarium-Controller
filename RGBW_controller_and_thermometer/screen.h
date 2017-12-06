@@ -73,12 +73,12 @@ void displayUpdate() { //Update info display
       display.setCursor(97,8); //Set cursor position
       display.print(tempLo,1); //Display tempLo with 1 decimal place
 
-      if (tempWarn == F("Hi") || tempWarn == F("Lo")) {
+      if (tempWarn == true) {
         display.setCursor(80,32);
-        display.print(F("!Temp "));
-        display.print(tempWarn);
-      }
-    }
+        display.print(F("Temp WARN"));
+        //ADD EXTRA TEMPERATURE WARNING FUNCTIONS HERE
+      }}
+    
 
     //Display Time on screen
     display.setTextSize(1);

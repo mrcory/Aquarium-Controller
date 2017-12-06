@@ -197,7 +197,7 @@ void timeUpdate() { //Update time and reset alarms
       Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
    } else { //If in single timer mode just free them
     Alarm.free(LedOn2);
-    Alarm.free(LedOff2);
+    Alarm.free(LedOff2);}
   }
 }
 
