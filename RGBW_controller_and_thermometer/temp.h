@@ -9,7 +9,7 @@
 float temp;
 float tempHi; //Max temp recorded
 float tempLo; //Lowest temp recorded
-int tNeg = 0; //0 is positive 1 means negative temp
+boolean tNeg = false; //0 is positive 1 means negative temp
 boolean tempWarn = false;
 
 OneWire oneWire(tempPin); // Create OneWire instance for temp sensor
@@ -25,8 +25,6 @@ void tempUpdate() { //Update temp and display
     temp = sensors.getTempCByIndex(0);
   }//Set temp from first sensor
 
-  temp = temp + tempOffset; //Apply temperature offset
-
   //Figure low and high
   if (tempHi <= temp) {
     tempHi = temp;
@@ -36,10 +34,10 @@ void tempUpdate() { //Update temp and display
     }
 
   if (temp < 0) {
-    tNeg = 1;  //If negative temp make it positive so it will fit on the display.
+    tNeg = true;  //If negative temp make it positive so it will fit on the display.
     temp = temp * -1;
   } else {
-    tNeg = 0;
+    tNeg = false;
   }
 
   if (tempHi >= tempWarnHi || tempLo <= tempWarnLo) {

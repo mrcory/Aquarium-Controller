@@ -54,6 +54,7 @@ int ledHold[5]; //Holds timer1 led color value while timer 2 is in use
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
+#include "screencommnads.h"
 #include "screen.h" //Screen functions
 #include "commands.h" //Functions for the commands below
 
@@ -86,7 +87,6 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
   setTime(19,54,0,12,4,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config

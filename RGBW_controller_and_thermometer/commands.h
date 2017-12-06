@@ -27,17 +27,17 @@ void ledPower() {
 void timerOn1() {
   if (ledState == 0 && enableTimer) {
     for (int i=0;i<=5;i++) {ledC[i] = ledHold[i];}
-    ledPower();ledState = 1; Serial.println("Turn On 1");
+    ledPower();ledState = 1; Serial.println(F("Turn On 1"));
   }
 }
 
-void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println("Turn On 2");}}
-void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
+void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println(F("Turn On 2"));}}
+void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println(F("Turn Off"));}}
 
 
 void ledPowerNow() { //Instant on/off
   if (ledState == 1) {ledP = 0;} //Changing to off, tun power to 0
-  if (ledState == 0) {ledP = 255;} //Changint to on, turn power to 255
+  if (ledState == 0) {ledP = 255;} //Changing to on, turn power to 255
   ledPower(); //Runs regular ledPower() command (We are just skipping the fade)
 }
 
@@ -75,8 +75,7 @@ void configSave() { //Save config
  i += sizeof(fadeTime);
  EEPROM.put(i,tempUnit);
  i += sizeof(tempUnit);
- Serial.print("Config Saved");
- Serial.print(" Size: ");
+ Serial.print(F("Config Saved Size: "));
  Serial.println(i);
 }
 
@@ -100,8 +99,7 @@ void configLoad() { //Load config
  i += sizeof(fadeTime);
  EEPROM.get(i,tempUnit);
  i += sizeof(tempUnit);
- Serial.print(F("Config Loaded"));
- Serial.print(F(" Size: "));
+ Serial.print(F("Config Loaded Size: "));
  Serial.println(i);
 }
 

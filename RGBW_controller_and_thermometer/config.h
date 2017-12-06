@@ -3,11 +3,10 @@
 */
 
 //Temperature Settings
-boolean tempEnabled = true; //Are you using a temp probe?
+//boolean tempEnabled = true; //Are you using a temp probe?
 char tempUnit = 'F'; //What unit do you want? (C or F)
 int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
 int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
-const int tempOffset = 0; //Just for testing
 
 //Pin Connections 
 const int ledPinR = 2; //Red 
@@ -33,9 +32,9 @@ int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 
 //Time Keeping. Only one can be true
-#define ds3231 false
+#define ds3231 true
 #define ds1307 false
-#define gpsRtc true
+#define gpsRtc false
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = 0; //Timezone offset from UTC
@@ -50,3 +49,10 @@ int timeOff2[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
 //Enable or disable serial commands
 #define serialCommands true
+
+//Add aditional functions to be run when temperature warning has been triggered.
+//Maybe a light or a buzzer or a siren
+void additionalWarn() {
+  //Fill in here
+}
+
