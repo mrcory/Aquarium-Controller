@@ -5,6 +5,11 @@
  *  ledpower | Turn leds on and off
  *  ledpowernow | Turn leds on and off instantly
  *  screen <val> | Change screen display
+ *  dst | Enable/Disable DST offset
+ *  save | Save config
+ *  load | Load config
+ *  configclear | Clear config
+ *  temprst | Reset temperature range
  */
 
 
@@ -22,7 +27,7 @@ void ledPower() {
 void timerOn1() {
   if (ledState == 0 && enableTimer) {
     for (int i=0;i<=5;i++) {ledC[i] = ledHold[i];}
-    ledPower();ledState = 1;Serial.println("Turn On 1");
+    ledPower();ledState = 1; Serial.println("Turn On 1");
   }
 }
 void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println("Turn On 2");}}

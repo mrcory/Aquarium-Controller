@@ -10,7 +10,7 @@ todo:
 */
 
 
-const String ver = "1.13-dev"; //Program Version 
+const String ver = "1.2-dev"; //Program Version 
 
 #include <Time.h>
 #include <TimeLib.h>
@@ -25,23 +25,19 @@ const String ver = "1.13-dev"; //Program Version
 
 
 //Include library for time keeping.
-#if ds3231 || ds1307
+#if ds3231 || ds1307 //If using one of these RTCs include lib
   #include <RTClib.h>
 #endif
 
-#if ds1307
+#if ds1307 //Declar "RTC" for either RTC
   RTC_DS1307 RTC;
 #elif ds3231
   RTC_DS3231 RTC;
 #endif
 
-#if gpsRtc
+#if gpsRtc //If using a GPS device include lib
   #include <TinyGPS++.h>
 #endif
-
-//Uncomment enabled RTC device
-//#include <DS3231.h>
-//#include <TinyGPS++.h>
 
 //i2c device stuff
 Adafruit_SSD1306 display(4); //display_reset
@@ -52,7 +48,7 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
-int ledHold[5];
+int ledHold[5]; //Holds timer1 led color value while timer 2 is in use
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
@@ -65,7 +61,7 @@ AlarmID_t LedOn2;
 AlarmID_t LedOff2;
 AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
-#if ds3231 || ds1307 //If ds3231 is being used declare it for RTC 
+#if ds3231 || ds1307 //If ds3231 or ds1307 being used, create proper timeUpdate function
   DateTime timeNow;
     void updateTimeNow() {
       timeNow = RTC.now();
@@ -183,7 +179,7 @@ void loop() {
 }
 
 void timeUpdate() { //Update time and reset alarms
-  updateTimeNow();
+  updateTimeNow(); //Call time update function created from selected RTC
   
   Alarm.free(LedOn1); //Free alarm so we can recreate it with a new time (or the same)
   LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
@@ -199,7 +195,9 @@ void timeUpdate() { //Update time and reset alarms
       Alarm.free(LedOff2); //Free alarm so we can recreate it with a new time (or the same)
       LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff); //Turn off led
       Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
-   }
+   } else { //If in single timer mode just free them
+    Alarm.free(LedOn2);
+    Alarm.free(LedOff2);
   }
 }
 
