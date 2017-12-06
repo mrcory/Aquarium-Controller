@@ -19,10 +19,12 @@ const String ver = "1.2-dev"; //Program Version
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <Cmd.h> //Comment out when not enabling Serial commands
 #include <EEPROM.h>
 #include "config.h" //Config file
 
+#if serialCommands
+  #include <Cmd.h> //Comment out when not enabling Serial commands
+#endif
 
 //Include library for time keeping.
 #if ds3231 || ds1307 //If using one of these RTCs include lib
@@ -94,7 +96,7 @@ void setup() {
 
   for (int i=0;i<=5;i++) {ledHold[i] = ledC[i];} //Save ledC for grabbing later
 
-#if defined (serialCommands) //If not defined then don't create commands
+#if serialCommands //If not defined then don't create commands
 
   cmdInit(&Serial);
   //Add Commands
@@ -143,7 +145,7 @@ void loop() {
   displayUpdate(); //Draw the screen for the display
   Alarm.delay(500);
   
-  #if defined (serialCommands)
+  #if serialCommands
     cmdPoll(); //Poll for commands via Serial
   #endif
 

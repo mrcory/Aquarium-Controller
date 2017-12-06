@@ -48,6 +48,5 @@ int timeOff1[3] = {12,0,0}; //Set time off (24 hour time) <hour, minute, second>
 int timeOn2[3] = {17,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
 int timeOff2[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
-//Comment out to disable Serial commands (Save a little space) Good for non-Mega boards
-//Also Comment out "#include <Cmd.h>" in the main .ino
-#define serialCommands
+//Enable or disable serial commands
+#define serialCommands false

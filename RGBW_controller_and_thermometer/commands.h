@@ -30,6 +30,7 @@ void timerOn1() {
     ledPower();ledState = 1; Serial.println("Turn On 1");
   }
 }
+
 void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println("Turn On 2");}}
 void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println("Turn Off");}}
 
@@ -40,7 +41,7 @@ void ledPowerNow() { //Instant on/off
   ledPower(); //Runs regular ledPower() command (We are just skipping the fade)
 }
 
-#ifdef serialCommands
+#if serialCommands
   void screenChange(int arg_cnt, char **args) {
     screenPage = cmdStr2Num(args[1],10);
   }
