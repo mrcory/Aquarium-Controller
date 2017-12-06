@@ -23,8 +23,8 @@ Features:
 
   Other  
   
-  Controllable via serial monitor  
-  Supports DS1307, DS3231 or TinuGPS++ for time keeping.
+    Controllable via serial monitor  
+    Supports DS1307, DS3231 or TinuGPS++ for time keeping.
 
 Hardware Used
 
