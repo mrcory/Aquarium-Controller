@@ -6,46 +6,36 @@ I am currently running this on a Mega 2560.
 
 Fritzing picture is for my current circut design.
 
-Libraries Used:
-	#include <TimeLib.h>
-	#include <TimeAlarms.h>
-	#include <Wire.h>
-	#include <DS3231.h>
-	#include <SPI.h>
-	#include <Adafruit_GFX.h>
-	#include <Adafruit_SSD1306.h>
-	#include <Cmd.h>
+
 
 Features:
   
-  LED Controller
-    
-    Color Setting
-    
-    On/off timer
-    
+  LED Controller  
+  
+    Color Setting  
+    On/Off Timer (Single timer or split timers)  
     Fade timer (With RTC support)
     
   Display
     
-    Temperature display
-	
-	Show max and minimum temperature recorded
+    Temperature display  
+    Show max and minimum temperature recorded
 
-  Other
-	
-	Controllable via serial monitor
+  Other  
+  
+  Controllable via serial monitor  
+  Supports DS1307, DS3231 or TinuGPS++ for time keeping.
 
 Hardware Used
 
-	x1 Arduino Mega 2560
-	x4 IRLB8743PBF
-	x4 10Kohm Resistors
-	x1 DS3231 RTC
-	x1 DS18B20 (Waterproof)
-	x1 I2C OLED SSD1306 (128x64)
-	x1 Whatever Case (I will be 3d printing one after internal hardware is final.)
-	(More to be listed)
+	x1 Arduino Mega 2560  
+	x4 IRLB8743PBF  
+	x4 10Kohm Resistors  
+	x1 DS3231 RTC  
+	x1 DS18B20 (Waterproof)  
+	x1 I2C OLED SSD1306 (128x64)  
+	x1 Whatever Case (I will be 3d printing one after internal hardware is final.)  
+	(More to be listed)  
 	
 
 
