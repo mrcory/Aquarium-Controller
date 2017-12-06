@@ -12,10 +12,10 @@ todo:
 
 const String ver = "1.13-dev"; //Program Version 
 
+#include <Time.h>
 #include <TimeLib.h>
 #include <TimeAlarms.h>
 #include <Wire.h>
-#include <DS3231.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -23,13 +23,31 @@ const String ver = "1.13-dev"; //Program Version
 #include <EEPROM.h>
 #include "config.h" //Config file
 
+
+//Include library for time keeping.
+#if ds3231 || ds1307
+  #include <RTClib.h>
+#endif
+
+#if ds1307
+  RTC_DS1307 RTC;
+#elif ds3231
+  RTC_DS3231 RTC;
+#endif
+
+#if gpsRtc
+  #include <TinyGPS++.h>
+#endif
+
+//Uncomment enabled RTC device
+//#include <DS3231.h>
+//#include <TinyGPS++.h>
+
 //i2c device stuff
 Adafruit_SSD1306 display(4); //display_reset
-RTClib RTC; //Declare "RTC" for calls
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
-DateTime timeNow; //Hold time
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
@@ -47,10 +65,29 @@ AlarmID_t LedOn2;
 AlarmID_t LedOff2;
 AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
+#if ds3231 || ds1307 //If ds3231 is being used declare it for RTC 
+  DateTime timeNow;
+    void updateTimeNow() {
+      timeNow = RTC.now();
+      setTime(timeNow.second(),timeNow.minute(),timeNow.hour(),timeNow.month(),timeNow.day(),timeNow.year());
+      if (DST) {adjustTime(3600);} //Adjust time for DST
+    }
+    #elif gpsRtc
+  TinyGPSPlus GPS; //If using GPS for time decare as RTC
+    void updateTimeNow() {
+      setTime(GPS.time.second(),GPS.time.minute(),GPS.time.hour(),GPS.date.month(),GPS.date.day(),GPS.date.year());
+      adjustTime(utcOffset * 3600); //Adjust time for UTC setting
+      if (DST) {adjustTime(3600);} //Adjust time for DST
+    }
+#else
+  #error "No RTC defined. Check config.h"
+    }
+#endif
+
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  timeNow = RTC.now(); //Hold time
+  updateTimeNow(); //Update time via selected time keeper
   //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year()); //Set time
   setTime(19,54,0,12,4,17);
 
@@ -146,12 +183,7 @@ void loop() {
 }
 
 void timeUpdate() { //Update time and reset alarms
-  timeNow = RTC.now(); //Grab time from RTC
-  if (!DST) { //If DST false set time
-    setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
-  } else { //If DST true set time hour+1
-    setTime(timeNow.hour()+1,timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
-  }
+  updateTimeNow();
   
   Alarm.free(LedOn1); //Free alarm so we can recreate it with a new time (or the same)
   LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
@@ -179,7 +211,7 @@ void DSTset() { //Set DST
     }
   else { //If DST current disabled the enable it
     DST = true;
-    Serial.println(F("DST Enabled")); //Confir via Serial
+    Serial.println(F("DST Enabled")); //Confirm via Serial
     }
   timeUpdate(); //Update time and recreate alarms
 }
