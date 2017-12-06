@@ -49,4 +49,4 @@ int timeOn2[3] = {17,0,0}; //Set time to turn on (24 hour time) <hour, minute, s
 int timeOff2[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
 //Enable or disable serial commands
-#define serialCommands false
+#define serialCommands true
