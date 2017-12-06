@@ -12,7 +12,7 @@ Features:
   
   LED Controller  
   
-    Color Setting  
+    Color Setting (Individual colors for 1st and 2nd timer set)  
     On/Off Timer (Single timer or split timers)  
     Fade timer (With RTC support)
     
