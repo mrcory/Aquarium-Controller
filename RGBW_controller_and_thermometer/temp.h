@@ -40,10 +40,11 @@ void tempUpdate() { //Update temp and display
     tNeg = false;
   }
 
+#if tempWarnEnable
   if (tempHi >= tempWarnHi || tempLo <= tempWarnLo) {
     tempWarn = true;
   }
-
+#endif
 }
 
   void tempRngRst() {

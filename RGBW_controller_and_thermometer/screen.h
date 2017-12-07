@@ -9,12 +9,13 @@ void displayUpdate() { //Update info display
       showTime(80,24,1);
       ledStatus(0,42); //Show LED status bars
 
+    #if tempWarnEnable
       if (tempWarn == true) {
         display.setCursor(80,32);
         display.print(F("Temp WARN"));
         additionalWarn(); //Run additional temp warning commands
       }
-
+    #endif
 
 if (enableTimer) {
     //Display on and off times

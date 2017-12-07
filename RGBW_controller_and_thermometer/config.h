@@ -37,7 +37,7 @@ boolean enableTimer = true; //Disable or enable timer
 #define gpsRtc true
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
-const int utcOffset = 0; //Timezone offset from UTC
+const int utcOffset = -5; //Timezone offset from UTC
 
 //Light on/off
   //Timer 1
@@ -50,9 +50,14 @@ int timeOff2[3] = {20,0,0}; //Set time off (24 hour time) <hour, minute, second>
 //Enable or disable serial commands
 #define serialCommands true
 
+
+//Diable or Enable Temperature warning
+#define tempWarnEnable false
+
+#if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
 //Maybe a light or a buzzer or a siren
 void additionalWarn() {
   //Fill in here
 }
-
+#endif
