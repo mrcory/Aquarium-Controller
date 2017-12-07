@@ -51,6 +51,7 @@ if (screenPage == 2) {
     }
   ledStatus(0,42); //Show LED status bars
 }
+
   display.display(); //Put the stuff on the display
 }
 

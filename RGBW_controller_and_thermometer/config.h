@@ -32,9 +32,9 @@ int fadeTime = 30; //Fade time in minutes
 boolean enableTimer = true; //Disable or enable timer
 
 //Time Keeping. Only one can be true
-#define ds3231 true
+#define ds3231 false
 #define ds1307 false
-#define gpsRtc false
+#define gpsRtc true
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = 0; //Timezone offset from UTC

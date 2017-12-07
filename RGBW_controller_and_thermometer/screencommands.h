@@ -2,6 +2,39 @@
 
 #define colon ':' //Saving a little space
 
+//Create array to draw an arrow from
+const int UP [5] [5] {
+  {0,0,1,0,0},
+  {0,1,1,1,0},
+  {1,1,1,1,1},
+  {0,0,1,0,0},
+  {0,0,1,0,0}
+};
+
+const int DOWN [5] [5] {
+  {0,0,1,0,0},
+  {0,0,1,0,0},
+  {1,1,1,1,1},
+  {0,1,1,1,0},
+  {0,0,1,0,0}
+};
+
+const int RIGHT [5] [5] {
+  {0,0,1,0,0},
+  {0,0,1,1,0},
+  {1,1,1,1,1},
+  {0,0,1,1,0},
+  {0,0,1,0,0}
+};
+
+const int LEFT [5] [5] {
+  {0,0,1,0,0},
+  {0,1,1,0,0},
+  {1,1,1,1,1},
+  {0,1,1,0,0},
+  {0,0,1,0,0}
+};
+
 void showTime(int _posX,int _posY, int _size) {
     display.setTextSize(1);
     display.setCursor(_posX,_posY); //80,24
@@ -38,10 +71,20 @@ void showTemp(int _posX,int _posY) { //0,0
       }
 }
 
-void drawArrow(int _X,int _Y) {
-  display.drawLine(_X,_Y,_X+10,_Y,WHITE); //Arrow Body
-  display.drawLine(_X+10,_Y,_X+5,_Y-3,WHITE); //Arrow Point 1
-  display.drawLine(_X+10,_Y,_X+5,_Y+3,WHITE); //Arrow Point 2
+void drawArrowH(int _X,int _Y) {
+  display.drawLine(_X,_Y,_X+8,_Y,WHITE); //Arrow Body
+  display.drawLine(_X+10,_Y,_X+4,_Y-3,WHITE); //Arrow Point 1
+  display.drawLine(_X+10,_Y,_X+4,_Y+3,WHITE); //Arrow Point 2
+}
+
+void drawArrow(int _X,int _Y,int _direction[5][5]) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (int y=0;y<=5;y++) {
+    for (int x=0;x<=5;x++) {
+      if (_direction[x][y] == 1) {
+        display.drawPixel(_X+x,_Y+y,WHITE);
+      }
+    }
+  }
 }
 
 

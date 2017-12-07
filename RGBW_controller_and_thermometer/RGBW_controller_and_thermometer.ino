@@ -54,7 +54,7 @@ int ledHold[5]; //Holds timer1 led color value while timer 2 is in use
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
-#include "screencommnads.h"
+#include "screencommands.h"
 #include "screen.h" //Screen functions
 #include "commands.h" //Functions for the commands below
 
