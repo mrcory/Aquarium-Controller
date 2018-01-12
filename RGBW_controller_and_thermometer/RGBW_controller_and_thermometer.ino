@@ -9,7 +9,6 @@ todo:
    Add button controls
 */
 
-
 const String ver = "1.2.1-dev"; //Program Version 
 
 #include <TimeLib.h>
