@@ -2,6 +2,7 @@ void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
   
+int oldPage;
 
   if (screenPage == 1) { //Screen 1 display
       showTemp(0,0);
@@ -51,6 +52,15 @@ if (screenPage == 2) {
       display.print(F("LED OFF"));
     }
   ledStatus(0,42); //Show LED status bars
+}
+
+if (screenPage == 3) { //Adjustment screen for colors
+  if (oldPage != screenPage) {oldPage = 3;}
+  display.setCursor(0,0);
+  display.print(F("Color Adjustment"));
+  ledStatus(0,21); //Draw status bars mid-screen
+  if (arrowL < 4) {drawArrowDOWN(arrow[0][arrowL],arrow[1][arrowL]-5);}
+  if (arrowL > 3) {drawArrowUP(arrow[0][arrowL],arrow[1][arrowL]-5);}
 }
 
   display.display(); //Put the stuff on the display

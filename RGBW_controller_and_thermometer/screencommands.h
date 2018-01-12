@@ -2,38 +2,61 @@
 
 #define colon ':' //Saving a little space
 
+
 //Create array to draw an arrow from
-const int UP [5] [5] {
-  {0,0,1,0,0},
-  {0,1,1,1,0},
-  {1,1,1,1,1},
-  {0,0,1,0,0},
-  {0,0,1,0,0}
-};
-
-const int DOWN [5] [5] {
-  {0,0,1,0,0},
-  {0,0,1,0,0},
-  {1,1,1,1,1},
-  {0,1,1,1,0},
-  {0,0,1,0,0}
-};
-
+#if enableMenu
 const int RIGHT [5] [5] {
   {0,0,1,0,0},
-  {0,0,1,1,0},
+  {0,1,1,1,0},
   {1,1,1,1,1},
-  {0,0,1,1,0},
+  {0,0,1,0,0},
   {0,0,1,0,0}
 };
 
 const int LEFT [5] [5] {
   {0,0,1,0,0},
+  {0,0,1,0,0},
+  {1,1,1,1,1},
+  {0,1,1,1,0},
+  {0,0,1,0,0}
+};
+
+const int DOWN [5] [5] {
+  {0,0,1,0,0},
+  {0,0,1,1,0},
+  {1,1,1,1,1},
+  {0,0,1,1,0},
+  {0,0,1,0,0}
+};
+
+const int UP [5] [5] {
+  {0,0,1,0,0},
   {0,1,1,0,0},
   {1,1,1,1,1},
   {0,1,1,0,0},
   {0,0,1,0,0}
 };
+
+void drawArrowUP(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (int y=0;y<5;y++) {
+    for (int x=0;x<5;x++) {
+      if (UP[x][y] == 1) {
+        display.drawPixel(_X+x,_Y+y,WHITE);
+      }
+    }
+  }
+}
+
+void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (int y=0;y<5;y++) {
+    for (int x=0;x<5;x++) {
+      if (DOWN[x][y] == 1) {
+        display.drawPixel(_X+x,_Y+y,WHITE);
+      }
+    }
+  }
+}
+#endif
 
 void showTime(int _posX,int _posY, int _size) {
     display.setTextSize(1);
@@ -71,24 +94,8 @@ void showTemp(int _posX,int _posY) { //0,0
       }
 }
 
-void drawArrowH(int _X,int _Y) {
-  display.drawLine(_X,_Y,_X+8,_Y,WHITE); //Arrow Body
-  display.drawLine(_X+10,_Y,_X+4,_Y-3,WHITE); //Arrow Point 1
-  display.drawLine(_X+10,_Y,_X+4,_Y+3,WHITE); //Arrow Point 2
-}
 
-void drawArrow(int _X,int _Y,int _direction[5][5]) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<=5;y++) {
-    for (int x=0;x<=5;x++) {
-      if (_direction[x][y] == 1) {
-        display.drawPixel(_X+x,_Y+y,WHITE);
-      }
-    }
-  }
-}
-
-
-void drawHBar(char locX, char locY, char height, char width, char percent) { //Draw a progrss bar
+void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
   int aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, WHITE); //Draw lower outline of progress bar
@@ -101,7 +108,7 @@ void drawHBar(char locX, char locY, char height, char width, char percent) { //D
 
 }
 
-void ledStatus(char _X, char _Y) { //Show LED value bars <location X, location Y>
+void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
   display.setTextSize(1);
   display.drawChar(_X, _Y, 'R', WHITE, BLACK, 1); //Bar label
   display.setCursor(_X+8, _Y); display.print(ledC[0]); //Display value digits

@@ -20,6 +20,7 @@ const String ver = "1.2-dev"; //Program Version
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <EEPROM.h>
+#include <AnalogButtons.h>
 #include "config.h" //Config file
 
 #if serialCommands
@@ -51,12 +52,21 @@ float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
 int ledHold[5]; //Holds timer1 led color value while timer 2 is in use
+int arrowL = 0;
+bool oldState = false;
+const int arrow [2] [6] {
+  {0,30,60,90,0,65},       //Arrow X locations
+  {18,18,18,18,51,51}         //Arrow Y locations
+};
 
 //Include other files
 #include "temp.h" //Tempurature functions and variables
 #include "screencommands.h"
 #include "screen.h" //Screen functions
 #include "commands.h" //Functions for the commands below
+#include "lightmode.h" //New light controls
+
+
 
 AlarmID_t LedOn1; //Define LedOn alarm
 AlarmID_t LedOff1; //Define LedOff alarm
@@ -87,7 +97,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(19,54,0,12,4,17);
+  setTime(17,02,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -109,6 +119,8 @@ void setup() {
   cmdAdd("save",configSave);
   cmdAdd("load",configLoad);
   cmdAdd("configclear",configClear);
+  cmdAdd("left",goLeft);
+  cmdAdd("right",goRight);
 #endif
 
 //Create Alarms and Timers
@@ -138,12 +150,19 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
   tempUpdate(); //Update temp
   delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
+  controlSetup(); //Convert times and other setup stuff.
 }
+
 
 //Loop runs once per second
 void loop() {
+  //if (ledCheck() == true) {Serial.println("true");}
+  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1();}
+  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
+
   displayUpdate(); //Draw the screen for the display
-  Alarm.delay(500);
+ // Alarm.delay(500);
+ delay(500);
   
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial

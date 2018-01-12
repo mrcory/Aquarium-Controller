@@ -1,7 +1,4 @@
 //Tempurature Functions 
-//Assign ONE_WIRE_BUS
-
-
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
