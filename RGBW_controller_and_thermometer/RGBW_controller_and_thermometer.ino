@@ -10,11 +10,9 @@ todo:
 */
 
 
-const String ver = "1.2-dev"; //Program Version 
+const String ver = "1.2.1-dev"; //Program Version 
 
-#include <Time.h>
 #include <TimeLib.h>
-#include <TimeAlarms.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
@@ -51,7 +49,8 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
-int ledHold[5]; //Holds timer1 led color value while timer 2 is in use
+int ledC[5] = {255,255,255,255,255};
+
 int arrowL = 0;
 bool oldState = false;
 const int arrow [2] [6] {
@@ -66,13 +65,6 @@ const int arrow [2] [6] {
 #include "commands.h" //Functions for the commands below
 #include "lightmode.h" //New light controls
 
-
-
-AlarmID_t LedOn1; //Define LedOn alarm
-AlarmID_t LedOff1; //Define LedOff alarm
-AlarmID_t LedOn2;
-AlarmID_t LedOff2;
-AlarmID_t TimeUpdate; //Define TimeUpdate alarm
 
 #if ds3231 || ds1307 //If ds3231 or ds1307 being used, create proper timeUpdate function
   DateTime timeNow;
@@ -104,7 +96,6 @@ void setup() {
     configLoad();
   }
 
-  for (int i=0;i<=5;i++) {ledHold[i] = ledC[i];} //Save ledC for grabbing later
 
 #if serialCommands //If not defined then don't create commands
 
@@ -123,14 +114,6 @@ void setup() {
   cmdAdd("right",goRight);
 #endif
 
-//Create Alarms and Timers
-LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
-LedOff1 = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
-//Timer 2
-LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn2);
-LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff);
-//TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate); //Update time from the RTC and reset alarms
-Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum
@@ -157,12 +140,9 @@ Alarm.timerRepeat(tempTime, tempUpdate); //Call temp update
 //Loop runs once per second
 void loop() {
   //if (ledCheck() == true) {Serial.println("true");}
-  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1();}
-  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
-
+  timerCheck();
   displayUpdate(); //Draw the screen for the display
- // Alarm.delay(500);
- delay(500);
+  delay(500);
   
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -201,25 +181,6 @@ void loop() {
 
 void timeUpdate() { //Update time and reset alarms
   updateTimeNow(); //Call time update function created from selected RTC
-  
-  Alarm.free(LedOn1); //Free alarm so we can recreate it with a new time (or the same)
-  LedOn1 = Alarm.alarmRepeat(timeOn1[0],timeOn1[1],timeOn1[3],timerOn1); //Turn on led
-  Alarm.free(LedOff1); //Free alarm so we can recreate it with a new time (or the same)
-  LedOff1 = Alarm.alarmRepeat(timeOff1[0],timeOff1[1],timeOff1[2],timerOff); //Turn off led
-  Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
-  TimeUpdate = Alarm.alarmRepeat(0,0,0,timeUpdate);
-
-  if (timerMode == 2) { //If double timer mode is enabled
-    if (timeOn1 != timeOn2 || timeOff1 != timeOff2) { //If timers are not set for the same time
-      Alarm.free(LedOn2); //Free alarm so we can recreate it with a new time (or the same)
-      LedOn2 = Alarm.alarmRepeat(timeOn2[0],timeOn2[1],timeOn2[3],timerOn2); //Turn on led
-      Alarm.free(LedOff2); //Free alarm so we can recreate it with a new time (or the same)
-      LedOff2 = Alarm.alarmRepeat(timeOff2[0],timeOff2[1],timeOff2[2],timerOff); //Turn off led
-      Alarm.free(TimeUpdate); //Free alarm so we can recreate it with a new time (or the same)
-   } else { //If in single timer mode just free them
-    Alarm.free(LedOn2);
-    Alarm.free(LedOff2);}
-  }
 }
 
 void DSTset() { //Set DST

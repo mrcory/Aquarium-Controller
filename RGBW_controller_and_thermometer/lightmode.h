@@ -42,3 +42,8 @@ void colorChange1() {
     
 }
 
+void timerCheck() {
+  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1();}
+  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
+}
+

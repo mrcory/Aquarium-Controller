@@ -16,21 +16,6 @@ const int ledPinW = 8; //White channel
 const int tempPin = 10; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
-int timerMode = 2; //Set to 1 for only using time1(On/Off) Set to 2 for double timer mode.
-
-
-//Colors (0-255) Set the initial color.
-             //Red Grn Blu Wht Pwr
-int ledC[5] = {255,255,200,255,125}; //Red, Green, Blue, White, Target Brightness (All vals 0-255)
-int ledC2[5] = {255,125,19 ,50,175}; //Same as above, but for timer2
-
-int colorSelect = 0;
-
-int ledCo [2] [5] {
-  {255,255,200,255,125},
-  {255,125,19 ,50 ,175}
-};
-
 //Various Configs
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 const int ledPMin = 0; //Minimum led power output 0-255
@@ -46,13 +31,6 @@ boolean enableTimer = true; //Disable or enable timer
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = -5; //Timezone offset from UTC
 
-//Light on/off
-  //Timer 1
-int timeOn1[3] = {10,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff1[3] = {16,0,0}; //Set time off (24 hour time) <hour, minute, second>
-  //Timer 2
-int timeOn2[3] = {17,0,0}; //Set time to turn on (24 hour time) <hour, minute, second>
-int timeOff2[3] = {19,0,0}; //Set time off (24 hour time) <hour, minute, second>
 
 //Enable or disable serial commands
 #define serialCommands true
@@ -74,15 +52,22 @@ void additionalWarn() {
 
 const int times = 2; //How many timers?
 
-int ledOnTimes [times] [2]{  
+int ledOnTimes [times] [2]{ //Times to turn on (24 hour)
   {9,30},
   {13,00}
 };
-int ledOffTimes [times] [2]{
+int ledOffTimes [times] [2]{ //Times to turn off (24 hour)
   {12,00},
   {19,00}
 };
 
-int colorChoice [times] {0,1};
+//Selects the color for each timer
+int colorChoice [times] {0,1}; //Which color to use with each timer
 
-
+//Colors (0-255) Set the initial color.
+//Red Grn Blu Wht Pwr
+//colorChoice options
+int ledCo [2] [5] {
+  {255,255,200,255,125},
+  {255,125,19 ,50 ,175}
+};

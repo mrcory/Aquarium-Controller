@@ -22,18 +22,6 @@ void ledPower() {
   screenPage = oldPage; //Restore old page location
 }
 
-//Timer led finctions | Set state correctly to run ledPower() [If state has been flipped for some reason]
-//Check if timer is enabled, if not make no change
-void timerOn1() {
-  if (ledState == 0 && enableTimer) {
-    for (int i=0;i<=5;i++) {ledC[i] = ledHold[i];}
-    ledPower();ledState = 1; Serial.println(F("Turn On 1"));
-  }
-}
-
-void timerOn2() { if (ledState == 0 && enableTimer) {for (int i=0;i<=5;i++) {ledC[i] = ledC2[i];} ledPower();ledState = 1;Serial.println(F("Turn On 2"));}}
-void timerOff() { if (ledState == 1 && enableTimer) {ledPower();ledState = 0;Serial.println(F("Turn Off"));}}
-
 
 void ledPowerNow() { //Instant on/off
   if (ledState == 1) {ledP = 0;} //Changing to off, tun power to 0
@@ -59,14 +47,6 @@ void configSave() { //Save config
  int i=5;
  EEPROM.put(i,ledC);
  i += sizeof(ledC);
- EEPROM.put(i,timeOn1);
- i += sizeof(timeOn1);
- EEPROM.put(i,timeOff1);
- i += sizeof(timeOff1);
- EEPROM.put(i,timeOn2);
- i += sizeof(timeOn2);
- EEPROM.put(i,timeOff2);
- i += sizeof(timeOff2);
  EEPROM.put(i,DST);
  i += sizeof(DST);
  EEPROM.put(i,enableTimer);
@@ -83,14 +63,6 @@ void configLoad() { //Load config
  int i = 5;
  EEPROM.get(i,ledC);
  i += sizeof(ledC);
- EEPROM.get(i,timeOn1);
- i += sizeof(timeOn1);
- EEPROM.get(i,timeOff1);
- i += sizeof(timeOff1);
- EEPROM.get(i,timeOn2);
- i += sizeof(timeOn2);
- EEPROM.get(i,timeOff2);
- i += sizeof(timeOff2);
  EEPROM.get(i,DST);
  i += sizeof(DST);
  EEPROM.get(i,enableTimer);
