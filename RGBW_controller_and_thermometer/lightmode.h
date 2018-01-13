@@ -47,3 +47,16 @@ void timerCheck() {
   if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
 }
 
+void ledAdjust() { //New led controller
+  
+    if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
+    ledP = ledP + fadeStep;
+    ledUpdate = 1;
+  }
+
+  if (ledState == 0 && ledPMin < ledP) { //Adjust power to target -
+    ledP = ledP - fadeStep;
+    ledUpdate = 1;
+  }
+  
+}

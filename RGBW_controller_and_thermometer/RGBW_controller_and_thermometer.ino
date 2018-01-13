@@ -134,6 +134,7 @@ void setup() {
   delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
   controlSetup(); //Convert times and other setup stuff.
+
 }
 
 
@@ -149,15 +150,7 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +
-    ledP = ledP + fadeStep;
-    ledUpdate = 1;
-  }
-
-  if (ledState == 0 && ledPMin < ledP) { //Adjust power to target -
-    ledP = ledP - fadeStep;
-    ledUpdate = 1;
-  }
+  ledAdjust();
 
   //If ledP oversteps power target, set value to power target
   if (ledState == 1 && ledP > ledC[4]) {
