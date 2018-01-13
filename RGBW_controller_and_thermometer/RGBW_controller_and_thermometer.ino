@@ -89,7 +89,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(17,02,0,12,8,17);
+  setTime(15,56,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -137,9 +137,10 @@ void setup() {
 }
 
 
-//Loop runs once per second
+//Loop runs ~once per second
 void loop() {
-  millisCount(0,0); //Start counting Mode-0 ID-0
+  delay(940);
+  //millisCount(0,0); //Start counting Mode-0 ID-0
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
   displayUpdate(); //Draw the screen for the display
@@ -176,7 +177,7 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
-  dynamicDelay(1000,millisCount(1,0)); //End time count and delay for 1000ms
+  //dynamicDelay(1000,millisCount(1,0)); //End time count and delay for 1000ms
 } //Loop end
 
 void timeUpdate() { //Update time and reset alarms

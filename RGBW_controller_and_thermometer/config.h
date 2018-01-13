@@ -21,7 +21,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 //Various Configs
 const int ledPMin = 0; //Minimum led power output 0-255
 const int tempTime = 4; //Temp update interval in seconds
-int fadeTime = 30; //Fade time in minutes
+int fadeTime = 10; //Fade time in minutes
 
 
 //Time Keeping. Only one can be true
@@ -38,16 +38,16 @@ const int times = 3; //How many timers?
 int ledOnTimes [times] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
-  {13,00}
+  {17,00}
 };
 int ledOffTimes [times] [2]{ //Times to turn off (24 hour)
   {12,00},
-  {12,59},
+  {16,59},
   {19,00}
 };
 
 //Selects the color for each timer
-int colorChoice [times] {0,2,1}; //Which color to use with each timer
+int colorChoice [times] {0,1,2}; //Which color to use with each timer
 
 //Colors (0-255) Set the initial color.
 //Red Grn Blu Wht Pwr

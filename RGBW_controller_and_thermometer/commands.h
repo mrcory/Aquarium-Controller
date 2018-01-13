@@ -105,11 +105,12 @@ int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity num
   }
 }
 
-void dynamicDelay(int _delay, int _time) {
+int dynamicDelay(int _delay, int _time) { //_delay-desired runtime, _time-time that has passed
   int _difference;
     if (_delay < _time) {
       _difference = _delay - _time;
       delay(_difference);
+      Serial.println(_difference);
     }
 }
 
