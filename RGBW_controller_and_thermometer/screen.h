@@ -40,7 +40,7 @@ if (screenPage == 0) {
       display.println(F("Config Saved"));
     }
     display.setCursor(0, 44);
-    display.print(F("RGBW Aquarium Controller by: Cory McGahee"));
+    display.print(F("RGBW Aquarium Control by: Cory McGahee"));
 }
 
 if (screenPage == 2) {

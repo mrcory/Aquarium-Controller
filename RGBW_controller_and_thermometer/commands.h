@@ -89,3 +89,27 @@ void goLeft() {
   arrowL--;
 }
 
+int countData[2] = {0};
+
+//Cal
+int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number 1-3 (allow more by editing the length of millisCountData
+  int _count;
+  if (_mode == 0) {
+    countData[_id]= millis();
+    return 0;
+  }
+
+  if (_mode == 1) {
+    _count = millis() - countData[_id];
+    return _count;
+  }
+}
+
+void dynamicDelay(int _delay, int _time) {
+  int _difference;
+    if (_delay < _time) {
+      _difference = _delay - _time;
+      delay(_difference);
+    }
+}
+

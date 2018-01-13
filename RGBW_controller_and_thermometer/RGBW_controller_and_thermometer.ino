@@ -50,6 +50,7 @@ int screenPage = 1; //What page to be displayed on the screen
 int configSaved;
 int ledC[5] = {255,255,255,255,255};
 
+
 int arrowL = 0;
 bool oldState = false;
 const int arrow [2] [6] {
@@ -138,10 +139,10 @@ void setup() {
 
 //Loop runs once per second
 void loop() {
+  millisCount(0,0); //Start counting Mode-0 ID-0
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
   displayUpdate(); //Draw the screen for the display
-  delay(500);
   
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -175,8 +176,8 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
-
-}
+  dynamicDelay(1000,millisCount(1,0)); //End time count and delay for 1000ms
+} //Loop end
 
 void timeUpdate() { //Update time and reset alarms
   updateTimeNow(); //Call time update function created from selected RTC
