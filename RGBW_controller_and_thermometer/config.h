@@ -11,17 +11,17 @@ int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
 int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
 
 //Pin Connections 
-const int ledPinR = 2; //Red 
-const int ledPinG = 4; //Green (Pin 4 goes high on start)
-const int ledPinB = 6; //Blue
-const int ledPinW = 8; //White channel
-const int tempPin = 10; //DS18B20 pin
+const byte ledPinR = 2; //Red 
+const byte ledPinG = 4; //Green (Pin 4 goes high on start)
+const byte ledPinB = 6; //Blue
+const byte ledPinW = 8; //White channel
+const byte tempPin = 10; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 //Various Configs
-const int ledPMin = 0; //Minimum led power output 0-255
-const int tempTime = 4; //Temp update interval in seconds
-int fadeTime = 10; //Fade time in minutes
+const byte ledPMin = 0; //Minimum led power output 0-255
+const byte tempTime = 4; //Temp update interval in seconds 0-255
+byte fadeTime = 10; //Fade time in minutes 0-255
 
 
 //Time Keeping. Only one can be true
@@ -33,29 +33,25 @@ boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = -5; //Timezone offset from UTC
 
 
-const int times = 3; //How many timers?
+const byte times = 3; //How many timers?
 
-int ledOnTimes [times] [2]{ //Times to turn on (24 hour)
+byte ledOnTimes [10] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
   {17,00}
 };
-int ledOffTimes [times] [2]{ //Times to turn off (24 hour)
+byte ledOffTimes [10] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
   {19,00}
 };
 
-//Selects the color for each timer
-int colorChoice [times] {0,1,2}; //Which color to use with each timer
 
-//Colors (0-255) Set the initial color.
+//Colors (0-255)
 //Red Grn Blu Wht Pwr
-//colorChoice options
 
-// Adjust for number of colors
-//         ↓         
-int ledCo [3] [5] {
+// Colors for timers       
+byte ledCo [10] [5] {
   {255,255,200,255,170},
   {255,255,200,255,100},
   {255,125,19 ,50 ,175}

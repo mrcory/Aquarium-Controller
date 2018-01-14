@@ -43,17 +43,17 @@ const String ver = "1.2.1-dev"; //Program Version
 Adafruit_SSD1306 display(4); //display_reset
 
 //Internal Variables
-int ledState = 0; //0 for turning off, 1 for turning on
-int ledUpdate = 1;
+byte ledState = 0; //0 for turning off, 1 for turning on
+byte ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-int screenPage = 1; //What page to be displayed on the screen
-int configSaved;
-int ledC[5] = {255,255,255,255,255};
+byte screenPage = 1; //What page to be displayed on the screen
+byte configSaved;
+byte ledC[5] = {255,255,255,255,255};
 
 
 int arrowL = 0;
 bool oldState = false;
-const int arrow [2] [6] {
+const byte arrow [2] [6] {
   {0,30,60,90,0,65},       //Arrow X locations
   {18,18,18,18,51,51}         //Arrow Y locations
 };
@@ -150,7 +150,7 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  ledAdjust();
+  ledAdjust(1);
 
   //If ledP oversteps power target, set value to power target
   if (ledState == 1 && ledP > ledC[4]) {

@@ -2,7 +2,7 @@ void displayUpdate() { //Update info display
 
   display.clearDisplay(); //Clean the Screen
   
-int oldPage;
+byte oldPage;
 
   if (screenPage == 1) { //Screen 1 display
       showTemp(0,0);

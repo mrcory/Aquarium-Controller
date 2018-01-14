@@ -5,7 +5,7 @@
 
 //Create array to draw an arrow from
 #if enableMenu
-const int RIGHT [5] [5] {
+const byte RIGHT [5] [5] {
   {0,0,1,0,0},
   {0,1,1,1,0},
   {1,1,1,1,1},
@@ -13,7 +13,7 @@ const int RIGHT [5] [5] {
   {0,0,1,0,0}
 };
 
-const int LEFT [5] [5] {
+const byte LEFT [5] [5] {
   {0,0,1,0,0},
   {0,0,1,0,0},
   {1,1,1,1,1},
@@ -21,7 +21,7 @@ const int LEFT [5] [5] {
   {0,0,1,0,0}
 };
 
-const int DOWN [5] [5] {
+const byte DOWN [5] [5] {
   {0,0,1,0,0},
   {0,0,1,1,0},
   {1,1,1,1,1},
@@ -29,7 +29,7 @@ const int DOWN [5] [5] {
   {0,0,1,0,0}
 };
 
-const int UP [5] [5] {
+const byte UP [5] [5] {
   {0,0,1,0,0},
   {0,1,1,0,0},
   {1,1,1,1,1},
@@ -37,9 +37,9 @@ const int UP [5] [5] {
   {0,0,1,0,0}
 };
 
-void drawArrowUP(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<5;y++) {
-    for (int x=0;x<5;x++) {
+void drawArrowUP(byte _X,byte _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (byte y=0;y<5;y++) {
+    for (byte x=0;x<5;x++) {
       if (UP[x][y] == 1) {
         display.drawPixel(_X+x,_Y+y,WHITE);
       }
@@ -47,9 +47,9 @@ void drawArrowUP(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RI
   }
 }
 
-void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<5;y++) {
-    for (int x=0;x<5;x++) {
+void drawArrowDOWN(byte _X,byte _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (byte y=0;y<5;y++) {
+    for (byte x=0;x<5;x++) {
       if (DOWN[x][y] == 1) {
         display.drawPixel(_X+x,_Y+y,WHITE);
       }
@@ -58,7 +58,7 @@ void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,
 }
 #endif
 
-void showTime(int _posX,int _posY, int _size) {
+void showTime(byte _posX,byte _posY, byte _size) {
     display.setTextSize(1);
     display.setCursor(_posX,_posY); //80,24
     display.print(hour());
@@ -68,7 +68,7 @@ void showTime(int _posX,int _posY, int _size) {
     display.print(second());
 }
 
-void showHiLo(int _posX,int _posY) { //97,0
+void showHiLo(byte _posX,byte _posY) { //97,0
   display.setTextSize(1); //Reset cursor size for safety
   display.setCursor(_posX,_posY); //Set cursor position
   display.print(tempHi,1); //Display tempHi with 1 decimal place
@@ -77,7 +77,7 @@ void showHiLo(int _posX,int _posY) { //97,0
         
 }
 
-void showTemp(int _posX,int _posY) { //0,0
+void showTemp(byte _posX,byte _posY) { //0,0
       //Update temperature display
       display.setCursor(_posX,_posY);
       display.setTextSize(1);
@@ -95,20 +95,20 @@ void showTemp(int _posX,int _posY) { //0,0
 }
 
 
-void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
-  int aLocX = map(percent, 1, 100, 1, width);
+void drawHBar(byte locX, byte locY, byte height, byte width, byte percent) { //Draw a progrss bar
+  byte aLocX = map(percent, 1, 100, 1, width);
   display.drawLine(locX, locY, locX + width, locY, WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, WHITE); //Draw lower outline of progress bar
 
   if (locX - (locX + aLocX > 1) ) { //If value is 0 then don't fill the bar
-    for (int i = 0; i < height; i++) { //Draw body of progress bar
+    for (byte i = 0; i < height; i++) { //Draw body of progress bar
       display.drawLine(locX, locY + i, locX + aLocX, locY + i, WHITE);
     }
   }
 
 }
 
-void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
+void ledStatus(byte _X, byte _Y) { //Show LED value bars <location X, location Y>
   display.setTextSize(1);
   display.drawChar(_X, _Y, 'R', WHITE, BLACK, 1); //Bar label
   display.setCursor(_X+8, _Y); display.print(ledC[0]); //Display value digits
