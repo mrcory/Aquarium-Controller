@@ -92,7 +92,7 @@ void goLeft() {
 int countData[2] = {0};
 
 //Cal
-int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number 1-3 (allow more by editing the length of millisCountData
+int millisCount(byte _mode, byte _id) { //_mode: 0-Start 1-Stop | _id Identity number 1-3 (allow more by editing the length of millisCountData
   int _count;
   if (_mode == 0) {
     countData[_id]= millis();
@@ -103,6 +103,7 @@ int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity num
     _count = millis() - countData[_id];
     return _count;
   }
+
 }
 
 int dynamicDelay(int _delay, int _time) { //_delay-desired runtime, _time-time that has passed
@@ -119,5 +120,13 @@ void timerAdd(byte _timer) {
       for (byte a=0;a<5;a++) //Save color and brightness setting from current setting
         {ledCo[_timer][a] = ledC[a];
       }
+}
+
+bool between(int _target, int _bottom, int _top) {
+  if (_target >= _bottom && _target <= _top) {
+    return true;
+  } else {
+    return false;
+  }
 }
 

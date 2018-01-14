@@ -134,14 +134,15 @@ void setup() {
   delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
   controlSetup(); //Convert times and other setup stuff.
-
+  
+  millisCount(0,0); //Start counting Mode-0 ID-0
 }
 
 
 //Loop runs ~once per second
 void loop() {
-  delay(940);
-  //millisCount(0,0); //Start counting Mode-0 ID-0
+
+  
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
   displayUpdate(); //Draw the screen for the display
@@ -150,7 +151,10 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  ledAdjust(1);
+  if (millisCount(1,0) >= 1000) {
+    ledAdjust(1);
+    millisCount(0,0);
+  }
 
   //If ledP oversteps power target, set value to power target
   if (ledState == 1 && ledP > ledC[4]) {
@@ -188,6 +192,8 @@ void DSTset() { //Set DST
     Serial.println(F("DST Enabled")); //Confirm via Serial
     }
   timeUpdate(); //Update time and recreate alarms
+
+
 }
 
 

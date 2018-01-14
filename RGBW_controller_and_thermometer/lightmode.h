@@ -12,11 +12,10 @@ int timeMin() { //Convert hour and minute (Hour*60+Minute)
 bool ledCheck() {
   int _now = timeMin();
   bool _state = false;
-  for (int i=0;i<times;i++) {
-    if (_now >=  convOnTimes[i] && _now <= convOffTimes[i]) {_state = true; currentTimer = i;
-     //Break the loop
+  
+  for (byte i=0;i<times;i++) {
+    if (between(_now,convOnTimes[i],convOffTimes[i])) {_state = true; currentTimer = i;
     }
-   // else { delay(500); Serial.println(_now); }
   }
 
   return _state;
@@ -28,7 +27,7 @@ int convertTime(int _hour, byte _minute) {
 }
 
 void controlSetup() {
-  for (int i=0;i<times;i++) {
+  for (byte i=0;i<times;i++) {
     convOnTimes[i]  = convertTime(ledOnTimes[i][0],ledOnTimes[i][1]);
     convOffTimes[i] = convertTime(ledOffTimes[i][0],ledOffTimes[i][1]);
   }
