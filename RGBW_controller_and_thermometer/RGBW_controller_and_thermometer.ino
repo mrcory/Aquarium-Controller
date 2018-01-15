@@ -174,7 +174,6 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
-  //dynamicDelay(1000,millisCount(1,0)); //End time count and delay for 1000ms
 } //Loop end
 
 void timeUpdate() { //Update time and reset alarms
