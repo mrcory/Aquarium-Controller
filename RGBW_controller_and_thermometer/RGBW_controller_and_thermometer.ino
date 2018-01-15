@@ -136,6 +136,7 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   
   millisCount(0,0); //Start counting Mode-0 ID-0
+  millisCount(0,1); //Start counting for tempUpdate()
 }
 
 
@@ -154,6 +155,11 @@ void loop() {
   if (millisCount(1,0) >= 1000) {
     ledAdjust(1);
     millisCount(0,0);
+  }
+
+  if (millisCount(1,1) >= tempTime*1000) { //Timer for tempUpdate()
+    tempUpdate();
+    millisCount(0,1);
   }
 
   //If ledP oversteps power target, set value to power target
