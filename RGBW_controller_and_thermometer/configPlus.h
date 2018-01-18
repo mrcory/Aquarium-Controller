@@ -4,7 +4,7 @@ float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on 
 boolean enableTimer = true; //Disable or enable timer
 
 //Enable or disable serial commands
-#define serialCommands true
+#define serialCommands true //Disable to save sram and flash space
 
 //Enable Menu (Not coded yet)
 #define enableMenu true

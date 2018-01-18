@@ -141,13 +141,12 @@ void setup() {
   delay(250); //Give some time for the temp probe to start
   tempRngRst(); //Reset temp min/max range
   controlSetup(); //Convert times and other setup stuff.
+
   
-  millisCount(0,0); //Start counting Mode-0 ID-0
-  millisCount(0,1); //Start counting for tempUpdate()
+  timerSetup(); //Start counters
 }
 
 
-//Loop runs ~once per second
 void loop() {
 
   
@@ -159,15 +158,17 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  if (millisCount(1,0) >= 1000) {
+  if (timer(1000,0)) { //Adjust LED every second
     ledAdjust(1);
-    millisCount(0,0);
   }
 
-  if (millisCount(1,1) >= tempTime*1000) { //Timer for tempUpdate()
+  if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
     tempUpdate();
-    millisCount(0,1);
   }
+
+//  if (timer(86400,2)) { //Update time every 24 hours
+//    timeUpdate();
+//  }
 
   //If ledP oversteps power target, set value to power target
   if (ledState == 1 && ledP > ledC[4]) {

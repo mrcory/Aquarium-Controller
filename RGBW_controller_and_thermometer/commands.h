@@ -90,25 +90,8 @@ void goLeft() {
   arrowL--;
 }
 
-int countData[2] = {0};
 
-//Cal
-int millisCount(byte _mode, byte _id) { //_mode: 0-Start 1-Stop | _id Identity number 1-3 (allow more by editing the length of millisCountData
-  int _count;
-  if (_mode == 0) {
-    countData[_id]= millis();
-    return 0;
-  }
-
-  if (_mode == 1) {
-    _count = millis() - countData[_id];
-    return _count;
-  }
-
-}
-
-
-void timerAdd(byte _timer) {
+void lightTimerAdd(byte _timer) {
   
       for (byte a=0;a<5;a++) //Save color and brightness setting from current setting
         {ledCo[_timer][a] = ledC[a];

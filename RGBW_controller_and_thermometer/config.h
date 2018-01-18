@@ -30,7 +30,7 @@ byte fadeTime = 10; //Fade time in minutes 0-255
 #define gpsRtc true //Requires arduino Mega
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
-const int utcOffset = -5; //Timezone offset from UTC
+const byte utcOffset = -5; //Timezone offset from UTC
 
 
 const byte times = 3; //How many timers?
