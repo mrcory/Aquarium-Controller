@@ -30,11 +30,10 @@ void tempUpdate() { //Update temp and display
     tempLo = temp;
     }
 
-  if (temp < 0) {
-    tNeg = true;  //If negative temp make it positive so it will fit on the display.
+  tNeg = isNegative(temp); //If negative temp make it positive so it will fit on the display.
+
+  if (isNegative(temp)) {
     temp = temp * -1;
-  } else {
-    tNeg = false;
   }
 
 #if tempWarnEnable

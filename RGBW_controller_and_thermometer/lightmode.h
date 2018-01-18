@@ -1,16 +1,13 @@
 //New light controls
 
-int convOnTimes[times];
-int convOffTimes[times];
-byte currentTimer = 0;
 
-int timeMin() { //Convert hour and minute (Hour*60+Minute)
-  int _time = (hour()*60) + minute();
-  return _time;
+int convertTime(int _hour, byte _minute) {
+  int _converted = (_hour*60)+_minute;
+    return _converted;
 }
 
 bool ledCheck() {
-  int _now = timeMin();
+  int _now = convertTime(hour(),minute());
   bool _state = false;
   
   for (byte i=0;i<times;i++) {
@@ -21,10 +18,7 @@ bool ledCheck() {
   return _state;
 }
 
-int convertTime(int _hour, byte _minute) {
-  int _converted = (_hour*60)+_minute;
-    return _converted;
-}
+
 
 void controlSetup() {
   for (byte i=0;i<times;i++) {
@@ -35,16 +29,28 @@ void controlSetup() {
 
 void colorChange1() {
    
-      for (byte a=0;a<5;a++) 
-        {ledC[a] = ledCo[currentTimer][a];
+      for (byte i = 0; i < 5; i++) 
+        {ledTarget[i] = ledCo[currentTimer][i];
       }
-    
+      ledUpdate = 1;
+      //Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
 }
 
 void timerCheck() {
   if (ledCheck() == true && ledState == 0) {ledPower();colorChange1();}
   if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
 }
+
+colorFade() {
+  
+  for (byte i=0;i<5;i++) {{
+    if (ledC[i] != ledTarget[i]) {
+      if (ledC[i] < ledTarget[i]) {
+        ledC[i]++;
+    }
+      if (ledC[i] > ledTarget[i]) {
+        ledC[i]--;
+}}}}}
 
 void ledAdjust(byte _mode) { //New led controller
 
@@ -59,5 +65,10 @@ void ledAdjust(byte _mode) { //New led controller
       ledUpdate = 1;
     }
   }
-  
+
+  colorChange1();
+  colorFade();
 }
+
+
+

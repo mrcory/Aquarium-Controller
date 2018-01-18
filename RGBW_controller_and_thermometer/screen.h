@@ -7,7 +7,11 @@ byte oldPage;
   if (screenPage == 1) { //Screen 1 display
       showTemp(0,0);
       showHiLo(97,0);
+      display.setCursor(0,24);
+      display.print("Timer ");
+      display.print(currentTimer);
       showTime(80,24,1);
+
       ledStatus(0,42); //Show LED status bars
 
     #if tempWarnEnable

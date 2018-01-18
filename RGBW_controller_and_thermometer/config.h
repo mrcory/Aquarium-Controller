@@ -27,7 +27,7 @@ byte fadeTime = 10; //Fade time in minutes 0-255
 //Time Keeping. Only one can be true
 #define ds3231 false
 #define ds1307 false
-#define gpsRtc true
+#define gpsRtc true //Requires arduino Mega
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = -5; //Timezone offset from UTC
@@ -35,12 +35,12 @@ const int utcOffset = -5; //Timezone offset from UTC
 
 const byte times = 3; //How many timers?
 
-byte ledOnTimes [10] [2]{ //Times to turn on (24 hour)
+byte ledOnTimes [5] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
   {17,00}
 };
-byte ledOffTimes [10] [2]{ //Times to turn off (24 hour)
+byte ledOffTimes [5] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
   {19,00}
@@ -51,8 +51,8 @@ byte ledOffTimes [10] [2]{ //Times to turn off (24 hour)
 //Red Grn Blu Wht Pwr
 
 // Colors for timers       
-byte ledCo [10] [5] {
-  {255,255,200,255,170},
-  {255,255,200,255,100},
-  {255,125,19 ,50 ,175}
+byte ledCo [5] [5] {
+  {255,255,200,255,75},
+  {255,255,200,255,60},
+  {255,125,19 ,50 ,50}
 };

@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.2.1-dev"; //Program Version 
+const String ver = "1.2.2-dev"; //Program Version 
 
 #include <TimeLib.h>
 #include <Wire.h>
@@ -48,7 +48,12 @@ byte ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 byte screenPage = 1; //What page to be displayed on the screen
 byte configSaved;
-byte ledC[5] = {255,255,255,255,255};
+byte ledC[5] = {0};
+byte ledTarget[5] = {0};
+
+int convOnTimes[times];
+int convOffTimes[times];
+byte currentTimer = 0;
 
 
 int arrowL = 0;
@@ -59,6 +64,7 @@ const byte arrow [2] [6] {
 };
 
 //Include other files
+#include "universalFunc.h" //Some universal functions
 #include "temp.h" //Tempurature functions and variables
 #include "screencommands.h"
 #include "screen.h" //Screen functions
@@ -89,7 +95,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(15,56,0,12,8,17);
+  setTime(18,23,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -112,6 +118,7 @@ void setup() {
   cmdAdd("configclear",configClear);
   cmdAdd("left",goLeft);
   cmdAdd("right",goRight);
+  cmdAdd("color",colorChange1);
 #endif
 
 

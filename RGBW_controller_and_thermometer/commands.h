@@ -13,6 +13,7 @@
  */
 
 
+
 void ledPower() {
   byte oldPage = screenPage; //Store old page location
   if (ledState == 0) {ledState = 1; oldState = true;} else {ledState = 0; oldState = false;} //Change between on and off
@@ -114,11 +115,5 @@ void timerAdd(byte _timer) {
       }
 }
 
-bool between(int _target, int _bottom, int _top) {
-  if (_target >= _bottom && _target <= _top) {
-    return true;
-  } else {
-    return false;
-  }
-}
+
 
