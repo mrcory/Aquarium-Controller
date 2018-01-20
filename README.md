@@ -1,6 +1,8 @@
 # Aquarium-Controller
 4 Channel led controller and aquarium info display.
 
+Can be used without the display and temperature probe as just an led controller. (Version 1.3-dev)
+
 This is a project for my aquirium. It is a 4 channel (RGBW) controller and thermometer.
 I am currently running this on a Mega 2560.
 
