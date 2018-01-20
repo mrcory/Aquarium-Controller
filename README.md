@@ -8,24 +8,22 @@ I am currently running this on a Mega 2560.
 
 Fritzing picture is for my current circut design.
 
-Libraries Used:
-	#include <TimeLib.h>
-	#include <Wire.h>
-	#include <SPI.h>
-	#include <Adafruit_GFX.h>
-	#include <Adafruit_SSD1306.h>
-	#include <EEPROM.h>
-	#include <AnalogButtons.h>
+Libraries Used:  
+	#include <TimeLib.h>  
+	#include <Wire.h>  
+	#include <SPI.h>  
+	#include <Adafruit_GFX.h>  
+	#include <Adafruit_SSD1306.h>  
+	#include <EEPROM.h>  
+	#include <AnalogButtons.h>  
 
 Features:
   
   LED Controller
     
-    Color Setting
-    
-    On/off timer
-    
-    Fade timer (With RTC support)
+    Color Setting  
+    On/off timer  
+    Fade timer (With RTC support)  
     
   Display
     
