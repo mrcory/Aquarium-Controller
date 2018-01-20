@@ -15,12 +15,14 @@
 
 
 void ledPower() {
-  byte oldPage = screenPage; //Store old page location
   if (ledState == 0) {ledState = 1; oldState = true;} else {ledState = 0; oldState = false;} //Change between on and off
   ledUpdate = 1; //There has been a change, update analogWrite
-  screenPage = 2; //Change page to "LED ON(OFF)"
-  displayUpdate(); delay(500); //Update and display for 1 second
-  screenPage = oldPage; //Restore old page location
+  #if screenEnable
+    byte oldPage = screenPage; //Store old page location
+    screenPage = 2; //Change page to "LED ON(OFF)"
+    displayUpdate(); delay(500); //Update and display for 1 second
+    screenPage = oldPage; //Restore old page location
+  #endif
 }
 
 

@@ -132,3 +132,13 @@ void ledStatus(byte _X, byte _Y) { //Show LED value bars <location X, location Y
   display.drawChar(_X+65,_Y + 15, 'B', WHITE, BLACK, 1);
   drawHBar(_X+74,_Y + 18, 3, 51, map(ledC[4], 0, 255, 0, 100));
 }
+
+void screenSetup() { //Do all screen setup in a single function
+  display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
+  display.setTextColor(WHITE); //Set text color so it is visible
+  delay(250); //Give some time for the temp probe to start
+}
+
+#if screenEnabled
+  cmdAdd("screen", screenChange);
+#endif

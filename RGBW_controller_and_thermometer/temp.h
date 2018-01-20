@@ -48,3 +48,13 @@ void tempUpdate() { //Update temp and display
     tempLo = temp;
   }
 
+void tempSetup() { //Do all temp setup in one function
+  sensors.begin(); //Start sensor lib
+  tempUpdate(); //Update temp
+  delay(250); //Give some time for the temp probe to start
+  tempRngRst(); //Reset temp min/max range
+  #if serialCommands
+    cmdAdd("temprst",tempRngRst);
+  #endif
+}
+

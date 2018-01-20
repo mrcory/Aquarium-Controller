@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.2.2-dev"; //Program Version 
+const String ver = "1.3-dev"; //Program Version 
 
 #include <TimeLib.h>
 #include <Wire.h>
@@ -65,9 +65,17 @@ const byte arrow [2] [6] {
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
-#include "temp.h" //Tempurature functions and variables
-#include "screencommands.h"
-#include "screen.h" //Screen functions
+
+  #if tempEnable
+    #include "temp.h" //Tempurature functions and variables
+  #endif
+
+  #if screenEnable
+   #include "screencommands.h"
+    #include "screen.h" //Screen functions
+  #endif
+
+
 #include "commands.h" //Functions for the commands below
 #include "lightmode.h" //New light controls
 
@@ -109,9 +117,7 @@ void setup() {
   //Add Commands
   cmdAdd("ledpower", ledPower);
   cmdAdd("ledpowernow", ledPowerNow);
-  cmdAdd("screen", screenChange);
   cmdAdd("led", ledChange);
-  cmdAdd("temprst",tempRngRst);
   cmdAdd("dst",DSTset);
   cmdAdd("save",configSave);
   cmdAdd("load",configLoad);
@@ -129,20 +135,16 @@ void setup() {
   } else {
     fadeStep = 255; //If fateTime is set to 0 then just turn on and off completely
   }
-  
-  
-  sensors.begin(); //Start sensor lib
 
-  display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
-  display.setTextColor(WHITE); //Set text color so it is visible
+  #if tempEnable
+    tempSetup();
+  #endif
 
-  delay(250); //Give some time for the temp probe to start
-  tempUpdate(); //Update temp
-  delay(250); //Give some time for the temp probe to start
-  tempRngRst(); //Reset temp min/max range
+  #if screenEnable
+    screenSetup();
+  #endif
+
   controlSetup(); //Convert times and other setup stuff.
-
-  
   timerSetup(); //Start counters
 }
 
@@ -152,7 +154,10 @@ void loop() {
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
-  displayUpdate(); //Draw the screen for the display
+
+  #if displayEnable
+    displayUpdate(); //Draw the screen for the display
+  #endif
   
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -162,9 +167,11 @@ void loop() {
     ledAdjust(1);
   }
 
+#if tempEnable
   if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
     tempUpdate();
   }
+#endif
 
 //  if (timer(86400,2)) { //Update time every 24 hours
 //    timeUpdate();

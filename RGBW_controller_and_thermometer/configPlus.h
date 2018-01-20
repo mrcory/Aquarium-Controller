@@ -6,6 +6,12 @@ boolean enableTimer = true; //Disable or enable timer
 //Enable or disable serial commands
 #define serialCommands true //Disable to save sram and flash space
 
+//Enable/disable Temperature
+#define tempEnable true
+
+//Enable/disable Screen
+#define screenEnable true
+
 //Enable Menu (Not coded yet)
 #define enableMenu true
 #define buttonPin A1
