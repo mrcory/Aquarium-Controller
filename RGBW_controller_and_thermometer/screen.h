@@ -22,13 +22,6 @@ byte oldPage;
       }
     #endif
 
-if (enableTimer) {
-    //Display on and off times
-    display.setCursor(0, 24);
-    display.setTextSize(1);
-    //display.print(F("On : ")); display.print(timeOn[0]); display.print(colon); display.print(timeOn[1]); display.print(colon); display.println(timeOn[2]);
-    //display.print(F("Off: ")); display.print(timeOff[0]); display.print(colon); display.print(timeOff[1]); display.print(colon); display.print(timeOff[2]);
-  }
 }
 
 
