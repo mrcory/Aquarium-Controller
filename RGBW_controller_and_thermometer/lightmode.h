@@ -1,6 +1,7 @@
 //New light controls
 
 
+
 int convertTime(int _hour, byte _minute) {
   int _converted = (_hour*60)+_minute;
     return _converted;
@@ -66,8 +67,11 @@ void ledAdjust(byte _mode) { //New led controller
     }
   }
 
-  colorChange1();
+if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
   colorFade();
+}
+  
+  colorChange1();
 }
 
 

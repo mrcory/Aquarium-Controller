@@ -23,6 +23,7 @@ const byte tempTime = 4; //Temp update interval in seconds 0-255
 byte fadeTime = 10; //Fade time in minutes 0-255
 
 
+
 //Time Keeping. Only one can be true
 #define ds3231 false
 #define ds1307 false
