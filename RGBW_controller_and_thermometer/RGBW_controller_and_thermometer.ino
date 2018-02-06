@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.3-dev"; //Program Version 
+const String ver = "1.4-dev"; //Program Version 
 
 #include <TimeLib.h>
 #include <Wire.h>
@@ -50,18 +50,20 @@ byte screenPage = 1; //What page to be displayed on the screen
 byte configSaved;
 byte ledC[5] = {0};
 byte ledTarget[5] = {0};
+bool menuActive = false;
 
 int convOnTimes[times];
 int convOffTimes[times];
 byte currentTimer = 0;
 
 
-int arrowL = 0;
+//int arrowL = 0;
 bool oldState = false;
-const byte arrow [2] [6] {
-  {0,30,60,90,0,65},       //Arrow X locations
-  {18,18,18,18,51,51}         //Arrow Y locations
-};
+
+//const byte arrow [2] [6] {
+//  {0,30,60,90,0,65},       //Arrow X locations
+//  {18,18,18,18,51,51}         //Arrow Y locations
+//};
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
@@ -72,7 +74,10 @@ const byte arrow [2] [6] {
 
   #if screenEnable
    #include "screencommands.h"
-    #include "screen.h" //Screen functions
+   #include "screen.h" //Screen functions
+    #if enableMenu
+      #include "menu.h"
+    #endif
   #endif
 
 
@@ -100,6 +105,14 @@ const byte arrow [2] [6] {
 #endif
 
 void setup() {
+
+  #if enableMenu && screenEnable
+    analogButtons.add(up);
+    analogButtons.add(down);
+    analogButtons.add(right);
+    analogButtons.add(left);
+  #endif
+  
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
@@ -122,8 +135,6 @@ void setup() {
   cmdAdd("save",configSave);
   cmdAdd("load",configLoad);
   cmdAdd("configclear",configClear);
-  cmdAdd("left",goLeft);
-  cmdAdd("right",goRight);
   cmdAdd("color",colorChange1);
 #endif
 
@@ -163,7 +174,7 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  if (timer(1000,0)) { //Adjust LED every second
+  if (timer(1000,0) && !menuActive) { //Adjust LED every second
     ledAdjust(1);
   }
 
@@ -195,6 +206,10 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
+  #if enableMenu && screenEnable
+    analogButtons.check();
+  #endif
+  
 } //Loop end
 
 void timeUpdate() { //Update time and reset alarms

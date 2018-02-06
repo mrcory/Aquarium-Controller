@@ -65,13 +65,15 @@ void ledAdjust(byte _mode) { //New led controller
       ledP = ledP - fadeStep;
       ledUpdate = 1;
     }
+
+    if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
+    colorFade();
+    }
+    colorChange1();
   }
 
-if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
-  colorFade();
-}
-  
-  colorChange1();
+
+
 }
 
 

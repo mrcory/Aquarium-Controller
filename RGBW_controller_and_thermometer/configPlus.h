@@ -5,7 +5,7 @@ boolean enableTimer = true; //Disable or enable timer
 byte crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
-#define serialCommands true //Disable to save sram and flash space
+#define serialCommands enable //Disable to save sram and flash space
 
 //Enable/disable Temperature
 #define tempEnable true
@@ -14,7 +14,7 @@ byte crossFade = 5; //Crossfade time in seconds per step
 #define screenEnable true
 
 //Enable Menu (Not coded yet)
-#define enableMenu true
+#define enableMenu false
 #define buttonPin A1
 
 //Diable or Enable Temperature warning
@@ -26,4 +26,12 @@ byte crossFade = 5; //Crossfade time in seconds per step
 void additionalWarn() {
   //Fill in here
 }
+#endif
+
+#if enableMenu && screenEnable //Set resistor values for buttons here
+  #define _upVal 0
+  #define _downVal 0
+  #define _leftVal 0
+  #define _rightVal 0
+  #define _menuVal 0
 #endif

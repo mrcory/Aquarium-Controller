@@ -58,6 +58,8 @@ void configSave() { //Save config
  i += sizeof(fadeTime);
  EEPROM.put(i,tempUnit);
  i += sizeof(tempUnit);
+ EEPROM.put(i,ledCo);
+ i+= sizeof(ledCo);
  Serial.print(F("Config Saved Size: "));
  Serial.println(i);
 }
@@ -74,6 +76,8 @@ void configLoad() { //Load config
  i += sizeof(fadeTime);
  EEPROM.get(i,tempUnit);
  i += sizeof(tempUnit);
+ EEPROM.put(i,ledCo);
+ i+= sizeof(ledCo);
  Serial.print(F("Config Loaded Size: "));
  Serial.println(i);
 }
@@ -84,14 +88,6 @@ void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loade
   }
 
 //-------------------------------------------------
-void goRight() {
-  arrowL++;
-}
-
-void goLeft() {
-  arrowL--;
-}
-
 
 void lightTimerAdd(byte _timer) {
   

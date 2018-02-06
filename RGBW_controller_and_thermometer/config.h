@@ -2,7 +2,6 @@
    Variables for configureing various things.
 */
 
-#include "configPlus.h"
 
 //Temperature Settings
 char tempUnit = 'F'; //What unit do you want? (C or F)
@@ -56,3 +55,6 @@ byte ledCo [5] [5] {
   {255,255,200,255,60},
   {255,125,19 ,50 ,50}
 };
+
+#include "configPlus.h"
+

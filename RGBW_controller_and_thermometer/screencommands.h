@@ -47,6 +47,16 @@ void drawArrowUP(byte _X,byte _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,
   }
 }
 
+void drawArrowRIGHT(byte _X,byte _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
+  for (byte y=0;y<5;y++) {
+    for (byte x=0;x<5;x++) {
+      if (RIGHT[x][y] == 1) {
+        display.drawPixel(_X+x,_Y+y,WHITE);
+      }
+    }
+  }
+}
+
 void drawArrowDOWN(byte _X,byte _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
   for (byte y=0;y<5;y++) {
     for (byte x=0;x<5;x++) {
