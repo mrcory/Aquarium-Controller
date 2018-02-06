@@ -8,16 +8,7 @@ I am currently running this on a Mega 2560.
 
 Fritzing picture is for my current circut design.
 
-<<<<<<< HEAD
-Libraries Used:
-	#include <TimeLib.h>
-	#include <Wire.h>
-	#include <SPI.h>
-	#include <Adafruit_GFX.h>
-	#include <Adafruit_SSD1306.h>
-	#include <EEPROM.h>
-	#include <AnalogButtons.h>
-=======
+
 Libraries Used:  
 	#include <TimeLib.h>  
 	#include <Wire.h>  
@@ -26,7 +17,7 @@ Libraries Used:
 	#include <Adafruit_SSD1306.h>  
 	#include <EEPROM.h>  
 	#include <AnalogButtons.h>  
->>>>>>> d3005a52e5b197f21ff2b5ca76ac30d6b6c6337c
+
 
 Features:
   
