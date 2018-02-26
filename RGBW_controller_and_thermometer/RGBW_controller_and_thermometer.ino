@@ -48,9 +48,11 @@ byte ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 byte screenPage = 1; //What page to be displayed on the screen
 byte configSaved;
-byte ledC[5] = {0};
+byte ledC[5] = {255,255,255,255,100};
 byte ledTarget[5] = {0};
 bool menuActive = false;
+byte oldTimer = 100;
+bool lightOveride = false;
 
 int convOnTimes[times];
 int convOffTimes[times];
@@ -116,7 +118,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(9,29,55,12,8,17);
+  setTime(11,17,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -160,16 +162,19 @@ void setup() {
 
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
+
+  colorChange1(true); //Force a color change
 }
 
 
 void loop() {
 
+
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
 
-  #if displayEnable
+  #if screenEnable
     displayUpdate(); //Draw the screen for the display
   #endif
   
@@ -177,7 +182,7 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-  if (timer(1000,0) && !menuActive) { //Adjust LED every second
+  if (timer(1000,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
 

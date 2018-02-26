@@ -28,18 +28,22 @@ void controlSetup() {
   }
 }
 
-void colorChange1() {
-   
+void colorChange1(bool _force) {
+
+   if ((currentTimer != oldTimer) || (_force)) {
       for (byte i = 0; i < 5; i++) 
-        {ledTarget[i] = ledCo[currentTimer][i];
+        {ledC[i] = ledCo[currentTimer][i];
       }
       ledUpdate = 1;
-      //Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
+      Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
+
+      oldTimer = currentTimer;
+   }
 }
 
 void timerCheck() {
-  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1();}
-  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1();}
+  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1(false);}
+  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1(false);}
 }
 
 colorFade() {
@@ -69,7 +73,7 @@ void ledAdjust(byte _mode) { //New led controller
     if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
     //colorFade();
     }
-    colorChange1();
+    colorChange1(false);
   }
 
 
