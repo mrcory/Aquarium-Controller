@@ -39,6 +39,7 @@ void colorChange1(bool _force) {
 
       oldTimer = currentTimer;
       memcpy(ledTarget,ledC,5*sizeof(int));
+
    }
 }
 

@@ -146,7 +146,11 @@ void setup() {
   cmdAdd("screen", screenChange);
 #endif
 
+
+
   //Do Some Setup
+  colorChange1(true); //Force a color change
+  
   ledP = ledPMin; //Set power to minimum
   if (fadeTime > 0) { //If a fadetime has been set solve for fadeStep to match it
     fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
@@ -165,7 +169,7 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-  colorChange1(true); //Force a color change
+  
 }
 
 
