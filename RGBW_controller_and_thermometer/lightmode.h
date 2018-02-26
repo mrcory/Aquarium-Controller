@@ -38,6 +38,7 @@ void colorChange1(bool _force) {
       Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
 
       oldTimer = currentTimer;
+      memcpy(ledTarget,ledC,5*sizeof(int));
    }
 }
 
@@ -48,7 +49,7 @@ void timerCheck() {
 
 colorFade() {
   
-  for (byte i=0;i<5;i++) {{
+  for (byte i=0;i<=5;i++) {{
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
         ledC[i]++;
@@ -71,9 +72,9 @@ void ledAdjust(byte _mode) { //New led controller
     }
 
     if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
-    //colorFade();
+    colorFade();
     }
-    colorChange1(false);
+    //colorChange1(false);
   }
 
 

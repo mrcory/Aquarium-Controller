@@ -43,13 +43,13 @@ const String ver = "1.4-dev"; //Program Version
 Adafruit_SSD1306 display(4); //display_reset
 
 //Internal Variables
-byte ledState = 0; //0 for turning off, 1 for turning on
+int ledState = 0; //0 for turning off, 1 for turning on
 byte ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 byte screenPage = 1; //What page to be displayed on the screen
 byte configSaved;
-byte ledC[5] = {255,255,255,255,100};
-byte ledTarget[5] = {0};
+int ledC[5] = {255,255,255,255,100};
+int ledTarget[5] = {0};
 bool menuActive = false;
 byte oldTimer = 100;
 bool lightOveride = false;
@@ -118,7 +118,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(11,17,0,12,8,17);
+  setTime(11,40,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
