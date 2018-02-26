@@ -5,7 +5,7 @@ boolean enableTimer = true; //Disable or enable timer
 byte crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
-#define serialCommands enable //Disable to save sram and flash space
+#define serialCommands true //Disable to save sram and flash space
 
 //Enable/disable Temperature
 #define tempEnable true

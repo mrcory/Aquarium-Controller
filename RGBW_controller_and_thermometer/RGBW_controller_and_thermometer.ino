@@ -138,6 +138,9 @@ void setup() {
   cmdAdd("color",colorChange1);
 #endif
 
+#if screenEnable && serialCommands
+  cmdAdd("screen", screenChange);
+#endif
 
   //Do Some Setup
   ledP = ledPMin; //Set power to minimum

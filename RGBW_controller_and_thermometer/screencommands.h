@@ -149,6 +149,4 @@ void screenSetup() { //Do all screen setup in a single function
   delay(250); //Give some time for the temp probe to start
 }
 
-#if screenEnabled
-  cmdAdd("screen", screenChange);
-#endif
+
