@@ -9,7 +9,9 @@ todo:
    Add button controls
 */
 
-const String ver = "1.4-dev"; //Program Version 
+const String ver = "1.4.1-dev"; //Program Version 
+//Last Tested version: 1.4.1-dev
+
 
 #include <TimeLib.h>
 #include <Wire.h>
