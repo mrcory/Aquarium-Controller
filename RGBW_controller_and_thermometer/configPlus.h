@@ -29,9 +29,9 @@ void additionalWarn() {
 #endif
 
 #if enableMenu && screenEnable //Set resistor values for buttons here
-  #define _upVal 1000
-  #define _downVal 1000
-  #define _leftVal 1000
-  #define _rightVal 1000
-  #define _menuVal 1000
+  #define _upVal 1002
+  #define _downVal 929
+  #define _leftVal 860
+  #define _rightVal 970
+  #define _menuVal 1013
 #endif

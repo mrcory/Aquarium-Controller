@@ -8,6 +8,9 @@ I am currently running this on a Mega 2560.
 
 Fritzing picture is for my current circut design.
 
+Using this schematic for the buttons.
+https://raw.githubusercontent.com/rlogiacco/AnalogButtons/master/schematic.png
+
 
 Libraries Used:  
 	#include <TimeLib.h>  
