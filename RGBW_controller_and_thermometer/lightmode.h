@@ -2,7 +2,7 @@
 
 
 
-int convertTime(int _hour, byte _minute) {
+int convertTime(int _hour, int _minute) {
   int _converted = (_hour*60)+_minute;
     return _converted;
 }
@@ -11,7 +11,7 @@ bool ledCheck() {
   int _now = convertTime(hour(),minute());
   bool _state = false;
   
-  for (byte i=0;i<times;i++) {
+  for (int i=0;i<times;i++) {
     if (between(_now,convOnTimes[i],convOffTimes[i])) {_state = true; currentTimer = i;
     }
   }
@@ -22,7 +22,7 @@ bool ledCheck() {
 
 
 void controlSetup() {
-  for (byte i=0;i<times;i++) {
+  for (int i=0;i<times;i++) {
     convOnTimes[i]  = convertTime(ledOnTimes[i][0],ledOnTimes[i][1]);
     convOffTimes[i] = convertTime(ledOffTimes[i][0],ledOffTimes[i][1]);
   }
@@ -31,7 +31,7 @@ void controlSetup() {
 void colorChange1(bool _force) {
 
    if ((currentTimer != oldTimer) || (_force)) {
-      for (byte i = 0; i < 5; i++) 
+      for (int i = 0; i < 5; i++) 
         {ledC[i] = ledCo[currentTimer][i];
       }
       ledUpdate = 1;
@@ -50,7 +50,7 @@ void timerCheck() {
 
 colorFade() {
   
-  for (byte i=0;i<=5;i++) {{
+  for (int i=0;i<=5;i++) {{
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
         ledC[i]++;
@@ -59,7 +59,7 @@ colorFade() {
         ledC[i]--;
 }}}}}
 
-void ledAdjust(byte _mode) { //New led controller
+void ledAdjust(int _mode) { //New led controller
 
   if (_mode == 1) {
     if (ledState == 1 && ledC[4] > ledP) { //Adjust power to target +

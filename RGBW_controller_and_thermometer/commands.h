@@ -18,7 +18,7 @@ void ledPower() {
   if (ledState == 0) {ledState = 1; oldState = true;} else {ledState = 0; oldState = false;} //Change between on and off
   ledUpdate = 1; //There has been a change, update analogWrite
   #if screenEnable
-    byte oldPage = screenPage; //Store old page location
+    int oldPage = screenPage; //Store old page location
     screenPage = 2; //Change page to "LED ON(OFF)"
     displayUpdate(); delay(500); //Update and display for 1 second
     screenPage = oldPage; //Restore old page location
@@ -40,7 +40,7 @@ void ledPowerNow() { //Instant on/off
   //Serial command "led"
   void ledChange(int arg_cnt, char **args) { //First argument will me the command name 
     if (arg_cnt == 3) {ledC[cmdStr2Num(args[1],10)] = cmdStr2Num(args[2],10);} //If 3 arguments, adjust single led channel
-    if (arg_cnt >= 6) {for(byte i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
+    if (arg_cnt >= 6) {for(int i = 0; i < 5; i++) {ledC[i] = cmdStr2Num(args[i+1],10);}}  //If 6 arguments adjust all channels and brightness
     ledUpdate = 1;
   }
 #endif
@@ -89,9 +89,9 @@ void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loade
 
 //-------------------------------------------------
 
-void lightTimerAdd(byte _timer) {
+void lightTimerAdd(int _timer) {
   
-      for (byte a=0;a<5;a++) //Save color and brightness setting from current setting
+      for (int a=0;a<5;a++) //Save color and brightness setting from current setting
         {ledCo[_timer][a] = ledC[a];
       }
 }

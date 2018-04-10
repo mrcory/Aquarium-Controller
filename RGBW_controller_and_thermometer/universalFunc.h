@@ -19,8 +19,8 @@ unsigned long countData[countDataAmount] = {0}; //Holds count information. (Adju
 
 
 
-int millisCount(byte _mode, byte _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
-  int _count;
+unsigned long millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
+  unsigned long _count;
   if (_mode == 0) {
     countData[_id]= millis();
     return 0;
@@ -34,12 +34,12 @@ int millisCount(byte _mode, byte _id) { //_mode: 0-Start 1-Stop | _id Identity n
 }
 
 void timerSetup() {
-  for (byte i=0;i<countDataAmount;i++) {
+  for (int i=0;i<countDataAmount;i++) {
     millisCount(0,i);
   }
 }
 
-bool timer(int _interval,byte _id) { //_interval in millis, _id in countData
+bool timer(int _interval,int _id) { //_interval in millis, _id in countData
   if (millisCount(1,_id) >= _interval) {
     millisCount(0,_id);
     return true;

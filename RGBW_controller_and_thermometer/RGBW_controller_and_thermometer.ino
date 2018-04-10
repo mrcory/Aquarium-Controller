@@ -19,7 +19,7 @@ const String ver = "1.4.1-dev"; //Program Version
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <EEPROM.h>
-#include <AnalogButtons.h>
+
 #include "config.h" //Config file
 
 #if serialCommands
@@ -46,25 +46,25 @@ Adafruit_SSD1306 display(4); //display_reset
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
-byte ledUpdate = 1;
+int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-byte screenPage = 1; //What page to be displayed on the screen
-byte configSaved;
+int screenPage = 1; //What page to be displayed on the screen
+int configSaved;
 int ledC[5] = {255,255,255,255,100};
 int ledTarget[5] = {0};
 bool menuActive = false;
-byte oldTimer = 100;
+int oldTimer = 100;
 bool lightOveride = false;
 
 int convOnTimes[times];
 int convOffTimes[times];
-byte currentTimer = 0;
+int currentTimer = 0;
 
 
 //int arrowL = 0;
 bool oldState = false;
 
-//const byte arrow [2] [6] {
+//const int arrow [2] [6] {
 //  {0,30,60,90,0,65},       //Arrow X locations
 //  {18,18,18,18,51,51}         //Arrow Y locations
 //};
@@ -83,7 +83,7 @@ bool oldState = false;
       #include "menu.h"
     #endif
   #endif
-
+ 
 
 #include "commands.h" //Functions for the commands below
 #include "lightmode.h" //New light controls
@@ -99,28 +99,39 @@ bool oldState = false;
     #elif gpsRtc
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
+     
+      
       setTime(GPS.time.second(),GPS.time.minute(),GPS.time.hour(),GPS.date.month(),GPS.date.day(),GPS.date.year());
       adjustTime(utcOffset * 3600); //Adjust time for UTC setting
       if (DST) {adjustTime(3600);} //Adjust time for DST
+
     }
 #else
   #error "No RTC defined. Check config.h"
     }
 #endif
 
+
+
+//#if enableMenu && screenEnable //Set resistor values for buttons here
+  #define _upVal 840
+  #define _downVal 957
+  #define _leftVal 979
+  #define _rightVal 930
+  #define _menuVal 700
+//#endif
+
+
+
+
+
 void setup() {
 
-  #if enableMenu && screenEnable
-    analogButtons.add(up);
-    analogButtons.add(down);
-    analogButtons.add(right);
-    analogButtons.add(left);
-  #endif
   
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
-  setTime(17,45,0,12,8,17);
+  //setTime(16,28,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
     Serial.print(F("Saved "));
@@ -140,6 +151,7 @@ void setup() {
   cmdAdd("load",configLoad);
   cmdAdd("configclear",configClear);
   cmdAdd("color",colorChange1);
+  cmdAdd("time",timeUpdate);
 #endif
 
 #if screenEnable && serialCommands
@@ -169,13 +181,25 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-  
+
+    analogButtons.add(up);
+    analogButtons.add(down);
+    analogButtons.add(right);
+    analogButtons.add(left);
+    analogButtons.add(menu);
+
+  //<><><><><><><><>
+  Serial2.begin(gpsBaud); //Start the serial port for the gps unit
 }
 
 
 void loop() {
+  analogButtons.check();
 
-
+    do 
+  {
+    GPS.encode(Serial2.read());
+  } while (Serial2.available());
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
@@ -220,9 +244,7 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
-  #if enableMenu && screenEnable
-    analogButtons.check();
-  #endif
+  smartDelay();
   
 } //Loop end
 
@@ -245,5 +267,11 @@ void DSTset() { //Set DST
 
 }
 
+//Borrowed from the tinyGPS++ example
+static void smartDelay()
+{
+while (Serial2.available() > 0)
+  GPS.encode(Serial2.read());
+}
 
 

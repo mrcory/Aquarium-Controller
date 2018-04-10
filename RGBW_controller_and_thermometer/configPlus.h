@@ -2,7 +2,7 @@
 
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 boolean enableTimer = true; //Disable or enable timer
-byte crossFade = 5; //Crossfade time in seconds per step
+int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
 #define serialCommands true //Disable to save sram and flash space
@@ -14,8 +14,7 @@ byte crossFade = 5; //Crossfade time in seconds per step
 #define screenEnable true
 
 //Enable Menu (Not coded yet)
-#define enableMenu false
-#define buttonPin A1
+#define enableMenu true
 
 //Diable or Enable Temperature warning
 #define tempWarnEnable false
@@ -28,10 +27,4 @@ void additionalWarn() {
 }
 #endif
 
-#if enableMenu && screenEnable //Set resistor values for buttons here
-  #define _upVal 1002
-  #define _downVal 929
-  #define _leftVal 860
-  #define _rightVal 970
-  #define _menuVal 1013
-#endif
+

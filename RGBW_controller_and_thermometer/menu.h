@@ -1,54 +1,86 @@
 //Menu Stuff
 
 String ledLetter[4] {"R","G","B","W"};
-const byte menuLine = 0;
-byte buttonReturn = 0; //Left -1, right 1, up 2, down -2, back/menu 3
-byte saveSet = 0;
+const int menuLine = 0;
+int buttonReturn = 0; //Left -1, right 1, up 2, down -2, back/menu 3
+int saveSet = 0;
+
+//#define analog_value_margin 15
+
+//#define debounce_frequency_multiplier 4
+
+#include <AnalogButtons.h>
+//#define buttonPin A1
+
 
 
 //Buttons!
 bool upClick() {
   buttonReturn = 2;
+  Serial.println("Up");
   return true;
 }
 
 bool downClick() {
   buttonReturn = -2;
+  Serial.println("Dn");
   return true;
+  
 }
 
 bool rightClick() {
   buttonReturn = 1;
+  Serial.println("Rt");
   return true;
+  
 }
 
 bool leftClick() {
   buttonReturn = -1;
+  Serial.println("Lt");
   return true;
+  
 }
 
 bool menuClick() {
   buttonReturn = 3;
-  return true;
+  Serial.println("Mn");
   
-  if (menuActive) {menuActive == false;} //If menu active disable it
+  
+  if (menuActive == true) {menuActive = false;} //If menu active disable it
   else
-  if (!menuActive) {menuActive == true;} //If menu not active enable it
+  if (menuActive == false) {menuActive = true;} //If menu not active enable it
+
+  return true;
 }
 
 bool menuHold() {
   buttonReturn = -3;
+  Serial.println("MnH");
   return true;
+  
 }
 
+//#if enableMenu && screenEnable //Set resistor values for buttons here
+  #define _upVal 840
+  #define _downVal 957
+  #define _leftVal 979
+  #define _rightVal 930
+  #define _menuVal 700
+//#endif
 
+AnalogButtons analogButtons(A1, INPUT);
 
-AnalogButtons analogButtons(buttonPin, INPUT);
-Button up = Button(_upVal, &upClick);
-Button down = Button(_downVal, &downClick);
-Button right = Button(_rightVal, &rightClick);
-Button left = Button(_leftVal, &leftClick);
-Button menu = Button(_menuVal, &menuClick, &menuHold);
+Button up = Button(840, &upClick);
+Button down = Button(957, &downClick);
+Button right = Button(930, &rightClick);
+Button left = Button(979, &leftClick);
+Button menu = Button(700, &menuClick, &menuHold);
+
+  //#if enableMenu && screenEnable
+
+  //#endif
+
 
 
 
@@ -73,7 +105,7 @@ void menuRun() {
 
   if (menuHold) {
     //Add config save stuff here
-      for (byte i = 0; i < 5; i++) 
+      for (int i = 0; i < 5; i++) 
         {ledCo[currentTimer][i] = ledC[i];
         display.clearDisplay();
         display.setCursor(0,0);
