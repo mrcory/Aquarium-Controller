@@ -99,6 +99,7 @@ bool oldState = false;
     #elif gpsRtc
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
+    
      gpsRead();
 
 
@@ -145,8 +146,10 @@ bool oldState = false;
 
 void setup() {
   //<><><><><><><><>
-  Serial2.begin(gpsBaud); //Start the serial port for the gps unit
-  
+#if gpsRtc
+  gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
+#endif
+
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
@@ -200,19 +203,22 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-
+#if enableMenu
     analogButtons.add(up);
     analogButtons.add(down);
     analogButtons.add(right);
     analogButtons.add(left);
     analogButtons.add(menu);
-
+#endif
 
 }
 
 
 void loop() {
+
+#if enableMenu
   analogButtons.check();
+#endif
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
@@ -225,8 +231,10 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
+#if gpsRtc //If using GPS for RTC read the serial buffer in
   gpsRead();
-  
+#endif
+
   if (timer(1000,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
@@ -259,7 +267,9 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
+#if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
   gpsRead();
+#endif
   
 } //Loop end
 
@@ -282,11 +292,12 @@ void DSTset() { //Set DST
 
 }
 
-//Borrowed from the tinyGPS++ example
+#if gpsRtc
+//Send info to tinyGPS++
 static void gpsRead()
 {
-while (Serial2.available() > 0)
-  GPS.encode(Serial2.read());
+while (gpsSerial.available() > 0)
+  GPS.encode(gpsSerial.read());
 }
-
+#endif
 

@@ -28,6 +28,8 @@ int fadeTime = 10; //Fade time in minutes 0-255
 #define ds1307 false
 #define gpsRtc true //Requires arduino Mega
 
+
+#define gpsSerial Serial2 //Which Serial to use for the GPS (You could also change to software serial)
 #define gpsBaud 9600
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
