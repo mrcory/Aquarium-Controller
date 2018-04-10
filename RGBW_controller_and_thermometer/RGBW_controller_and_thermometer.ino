@@ -144,9 +144,8 @@ bool oldState = false;
 
 
 void setup() {
-  gpsRead();
-  delay(100); //Give GPS some time
-  gpsRead();
+  //<><><><><><><><>
+  Serial2.begin(gpsBaud); //Start the serial port for the gps unit
   
   Wire.begin();
   Serial.begin(9600);
@@ -208,8 +207,7 @@ void setup() {
     analogButtons.add(left);
     analogButtons.add(menu);
 
-  //<><><><><><><><>
-  Serial2.begin(gpsBaud); //Start the serial port for the gps unit
+
 }
 
 
@@ -239,9 +237,9 @@ void loop() {
   }
 #endif
 
-//  if (timer(86400,2)) { //Update time every 24 hours
-//    timeUpdate();
-//  }
+  if (timer(86400,2)) { //Update time every 24 hours
+    timeUpdate();
+  }
 
   //If ledP oversteps power target, set value to power target
   if (ledState == 1 && ledP > ledC[4]) {
