@@ -93,17 +93,35 @@ bool oldState = false;
   DateTime timeNow;
     void updateTimeNow() {
       timeNow = RTC.now();
-      setTime(timeNow.second(),timeNow.minute(),timeNow.hour(),timeNow.month(),timeNow.day(),timeNow.year());
+      setTime((timeNow.hour() + utcOffset),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
       if (DST) {adjustTime(3600);} //Adjust time for DST
     }
     #elif gpsRtc
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
-     
+     gpsRead();
+
+
+    int _utcAdjust = GPS.time.hour() + utcOffset;
+    if (DST) {_utcAdjust++;} //Adjust time for DST
+    if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
+
+      setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
+      //adjustTime(utcOffset * 3600); //Adjust time for UTC setting
       
-      setTime(GPS.time.second(),GPS.time.minute(),GPS.time.hour(),GPS.date.month(),GPS.date.day(),GPS.date.year());
-      adjustTime(utcOffset * 3600); //Adjust time for UTC setting
-      if (DST) {adjustTime(3600);} //Adjust time for DST
+      Serial.print("GPS Time: ");
+      Serial.print(GPS.time.hour());
+      Serial.print(":");
+      Serial.print(GPS.time.minute());
+      Serial.print(":");
+      Serial.println(GPS.time.second());
+
+      Serial.print("Arduino Time: ");
+      Serial.print(hour());
+      Serial.print(":");
+      Serial.print(minute());
+      Serial.print(":");
+      Serial.println(second());;
 
     }
 #else
@@ -126,7 +144,9 @@ bool oldState = false;
 
 
 void setup() {
-
+  gpsRead();
+  delay(100); //Give GPS some time
+  gpsRead();
   
   Wire.begin();
   Serial.begin(9600);
@@ -195,11 +215,6 @@ void setup() {
 
 void loop() {
   analogButtons.check();
-
-    do 
-  {
-    GPS.encode(Serial2.read());
-  } while (Serial2.available());
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
@@ -212,6 +227,8 @@ void loop() {
     cmdPoll(); //Poll for commands via Serial
   #endif
 
+  gpsRead();
+  
   if (timer(1000,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
@@ -244,7 +261,7 @@ void loop() {
     ledUpdate = 0; //Don't analogwrite unless needed
   }
 
-  smartDelay();
+  gpsRead();
   
 } //Loop end
 
@@ -268,7 +285,7 @@ void DSTset() { //Set DST
 }
 
 //Borrowed from the tinyGPS++ example
-static void smartDelay()
+static void gpsRead()
 {
 while (Serial2.available() > 0)
   GPS.encode(Serial2.read());
