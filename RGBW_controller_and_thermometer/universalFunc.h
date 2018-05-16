@@ -1,3 +1,4 @@
+
 //Math Stuff
 
 bool between(int _target, int _bottom, int _top) {
@@ -39,7 +40,7 @@ void timerSetup() {
   }
 }
 
-bool timer(int _interval,int _id) { //_interval in millis, _id in countData
+bool timer(unsigned long _interval,int _id) { //_interval in millis, _id in countData
   if (millisCount(1,_id) >= _interval) {
     millisCount(0,_id);
     return true;

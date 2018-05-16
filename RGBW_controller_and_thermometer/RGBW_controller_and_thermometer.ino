@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.4.1-dev"; //Program Version 
+const String ver = "1.4.2-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev
 
 
@@ -245,7 +245,7 @@ void loop() {
   }
 #endif
 
-  if (timer(86400,2)) { //Update time every 24 hours
+  if (timer(60000,2)) { //Update time every 24 hours
     timeUpdate();
   }
 
@@ -287,8 +287,7 @@ void DSTset() { //Set DST
     DST = true;
     Serial.println(F("DST Enabled")); //Confirm via Serial
     }
-  timeUpdate(); //Update time and recreate alarms
-
+  timeUpdate(); //Update time
 
 }
 
