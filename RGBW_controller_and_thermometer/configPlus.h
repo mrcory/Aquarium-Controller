@@ -5,7 +5,7 @@ boolean enableTimer = true; //Disable or enable timer
 int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
-#define serialCommands true //Disable to save sram and flash space
+#define serialCommands false //Disable to save sram and flash space
 
 //Enable/disable Temperature
 #define tempEnable true
@@ -14,7 +14,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define screenEnable true
 
 //Enable Menu (Not coded yet)
-#define enableMenu true
+#define enableMenu false
 
 //Diable or Enable Temperature warning
 #define tempWarnEnable false
@@ -27,4 +27,6 @@ void additionalWarn() {
 }
 #endif
 
-
+//New debug serial contrtol
+//true will allow Serial.print() feedback.
+#define serial_debug false

@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.4.2-dev"; //Program Version 
+const String ver = "1.4.3-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev
 
 
@@ -20,6 +20,7 @@ const String ver = "1.4.2-dev"; //Program Version
 #include <Adafruit_SSD1306.h>
 #include <EEPROM.h>
 
+
 #include "config.h" //Config file
 
 #if serialCommands
@@ -28,7 +29,7 @@ const String ver = "1.4.2-dev"; //Program Version
 
 //Include library for time keeping.
 #if ds3231 || ds1307 //If using one of these RTCs include lib
-  #include <RTClib.h>
+  #include <RTClib.h>e
 #endif
 
 #if ds1307 //Declar "RTC" for either RTC
@@ -109,7 +110,8 @@ bool oldState = false;
 
       setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
       //adjustTime(utcOffset * 3600); //Adjust time for UTC setting
-      
+
+      #if serial_debug
       Serial.print("GPS Time: ");
       Serial.print(GPS.time.hour());
       Serial.print(":");
@@ -123,6 +125,7 @@ bool oldState = false;
       Serial.print(minute());
       Serial.print(":");
       Serial.println(second());;
+      #endif
 
     }
 #else
@@ -156,7 +159,9 @@ void setup() {
   //setTime(16,28,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print(F("Saved "));
+    #if serial_debug
+      Serial.print(F("Saved "));
+    #endif
     configLoad();
   }
 
@@ -211,6 +216,7 @@ void setup() {
     analogButtons.add(menu);
 #endif
 
+
 }
 
 
@@ -235,17 +241,18 @@ void loop() {
   gpsRead();
 #endif
 
-  if (timer(1000,0) && menuActive == false) { //Adjust LED every second
+  if (timer(1,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
 
 #if tempEnable
-  if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
+  if (timer(tempTime*1,1)) { //Timer for tempUpdate()
     tempUpdate();
   }
 #endif
 
-  if (timer(60000,2)) { //Update time every 24 hours
+  //Update Time
+  if (timer(30,2)) { //Update time every 24 hours
     timeUpdate();
   }
 
