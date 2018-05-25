@@ -1,6 +1,6 @@
 //Menu Stuff
 
-String ledLetter[4] {"R","G","B","W"};
+const char ledLetter[4] {"R","G","B","W"};
 const int menuLine = 0;
 int buttonReturn = 0; //Left -1, right 1, up 2, down -2, back/menu 3
 int saveSet = 0;

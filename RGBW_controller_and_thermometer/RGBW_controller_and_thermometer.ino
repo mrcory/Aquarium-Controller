@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-const String ver = "1.4.3-dev"; //Program Version 
+//const String ver = "1.4.3-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev
 
 
@@ -246,7 +246,7 @@ void loop() {
   }
 
 #if tempEnable
-  if (timer(tempTime*1,1)) { //Timer for tempUpdate()
+  if (timer(tempTime,1)) { //Timer for tempUpdate()
     tempUpdate();
   }
 #endif

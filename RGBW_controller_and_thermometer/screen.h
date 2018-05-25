@@ -32,7 +32,7 @@ if (screenPage == 0) {
     display.print(ledState);
     display.println(" ");
     display.print(F("Version: ")); 
-    display.println(ver);
+    //display.println(ver);
     if (EEPROM.read(0) == 1) { //If position 0 is 1 then there is a saved config
       display.println(F("Config Saved"));
     }

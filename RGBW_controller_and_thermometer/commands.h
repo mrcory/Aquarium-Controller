@@ -78,8 +78,10 @@ void configLoad() { //Load config
  i += sizeof(tempUnit);
  EEPROM.put(i,ledCo);
  i+= sizeof(ledCo);
- Serial.print(F("Config Loaded Size: "));
- Serial.println(i);
+  #if serial_debug
+    Serial.print(F("Config Loaded Size: "));
+    Serial.println(i);
+  #endif
 }
 
 void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually

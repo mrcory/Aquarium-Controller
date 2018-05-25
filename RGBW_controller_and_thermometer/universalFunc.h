@@ -1,3 +1,5 @@
+unsigned long tempNum; //Testing
+
 
 //Math Stuff
 
@@ -46,9 +48,9 @@ void timerSetup() {
 //Check if a timer has gone over the trigger amount in milliseconds
 bool timer(int _interval,int _id) { //_interval in millis, _id in countData
 
-  unsigned long _tempNum = _interval * 1000;
+  tempNum = _interval * 1000;
   
-  if (millisCount(1,_id) >= _tempNum) {
+  if (millisCount(1,_id) >= tempNum) {
     millisCount(0,_id);
     return true;
   } else {
