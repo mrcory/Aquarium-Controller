@@ -1,12 +1,17 @@
 //Menu Stuff
 
- 
-const char ledLetter[] = {'R','G','B','W'};
+const char ledLetter[4] {'R','G','B','W'};
 const int menuLine = 0;
 int buttonReturn = 0; //Left -1, right 1, up 2, down -2, back/menu 3
 int saveSet = 0;
 
+//#define analog_value_margin 15
+
+//#define debounce_frequency_multiplier 4
+
 #include <AnalogButtons.h>
+//#define buttonPin A1
+
 
 
 //Buttons!
@@ -81,6 +86,7 @@ Button menu = Button(700, &menuClick, &menuHold);
 
 void menuRun() {
   if (menuActive) { //If menu is active
+    //drawArrowRIGHT(1,menuLine); //Draw arrow
     
     if (buttonReturn != 0 && menuLine < 5) {
       if (rightClick) {ledC[menuLine]++;}

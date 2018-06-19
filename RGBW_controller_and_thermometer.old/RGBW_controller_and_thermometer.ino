@@ -9,7 +9,7 @@ todo:
    Add button controls
 */
 
-//const String ver = "1.4.3b-dev"; //Program Version 
+//const String ver = "1.4.3-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev
 
 
@@ -19,6 +19,7 @@ todo:
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <EEPROM.h>
+
 
 #include "config.h" //Config file
 
@@ -54,6 +55,7 @@ int ledC[5] = {255,255,255,255,100};
 int ledTarget[5] = {0};
 bool menuActive = false;
 int oldTimer = 100;
+bool lightOveride = false;
 
 int convOnTimes[times];
 int convOffTimes[times];
@@ -62,6 +64,11 @@ int currentTimer = 0;
 
 //int arrowL = 0;
 bool oldState = false;
+
+//const int arrow [2] [6] {
+//  {0,30,60,90,0,65},       //Arrow X locations
+//  {18,18,18,18,51,51}         //Arrow Y locations
+//};
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
@@ -103,7 +110,8 @@ bool oldState = false;
 
       setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
       //adjustTime(utcOffset * 3600); //Adjust time for UTC setting
-      
+
+      #if serial_debug
       Serial.print("GPS Time: ");
       Serial.print(GPS.time.hour());
       Serial.print(":");
@@ -117,6 +125,7 @@ bool oldState = false;
       Serial.print(minute());
       Serial.print(":");
       Serial.println(second());;
+      #endif
 
     }
 #else
@@ -147,9 +156,12 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   updateTimeNow(); //Update time via selected time keeper
+  //setTime(16,28,0,12,8,17);
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print(F("Saved "));
+    #if serial_debug
+      Serial.print(F("Saved "));
+    #endif
     configLoad();
   }
 
@@ -204,13 +216,11 @@ void setup() {
     analogButtons.add(menu);
 #endif
 
+
 }
 
 
 void loop() {
-#if gpsRtc //If using GPS for RTC read the serial buffer in
-  gpsRead();
-#endif
 
 #if enableMenu
   analogButtons.check();
@@ -231,17 +241,18 @@ void loop() {
   gpsRead();
 #endif
 
-  if (timer(1000,0) && menuActive == false) { //Adjust LED every second
+  if (timer(1,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
 
 #if tempEnable
-  if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
-    //tempUpdate();
+  if (timer(tempTime,1)) { //Timer for tempUpdate()
+    tempUpdate();
   }
 #endif
 
-  if (timer(60000,2)) { //Update time every 24 hours
+  //Update Time
+  if (timer(30,2)) { //Update time every 24 hours
     timeUpdate();
   }
 
@@ -283,8 +294,7 @@ void DSTset() { //Set DST
     DST = true;
     Serial.println(F("DST Enabled")); //Confirm via Serial
     }
-  timeUpdate(); //Update time and recreate alarms
-
+  timeUpdate(); //Update time
 
 }
 
