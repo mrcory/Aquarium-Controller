@@ -60,11 +60,11 @@ void colorFade() {
   for (int i=0;i<=5;i++) {{
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
-        ledC[i] += 1;
+        ledC[i] += crossFade;
         ledUpdate = 1;
     }
       if (ledC[i] > ledTarget[i]) {
-        ledC[i] -= 1;
+        ledC[i] -= crossFade;
         ledUpdate = 1;
 }}}}}
 
