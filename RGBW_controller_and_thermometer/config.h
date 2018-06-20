@@ -10,7 +10,7 @@ int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
 
 //Pin Connections 
 const int ledPinR = 2; //Red 
-const int ledPinG = 4; //Green (Pin 4 goes high on start)
+const int ledPinG = 3; //Green 
 const int ledPinB = 6; //Blue
 const int ledPinW = 8; //White channel
 const int tempPin = 10; //DS18B20 pin
