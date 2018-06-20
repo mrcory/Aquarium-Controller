@@ -48,5 +48,18 @@ bool timer(unsigned long _interval,int _id) { //_interval in millis, _id in coun
   }
 }
 
+unsigned long difference(unsigned long _a, unsigned long _b) { //Return difference
+  return _a - _b;
+}
 
+bool rollOver(int _oldNumber, int _number, int _top) {
+  if (_oldNumber == _top) {
+    if (difference(_top,_number) >= 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+ 
+}
 
