@@ -77,19 +77,11 @@ void ledAdjust(int _mode) { //New led controller
       ledUpdate = 1;
     }
 
-    if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
+    //if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
     colorFade();
-    }
+    //}
     colorChange1(false);
   }
-
-  if (_mode == 2) {
-    colorFade();
-    colorChange1(false);
-    ledUpdate = 1;
-    
-  }
-
 
 }
 
