@@ -30,6 +30,10 @@ void controlSetup() {
 
 void colorChange1(bool _force) {
 
+   if (currentTimer != oldTimer) {
+     memcpy(ledTarget,ledCo[currentTimer],5*sizeof(int)); //Load ledTarget from stored values
+   }
+
    if ((currentTimer != oldTimer) || (_force)) {
       //for (int i = 0; i < 5; i++) 
       //  {ledC[i] = ledCo[currentTimer][i]; //Load ledC from stored values
@@ -42,6 +46,8 @@ void colorChange1(bool _force) {
       
 
    }
+
+
 }
 
 void timerCheck() {
@@ -54,11 +60,11 @@ void colorFade() {
   for (int i=0;i<=5;i++) {{
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
-        ledC[i] += fadeStep;
+        ledC[i] += 1;
         ledUpdate = 1;
     }
       if (ledC[i] > ledTarget[i]) {
-        ledC[i] -= fadeStep;
+        ledC[i] -= 1;
         ledUpdate = 1;
 }}}}}
 
