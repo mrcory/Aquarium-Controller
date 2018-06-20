@@ -54,11 +54,11 @@ void colorFade() {
   for (int i=0;i<=5;i++) {{
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
-        ledC[i]++;
+        ledC[i] += fadeStep;
         ledUpdate = 1;
     }
       if (ledC[i] > ledTarget[i]) {
-        ledC[i]--;
+        ledC[i] -= fadeStep;
         ledUpdate = 1;
 }}}}}
 
@@ -83,6 +83,12 @@ void ledAdjust(int _mode) { //New led controller
     colorChange1(false);
   }
 
+  if (_mode == 2) {
+    colorFade();
+    colorChange1(false);
+    ledUpdate = 1;
+    
+  }
 
 
 }
