@@ -36,22 +36,18 @@ boolean DST = false; //Set DST (Can be changed with "dst" via Serial
 const int utcOffset = -5; //Timezone offset from UTC
 
 
-const int times = 4; //How many timers?
+const int times = 3; //How many timers?
 
 int ledOnTimes [5] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
-  {17,00},
-  {19,01} //Off
+  {17,00}
 };
 int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
-  {19,00},
-  {9,29} //Off
+  {19,00}
 };
-
-int offTimer = 3; //Which timer is off mode
 
 
 //Colors (0-255)
@@ -61,8 +57,7 @@ int offTimer = 3; //Which timer is off mode
 int ledCo [5] [5] {
   {255,255,200,255,100},
   {255,255,200,255,120},
-  {255,125,19 ,50 ,50},
-  {0,0,0,0,0}
+  {255,125,19 ,50 ,50}
 };
 
 #include "configPlus.h"

@@ -1,32 +1,19 @@
 //New light controls
 
-bool timerState[times]; //Store true false state for timer triggers
 
 
-int convertTime(int _hour, int _minute) { //Turn hour and minute into a minute count
+int convertTime(int _hour, int _minute) {
   int _converted = (_hour*60)+_minute;
     return _converted;
 }
 
-bool ledCheck() { //Check if between times
+bool ledCheck() {
   int _now = convertTime(hour(),minute());
   bool _state = false;
   
   for (int i=0;i<times;i++) {
-    if (between(_now,convOnTimes[i],convOffTimes[i]) ) {_state = true; currentTimer = i; 
-      if (!timerState[i]) { //If the current timer is not true then make it so.
-        for (int x=0;i<=times;x++) {
-          if (x != i) { //Change all values that are not for the current timer to false
-            timerState[x] = false;
-          }
-        }
-      }
+    if (between(_now,convOnTimes[i],convOffTimes[i])) {_state = true; currentTimer = i;
     }
-  }
-
-  if (currentTimer == offTimer) {
-    ledState = 0;
-    _state = false;
   }
 
   return _state;
@@ -89,15 +76,14 @@ void ledAdjust(int _mode) { //New led controller
       ledP = ledP - fadeStep;
       ledUpdate = 1;
     }
-    
+
+    if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
+    colorFade();
+    }
     colorChange1(false);
   }
 
-  if (_mode == 2) {
-      if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
-      colorFade();
-    }
-  }
+
 
 }
 
