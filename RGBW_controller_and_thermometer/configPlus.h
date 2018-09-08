@@ -2,7 +2,7 @@
 
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 boolean enableTimer = true; //Disable or enable timer
-#define crossFade 1 //Crossfade time in seconds per step
+int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
 #define serialCommands true //Disable to save sram and flash space
@@ -14,10 +14,13 @@ boolean enableTimer = true; //Disable or enable timer
 #define screenEnable true
 
 //Enable Menu (Not coded yet)
-#define enableMenu true
+#define enableMenu false
 
-//Diable or Enable Temperature warning
+//Disable or Enable Temperature warning
 #define tempWarnEnable false
+
+//Disable or Enable Water Fill
+#define waterFillEnable true
 
 #if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
@@ -27,4 +30,10 @@ void additionalWarn() {
 }
 #endif
 
-
+#if waterFillEnable //If water fill is enabled define these
+  #define waterPin 0
+  #define waterSense 0
+  #define waterSense2 0
+  #define waterTimeMin 0
+  #define waterTimeMax 1000
+#endif

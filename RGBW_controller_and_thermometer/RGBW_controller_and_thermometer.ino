@@ -20,6 +20,10 @@ todo:
 #include <Adafruit_SSD1306.h>
 #include <EEPROM.h>
 
+#if waterFillEnable
+  #include "water.h"
+#endif
+
 #include "config.h" //Config file
 
 #if serialCommands
@@ -204,8 +208,6 @@ void setup() {
     analogButtons.add(menu);
 #endif
 
-
-
 }
 
 
@@ -298,4 +300,3 @@ while (gpsSerial.available() > 0)
   GPS.encode(gpsSerial.read());
 }
 #endif
-
