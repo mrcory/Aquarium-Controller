@@ -55,8 +55,8 @@ int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
 
 // Colors for timers       
 int ledCo [5] [5] {
+  {255,255,200,255,80},
   {255,255,200,255,100},
-  {255,255,200,255,120},
   {255,125,19 ,50 ,50}
 };
 
