@@ -9,8 +9,8 @@ todo:
    Add button controls
 */
 
-//const String ver = "1.4.3b-dev"; //Program Version 
-//Last Tested version: 1.4.1-dev
+//const String ver = "1.4.3c-dev"; //Program Version 
+//Last Tested version: 1.4.1-dev (Set for board)
 
 
 #include <TimeLib.h>
