@@ -9,11 +9,11 @@ int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
 int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
 
 //Pin Connections 
-const int ledPinR = 2; //Red 
-const int ledPinG = 3; //Green 
-const int ledPinB = 6; //Blue
-const int ledPinW = 8; //White channel
-const int tempPin = 10; //DS18B20 pin
+const int ledPinR = 9; //Red 9
+const int ledPinG = 10; //Green 10
+const int ledPinB = 11; //Blue 11
+const int ledPinW = 8; //White channel 8
+const int tempPin = 12; //DS18B20 pin
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 //Various Configs
@@ -28,8 +28,8 @@ int fadeTime = 10; //Fade time in minutes 0-255
 #define ds1307 false
 #define gpsRtc true //Requires arduino Mega
 
-
-#define gpsSerial Serial2 //Which Serial to use for the GPS (You could also change to software serial)
+                          //Custom board will use Serial1 (19 and 18)
+#define gpsSerial Serial1 //Which Serial to use for the GPS (You could also change to software serial)
 #define gpsBaud 9600
 
 boolean DST = false; //Set DST (Can be changed with "dst" via Serial
