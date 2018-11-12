@@ -55,9 +55,9 @@ int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
 
 // Colors for timers       
 int ledCo [5] [5] {
-  {255,255,200,255,45},
-  {255,255,200,255,70},
-  {255,125,19 ,50 ,40}
+  {255,255,200,255,30},
+  {255,255,200,255,55},
+  {255,125,19 ,50 ,35}
 };
 
 #include "configPlus.h"
