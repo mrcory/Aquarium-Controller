@@ -18,6 +18,7 @@ todo:
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
 #include <EEPROM.h>
 
 #if waterFillEnable
@@ -46,7 +47,8 @@ todo:
 #endif
 
 //i2c device stuff
-Adafruit_SSD1306 display(4); //display_reset
+Adafruit_SSD1306 display(128, 64, &Wire, 4);
+//Adafruit_SSD1306 display(4); //display_reset
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
