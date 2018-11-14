@@ -11,8 +11,8 @@ todo:
 
 //const String ver = "1.5-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev (Set for board)
-#define screenOLED true
-#define screenTFT false
+#define screenOLED false
+#define screenTFT true
 
 
 #include <TimeLib.h>
@@ -90,13 +90,19 @@ bool oldState = false;
   #endif
 
   #if screenEnable
-
-    #if screenOLED
-     #include "screencommands.h"
-     #include "screen.h" //Screen functions
-    #if enableMenu
-      #include "menu.h"
+    
+    
+      #if screenOLED
+        #include "screencommands.h"
+        #include "screen.h" //Screen functions
+      #if enableMenu
+        #include "menu.h"
+      #endif
     #endif
+
+    #if screenTFT
+      #include "tftcommand.h"
+      #include "tft.h"
     #endif
   #endif
  
@@ -162,14 +168,6 @@ bool oldState = false;
 
 void setup() {
 
-#if screenTFT
-    // Use this initializer if you're using a 1.8" TFT
-  display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
-  analogWrite(2,50);
-
-  display.setRotation(3);
-#endif
-
   //<><><><><><><><>
 #if gpsRtc
   gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
@@ -221,9 +219,7 @@ void setup() {
   #endif
 
   #if screenEnable
-    #if screenOLED
-      screenSetup();
-    #endif
+      screenSetup(); //Perform the setup for either screen
   #endif
 
   controlSetup(); //Convert times and other setup stuff.
@@ -242,7 +238,7 @@ void setup() {
 
 void loop() {
 
-//#include "tft.h"
+activeDisplay(); //Run the display
   
 #if gpsRtc //If using GPS for RTC read the serial buffer in
   gpsRead();

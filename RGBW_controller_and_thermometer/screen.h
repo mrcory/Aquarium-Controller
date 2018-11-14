@@ -67,5 +67,3 @@ if (screenPage == 2) {
   display.display(); //Put the stuff on the display
 #endif
 }
-
-

@@ -12,7 +12,10 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable/disable Screen
 #define screenEnable true
-//#define screenOLED false
+
+//TFT Settings
+int tft_brightness = 50;
+int tft_pin = 2;
 
 
 //Enable Menu (Not coded yet)
