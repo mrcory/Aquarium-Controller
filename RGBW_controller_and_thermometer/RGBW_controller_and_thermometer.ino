@@ -9,10 +9,10 @@ todo:
    Add button controls
 */
 
-//const String ver = "1.4.3c-dev"; //Program Version 
+//const String ver = "1.5-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev (Set for board)
 #define screenOLED true
-//#define screenTFT false
+#define screenTFT false
 
 
 #include <TimeLib.h>
@@ -166,6 +166,8 @@ void setup() {
     // Use this initializer if you're using a 1.8" TFT
   display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
   analogWrite(2,50);
+
+  display.setRotation(3);
 #endif
 
   //<><><><><><><><>
@@ -219,7 +221,9 @@ void setup() {
   #endif
 
   #if screenEnable
-    screenSetup();
+    #if screenOLED
+      screenSetup();
+    #endif
   #endif
 
   controlSetup(); //Convert times and other setup stuff.
@@ -237,6 +241,9 @@ void setup() {
 
 
 void loop() {
+
+//#include "tft.h"
+  
 #if gpsRtc //If using GPS for RTC read the serial buffer in
   gpsRead();
 #endif
@@ -249,7 +256,9 @@ void loop() {
   timerCheck();
 
   #if screenEnable
-    displayUpdate(); //Draw the screen for the display
+    #if screenOLED
+      displayUpdate(); //Draw the screen for the display
+    #endif
   #endif
   
   #if serialCommands
