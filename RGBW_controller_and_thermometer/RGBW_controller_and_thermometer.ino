@@ -56,7 +56,7 @@ todo:
 
 //i2c device stuff
 #if screenOLED
-  Adafruit_SSD1306 display(4); //display_reset
+  Adafruit_SSD1306 display(128, 64, &Wire, 4);
 #endif
 
 #if screenTFT
