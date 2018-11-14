@@ -11,13 +11,22 @@ todo:
 
 //const String ver = "1.4.3c-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev (Set for board)
+#define screenOLED true
+//#define screenTFT false
 
 
 #include <TimeLib.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#if screenTFT
+  #include <Adafruit_ST7735.h>
+#endif
+
+#if screenOLED
+  #include <Adafruit_SSD1306.h>
+#endif
+
 #include <EEPROM.h>
 
 #if waterFillEnable
@@ -46,7 +55,13 @@ todo:
 #endif
 
 //i2c device stuff
-Adafruit_SSD1306 display(4); //display_reset
+#if screenOLED
+  Adafruit_SSD1306 display(4); //display_reset
+#endif
+
+#if screenTFT
+  Adafruit_ST7735 display = Adafruit_ST7735(53, 50, 51, 52, 4);
+#endif
 
 //Internal Variables
 int ledState = 0; //0 for turning off, 1 for turning on
@@ -75,10 +90,13 @@ bool oldState = false;
   #endif
 
   #if screenEnable
-   #include "screencommands.h"
-   #include "screen.h" //Screen functions
+
+    #if screenOLED
+     #include "screencommands.h"
+     #include "screen.h" //Screen functions
     #if enableMenu
       #include "menu.h"
+    #endif
     #endif
   #endif
  
@@ -143,6 +161,13 @@ bool oldState = false;
 
 
 void setup() {
+
+#if screenTFT
+    // Use this initializer if you're using a 1.8" TFT
+  display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
+  analogWrite(2,50);
+#endif
+
   //<><><><><><><><>
 #if gpsRtc
   gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit

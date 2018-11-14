@@ -12,6 +12,8 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable/disable Screen
 #define screenEnable true
+//#define screenOLED false
+
 
 //Enable Menu (Not coded yet)
 #define enableMenu false

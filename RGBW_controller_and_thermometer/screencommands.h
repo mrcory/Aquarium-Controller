@@ -144,8 +144,10 @@ void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
 }
 
 void screenSetup() { //Do all screen setup in a single function
+ #if screenOLED
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
-  display.setTextColor(WHITE); //Set text color so it is visible
+ #endif
+ display.setTextColor(WHITE); //Set text color so it is visible
   delay(250); //Give some time for the temp probe to start
 }
 

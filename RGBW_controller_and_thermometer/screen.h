@@ -1,7 +1,9 @@
 void displayUpdate() { //Update info display
 
+#if screenOLED
   display.clearDisplay(); //Clean the Screen
-  
+#endif
+
 int oldPage;
 
   if (screenPage == 1) { //Screen 1 display
@@ -61,7 +63,9 @@ if (screenPage == 2) {
 //  if (arrowL > 3) {drawArrowUP(arrow[0][arrowL],arrow[1][arrowL]-5);}
 //}
 
+#if screenOLED
   display.display(); //Put the stuff on the display
+#endif
 }
 
 
