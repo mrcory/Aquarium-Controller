@@ -5,8 +5,8 @@
 
 //Temperature Settings
 char tempUnit = 'F'; //What unit do you want? (C or F)
-int tempWarnHi = 82; //High temp warning. (Set with the same unit as above)
-int tempWarnLo = 72; //Low temp warning. (Set with the same unit as above)
+int tempWarnHi = 78; //High temp warning. (Set with the same unit as above)
+int tempWarnLo = 74; //Low temp warning. (Set with the same unit as above)
 
 //Pin Connections 
 const int ledPinR = 9; //Red 9

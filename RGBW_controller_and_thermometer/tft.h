@@ -42,6 +42,9 @@ void activeDisplay() {
   showHiLo(97,0,0.5);
   ledStatus(0,39);
 
+  #if tempWarnEnable //If tempurature warning is enabled draw a warning icon.
+    warnIcon(97,13);
+  #endif
 
   screenReset(0,100,1);
   display.print("LED Status: ");

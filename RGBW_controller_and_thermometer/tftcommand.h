@@ -10,70 +10,12 @@ const unsigned char clockBitmap [] PROGMEM = {
   0x1c, 0x00
 };
 
-//Create array to draw an arrow from
-#if enableMenu
-const int RIGHT [5] [5] {
-  {0,0,1,0,0},
-  {0,1,1,1,0},
-  {1,1,1,1,1},
-  {0,0,1,0,0},
-  {0,0,1,0,0}
+const unsigned char warnBitmap [] PROGMEM = {
+  // 'warn, 9x9px
+  0x1c, 0x00, 0x36, 0x00, 0x63, 0x00, 0x49, 0x00, 0xc9, 0x80, 0x80, 0x80, 0xc9, 0x80, 0x63, 0x00, 
+  0x7f, 0x00
 };
 
-const int LEFT [5] [5] {
-  {0,0,1,0,0},
-  {0,0,1,0,0},
-  {1,1,1,1,1},
-  {0,1,1,1,0},
-  {0,0,1,0,0}
-};
-
-const int DOWN [5] [5] {
-  {0,0,1,0,0},
-  {0,0,1,1,0},
-  {1,1,1,1,1},
-  {0,0,1,1,0},
-  {0,0,1,0,0}
-};
-
-const int UP [5] [5] {
-  {0,0,1,0,0},
-  {0,1,1,0,0},
-  {1,1,1,1,1},
-  {0,1,1,0,0},
-  {0,0,1,0,0}
-};
-
-void drawArrowUP(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<5;y++) {
-    for (int x=0;x<5;x++) {
-      if (UP[x][y] == 1) {
-        display.drawPixel(_X+x,_Y+y,ST77XX_ST77XX_WHITE);
-      }
-    }
-  }
-}
-
-void drawArrowRIGHT(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<5;y++) {
-    for (int x=0;x<5;x++) {
-      if (RIGHT[x][y] == 1) {
-        display.drawPixel(_X+x,_Y+y,ST77XX_WHITE);
-      }
-    }
-  }
-}
-
-void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,RIGHT,LEFT)
-  for (int y=0;y<5;y++) {
-    for (int x=0;x<5;x++) {
-      if (DOWN[x][y] == 1) {
-        display.drawPixel(_X+x,_Y+y,ST77XX_WHITE);
-      }
-    }
-  }
-}
-#endif
 
 void showTime(int _posX,int _posY, float _size) {
   if (!_size) { _size = 1;};
@@ -174,3 +116,13 @@ bool fpsControl(int _rate) {
     return false;
   }
 }
+
+#if tempWarnEnable
+  void warnIcon(int _posX,int _posY) {
+    if (tempWarn) {
+      display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_RED);
+    } else {
+      display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_BLACK);
+    }
+  }
+#endif

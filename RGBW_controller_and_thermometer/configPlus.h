@@ -26,7 +26,7 @@ int tft_pin = 2; //Reset pin(?)
 #define enableMenu false
 
 //Disable or Enable Temperature warning
-#define tempWarnEnable false
+#define tempWarnEnable true
 
 //Disable or Enable Water Fill
 #define waterFillEnable false
