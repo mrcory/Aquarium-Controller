@@ -124,7 +124,7 @@ void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a
       
       
       if (locX - (locX + aLocX) < 0) {
-        display.drawLine(locX + aLocX, locY + i, locX + width, locY + i, ST77XX_BLUE); //Fill rest of bar in background color
+        display.drawLine(locX + aLocX, locY + i, locX + width, locY + i, ST77XX_BLACK); //Fill rest of bar in background color
       }
 
       display.drawLine(locX, locY + i, locX + aLocX, locY + i, ST77XX_WHITE); //Fill visible bar

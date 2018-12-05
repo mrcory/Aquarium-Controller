@@ -14,7 +14,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define screenEnable true
 
 //TFT Settings
-int tft_brightness = 50;
+int tft_brightness = 25; //0-255 Controls a pwm pin
 int tft_pin = 2;
 
 
