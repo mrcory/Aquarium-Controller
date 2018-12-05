@@ -40,7 +40,7 @@ void activeDisplay() {
   showTime(0,24,1.5);
 
   showHiLo(97,0,0.5);
-  ledStatus(0,35);
+  ledStatus(0,39);
 
 
   screenReset(0,100,1);
@@ -54,5 +54,3 @@ void activeDisplay() {
   
   }
 }
-
-

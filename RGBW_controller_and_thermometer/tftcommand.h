@@ -3,6 +3,13 @@
 #define colon ':' //Saving a little space
 
 
+//BITMAPS
+const unsigned char clockBitmap [] PROGMEM = {
+  // 'clock, 9x9px
+  0x08, 0x00, 0x2a, 0x00, 0x49, 0x00, 0x88, 0x80, 0x86, 0x80, 0x80, 0x80, 0x41, 0x00, 0x22, 0x00, 
+  0x1c, 0x00
+};
+
 //Create array to draw an arrow from
 #if enableMenu
 const int RIGHT [5] [5] {
@@ -70,8 +77,9 @@ void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,
 
 void showTime(int _posX,int _posY, float _size) {
   if (!_size) { _size = 1;};
+    display.drawBitmap(_posX,_posY,clockBitmap,9,9,ST77XX_WHITE); //Draw a clock icon that is 9x9
     display.setTextSize(_size);
-    display.setCursor(_posX,_posY); //80,24
+    display.setCursor(_posX+11,_posY+2); //Write the time to the scren with an offset for the clock icon
     if (hour() <10) {display.print("0");}
     display.print(hour());
     display.print(colon);

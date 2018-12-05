@@ -19,14 +19,6 @@ todo:
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
-#if screenTFT
-  #include <Adafruit_ST7735.h>
-#endif
-
-#if screenOLED
-  #include <Adafruit_SSD1306.h>
-#endif
-
 #include <EEPROM.h>
 
 #if waterFillEnable
@@ -35,6 +27,16 @@ todo:
 
 #include "config.h" //Config file
 
+//Include the correct library for the screen used.
+#if screenTFT
+  #include <Adafruit_ST7735.h>
+#endif
+
+#if screenOLED
+  #include <Adafruit_SSD1306.h>
+#endif
+
+//Are we gonna enable serial monitor based control?
 #if serialCommands
   #include <Cmd.h> //Comment out when not enabling Serial commands
 #endif
@@ -54,13 +56,13 @@ todo:
   #include <TinyGPS++.h>
 #endif
 
-//i2c device stuff
+//Setuo our screen.
 #if screenOLED == true
-  Adafruit_SSD1306 display(128, 64, &Wire, 4);
+  Adafruit_SSD1306 display(128, 64, &Wire, 4); //Set the screen resolution
 #endif
 
 #if screenTFT == true
-  Adafruit_ST7735 display = Adafruit_ST7735(53, 50, 51, 52, 4);
+  Adafruit_ST7735 display = Adafruit_ST7735(53, 50, 51, 52, 4); //Set the screen pins
 #endif
 
 //Internal Variables
@@ -68,45 +70,39 @@ int ledState = 0; //0 for turning off, 1 for turning on
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
-int configSaved;
+int configSaved; //Creating a flag
 int ledC[5] = {255,255,255,255,100};
 int ledTarget[5] = {0};
 bool menuActive = false;
 int oldTimer = 100;
-
-int convOnTimes[times];
-int convOffTimes[times];
-int currentTimer = 0;
-
-
-//int arrowL = 0;
-bool oldState = false;
+int convOnTimes[times]; //Stores the timer on times in a function compatible format
+int convOffTimes[times]; //Store the timer off times in a function compatible format
+int currentTimer = 0; //The current timer being used. Determines what colors should be used.
+bool oldState = false; //Just used for triggering
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
 
-  #if tempEnable
-    #include "temp.h" //Tempurature functions and variables
+#if tempEnable
+  #include "temp.h" //Tempurature functions and variables
+#endif
+
+#if screenEnable
+  #if screenOLED == true
+    #include "screencommands.h" //Supporting functions for below.
+    #include "screen.h" //Used for controlling the display.
+  #if enableMenu
+    #include "menu.h" //Menu stuff. (Probably to be removed and replaced.
   #endif
+#endif
 
-  #if screenEnable
-    
-    
-      #if screenOLED == true
-        #include "screencommands.h"
-        #include "screen.h" //Screen functions
-      #if enableMenu
-        #include "menu.h"
-      #endif
-    #endif
-
-    #if screenTFT == true
-      #include "tftcommand.h"
-      #include "tft.h"
-    #endif
+  #if screenTFT == true
+    #include "tftcommand.h" //Supporting functions for below.
+    #include "tft.h" //Used for controlling the display.
   #endif
- 
+#endif
 
+//Some more includes
 #include "commands.h" //Functions for the commands below
 #include "lightmode.h" //New light controls
 
@@ -118,20 +114,16 @@ bool oldState = false;
       setTime((timeNow.hour() + utcOffset),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
       if (DST) {adjustTime(3600);} //Adjust time for DST
     }
-    #elif gpsRtc
+#elif gpsRtc
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
-    
-     gpsRead();
-
-
-    int _utcAdjust = GPS.time.hour() + utcOffset;
-    if (DST) {_utcAdjust++;} //Adjust time for DST
-    if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
-
+      gpsRead();
+      int _utcAdjust = GPS.time.hour() + utcOffset;
+      if (DST) {_utcAdjust++;} //Adjust time for DST
+      if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
       setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
-      //adjustTime(utcOffset * 3600); //Adjust time for UTC setting
-      
+
+      //Print the time to serial monitor
       Serial.print("GPS Time: ");
       Serial.print(GPS.time.hour());
       Serial.print(":");
@@ -144,8 +136,7 @@ bool oldState = false;
       Serial.print(":");
       Serial.print(minute());
       Serial.print(":");
-      Serial.println(second());;
-
+      Serial.println(second());
     }
 #else
   #error "No RTC defined. Check config.h"
@@ -154,13 +145,13 @@ bool oldState = false;
 
 
 
-//#if enableMenu && screenEnable //Set resistor values for buttons here
+#if enableMenu && screenEnable //Set resistor values for buttons here
   #define _upVal 840
   #define _downVal 957
   #define _leftVal 979
   #define _rightVal 930
   #define _menuVal 700
-//#endif
+#endif
 
 
 
