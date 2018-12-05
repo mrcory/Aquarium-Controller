@@ -94,10 +94,10 @@ void showHiLo(int _posX,int _posY, float _size) { //97,0
   display.setTextSize(_size); //Reset cursor size for safety
   display.setCursor(_posX,_posY); //Set cursor position
   display.print("High: ");
-  display.print(tempHi,_size); //Display tempHi with 1 decimal place
+  display.print(tempHi,1); //Display tempHi with 1 decimal place
   display.setCursor(_posX,_posY+8); //Set cursor position
   display.print("Low : ");
-  display.print(tempLo,_size); //Display tempLo with 1 decimal place
+  display.print(tempLo,1); //Display tempLo with 1 decimal place
         
 }
 
