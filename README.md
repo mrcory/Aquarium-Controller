@@ -6,7 +6,8 @@ Can be used without the display and temperature probe as just an led controller.
 This is a project for my aquirium. It is a 4 channel (RGBW) controller and thermometer.
 I am currently running this on a Mega 2560.
 
-Fritzing picture is for my current circut design.
+Fritzing picture is for my old circut design.
+I have moved to a custom PCB.
 
 Using this schematic for the buttons.
 https://raw.githubusercontent.com/rlogiacco/AnalogButtons/master/schematic.png

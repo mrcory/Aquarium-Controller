@@ -11,7 +11,7 @@ todo:
 */
 
 //const String ver = "1.5.1-dev"; //Program Version 
-//Last Tested version: 1.4.1-dev (Set for board)
+//Last Tested version: 1.5.1-dev 
 
 
 #include <TimeLib.h>
