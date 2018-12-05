@@ -312,10 +312,9 @@ void DSTset() { //Set DST
 }
 
 #if gpsRtc
-//Send info to tinyGPS++
-static void gpsRead()
-{
-while (gpsSerial.available() > 0)
-  GPS.encode(gpsSerial.read());
-}
+  //Send info to tinyGPS++
+  static void gpsRead() {
+  while (gpsSerial.available() > 0)
+    GPS.encode(gpsSerial.read());
+  }
 #endif
