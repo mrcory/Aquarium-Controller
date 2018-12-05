@@ -69,7 +69,8 @@ void drawArrowDOWN(int _X,int _Y) { //Draw an arrow from an array. X,Y,(DOWN,UP,
 #endif
 
 void showTime(int _posX,int _posY, int _size) {
-    display.setTextSize(1);
+  if (!_size) { _size = 1;};
+    display.setTextSize(_size);
     display.setCursor(_posX,_posY); //80,24
     display.print(hour());
     display.print(colon);
@@ -144,9 +145,18 @@ void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
 }
 
 void screenSetup() { //Do all screen setup in a single function
+ #if screenOLED
   display.begin(SSD1306_SWITCHCAPVCC, displayAddress); //Initialize with I2C address
-  display.setTextColor(WHITE); //Set text color so it is visible
+ #endif
+ display.setTextColor(WHITE); //Set text color so it is visible
   delay(250); //Give some time for the temp probe to start
 }
 
-
+//Refresh rate controller
+bool fpsControl(int _rate) {
+  if (timer(1000/_rate,4)) {
+    return true;
+  } else {
+    return false;
+  }
+}

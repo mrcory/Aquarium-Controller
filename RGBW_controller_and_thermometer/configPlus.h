@@ -13,6 +13,15 @@ int crossFade = 5; //Crossfade time in seconds per step
 //Enable/disable Screen
 #define screenEnable true
 
+//Choose a screen
+#define screenOLED false
+#define screenTFT true
+
+//TFT Settings
+int tft_brightness = 25; //0-255 Controls a pwm pin
+int tft_pin = 2; //Reset pin(?)
+
+
 //Enable Menu (Not coded yet)
 #define enableMenu false
 
@@ -20,7 +29,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define tempWarnEnable false
 
 //Disable or Enable Water Fill
-#define waterFillEnable true
+#define waterFillEnable false
 
 #if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
