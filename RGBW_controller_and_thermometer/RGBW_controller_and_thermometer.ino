@@ -159,13 +159,13 @@ bool oldState = false; //Just used for triggering
 
 void setup() {
 
-  //<><><><><><><><>
-#if gpsRtc
-  gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
-#endif
+  #if gpsRtc
+    gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
+  #endif
 
   Wire.begin();
   Serial.begin(9600);
+  
   updateTimeNow(); //Update time via selected time keeper
 
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
@@ -174,24 +174,24 @@ void setup() {
   }
 
 
-#if serialCommands //If not defined then don't create commands
+  #if serialCommands //If not defined then don't create commands
 
-  cmdInit(&Serial);
-  //Add Commands
-  cmdAdd("ledpower", ledPower);
-  cmdAdd("ledpowernow", ledPowerNow);
-  cmdAdd("led", ledChange);
-  cmdAdd("dst",DSTset);
-  cmdAdd("save",configSave);
-  cmdAdd("load",configLoad);
-  cmdAdd("configclear",configClear);
-  cmdAdd("color",colorChange1);
-  cmdAdd("time",timeUpdate);
-#endif
+    cmdInit(&Serial);
+    //Add Commands
+    cmdAdd("ledpower", ledPower);
+    cmdAdd("ledpowernow", ledPowerNow);
+    cmdAdd("led", ledChange);
+    cmdAdd("dst",DSTset);
+    cmdAdd("save",configSave);
+    cmdAdd("load",configLoad);
+    cmdAdd("configclear",configClear);
+    cmdAdd("color",colorChange1);
+    cmdAdd("time",updateTimeNow);
+  #endif
 
-#if screenEnable && serialCommands
-  cmdAdd("screen", screenChange);
-#endif
+  #if screenEnable && serialCommands
+    cmdAdd("screen", screenChange);
+  #endif
 
 
 
@@ -199,6 +199,7 @@ void setup() {
   colorChange1(true); //Force a color change
   
   ledP = ledPMin; //Set power to minimum
+  
   if (fadeTime > 0) { //If a fadetime has been set solve for fadeStep to match it
     fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
   } else {
@@ -216,28 +217,28 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-#if enableMenu
-    analogButtons.add(up);
-    analogButtons.add(down);
-    analogButtons.add(right);
-    analogButtons.add(left);
-    analogButtons.add(menu);
-#endif
+  #if enableMenu //If menu is enabled, then add button functions
+      analogButtons.add(up);
+      analogButtons.add(down);
+      analogButtons.add(right);
+      analogButtons.add(left);
+      analogButtons.add(menu);
+  #endif
 
 }
 
 
 void loop() {
 
-activeDisplay(); //Run the display
+  activeDisplay(); //Run the display
+    
+  #if gpsRtc //If using GPS for RTC read the serial buffer in
+    gpsRead();
+  #endif
   
-#if gpsRtc //If using GPS for RTC read the serial buffer in
-  gpsRead();
-#endif
-
-#if enableMenu
-  analogButtons.check();
-#endif
+  #if enableMenu
+    analogButtons.check();
+  #endif
   
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
@@ -252,22 +253,22 @@ activeDisplay(); //Run the display
     cmdPoll(); //Poll for commands via Serial
   #endif
 
-#if gpsRtc //If using GPS for RTC read the serial buffer in
-  gpsRead();
-#endif
+  #if gpsRtc //If using GPS for RTC read the serial buffer in
+    gpsRead();
+  #endif
 
   if (timer(1000,0) && menuActive == false) { //Adjust LED every second
     ledAdjust(1);
   }
 
-#if tempEnable
-  if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
-    tempUpdate();
-  }
-#endif
+  #if tempEnable
+    if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
+      tempUpdate();
+    }
+  #endif
 
   if (timer(60000,2)) { //Update time every 24 hours
-    timeUpdate();
+    updateTimeNow();
   }
 
   //If ledP oversteps power target, set value to power target
@@ -287,16 +288,13 @@ activeDisplay(); //Run the display
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
   }
-
-#if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
-  gpsRead();
-#endif
+  
+  #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
+    gpsRead();
+  #endif
   
 } //Loop end
 
-void timeUpdate() { //Update time and reset alarms
-  updateTimeNow(); //Call time update function created from selected RTC
-}
 
 void DSTset() { //Set DST
   
@@ -308,7 +306,7 @@ void DSTset() { //Set DST
     DST = true;
     Serial.println(F("DST Enabled")); //Confirm via Serial
     }
-  timeUpdate(); //Update time and recreate alarms
+  updateTimeNow(); //Update time and recreate alarms
 
 
 }
