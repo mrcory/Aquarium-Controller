@@ -55,11 +55,11 @@ todo:
 #endif
 
 //i2c device stuff
-#if screenOLED
+#if screenOLED == true
   Adafruit_SSD1306 display(128, 64, &Wire, 4);
 #endif
 
-#if screenTFT
+#if screenTFT == true
   Adafruit_ST7735 display = Adafruit_ST7735(53, 50, 51, 52, 4);
 #endif
 
@@ -92,7 +92,7 @@ bool oldState = false;
   #if screenEnable
     
     
-      #if screenOLED
+      #if screenOLED == true
         #include "screencommands.h"
         #include "screen.h" //Screen functions
       #if enableMenu
@@ -100,7 +100,7 @@ bool oldState = false;
       #endif
     #endif
 
-    #if screenTFT
+    #if screenTFT == true
       #include "tftcommand.h"
       #include "tft.h"
     #endif
@@ -271,7 +271,7 @@ activeDisplay(); //Run the display
 
 #if tempEnable
   if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
-    //tempUpdate();
+    tempUpdate();
   }
 #endif
 
