@@ -1,5 +1,6 @@
 //Math Stuff
 
+//Is _target between _bottom and _top. If so return true.
 bool between(int _target, int _bottom, int _top) {
   if (_target >= _bottom && _target <= _top) {
     return true;
@@ -18,7 +19,7 @@ bool isNegative(int _ref) { //If _ref is negative return true
 unsigned long countData[countDataAmount] = {0}; //Holds count information. (Adjust for numeber of timers needed.)
 //4 = fpsTimer
 
-
+//Used by timer function
 int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
   unsigned long _count;
   if (_mode == 0) {
@@ -33,12 +34,15 @@ int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity num
 
 }
 
+//Will set all variables in timer table to 0.
 void timerSetup() {
   for (int i=0;i<countDataAmount;i++) {
     millisCount(0,i);
   }
 }
 
+//Use this to check if set time has passed.
+//Will return true or false
 bool timer(unsigned long _interval,int _id) { //_interval in millis, _id in countData
   if (millisCount(1,_id) >= _interval) {
     millisCount(0,_id);

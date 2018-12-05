@@ -5,14 +5,13 @@
    Original GitHub Upload: 11/6/2017
    Credits:
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
+   GPS incoming info function taken from example program
 todo:
    Add button controls
 */
 
-//const String ver = "1.5-dev"; //Program Version 
+//const String ver = "1.5.1-dev"; //Program Version 
 //Last Tested version: 1.4.1-dev (Set for board)
-#define screenOLED false
-#define screenTFT true
 
 
 #include <TimeLib.h>
@@ -56,7 +55,7 @@ todo:
   #include <TinyGPS++.h>
 #endif
 
-//Setuo our screen.
+//Setup our screen.
 #if screenOLED == true
   Adafruit_SSD1306 display(128, 64, &Wire, 4); //Set the screen resolution
 #endif
