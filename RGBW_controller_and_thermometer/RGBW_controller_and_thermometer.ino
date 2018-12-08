@@ -10,7 +10,7 @@ todo:
    Add button controls
 */
 
-//const String ver = "1.5.1-dev"; //Program Version
+//const String ver = "1.5.2-dev"; //Program Version
 //Last Tested version: 1.5.1-dev
 
 
