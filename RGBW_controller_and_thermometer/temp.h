@@ -36,11 +36,12 @@ void tempUpdate() { //Update temp and display
     temp = temp * -1;
   }
 
-#if tempWarnEnable
-  if (tempHi >= tempWarnHi || tempLo <= tempWarnLo) {
-    tempWarn = true;
-  }
-#endif
+  #if tempWarnEnable
+    if (tempHi >= tempWarnHi || tempLo <= tempWarnLo) {
+      tempWarn = true;
+      additionalWarn(); //Run additional temp warning commands
+    }
+  #endif
 }
 
   void tempRngRst() {
