@@ -30,6 +30,7 @@ void showTime(int _posX,int _posY, float _size) {
     display.print(colon);
     if (second() <10) {display.print("0");}
     display.print(second());
+    display.print(" "); //Cover errant extra 0 that shows up by morning. (Lazy fix)
 }
 
 void showHiLo(int _posX,int _posY, float _size) { //97,0
