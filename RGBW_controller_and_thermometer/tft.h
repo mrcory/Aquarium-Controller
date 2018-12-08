@@ -1,19 +1,3 @@
-/*
-
-
-void displayTemp(_x,_y) {
-  display.print("Temp ");
-}
-
-void activeDisplay() {
-  showTemp(0,0);
-}
-
-
-
-display.print("This is a test.");
-*/ 
-
 //Setup TFT
 void screenSetup() { 
   display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
@@ -23,10 +7,7 @@ void screenSetup() {
 }
 
 void screenReset(int _X, int _Y, float _SIZE) {
-  //display.setTextWrap(false);
-  //display.fillScreen(ST77XX_BLACK);
   display.setCursor(_X,_Y);
-  //display.setTextColor(ST77XX_RED);
   display.setTextSize(_SIZE);
 }
 
