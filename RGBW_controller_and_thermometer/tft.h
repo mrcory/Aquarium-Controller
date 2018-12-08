@@ -33,7 +33,7 @@ void screenReset(int _X, int _Y, float _SIZE) {
 
 
 void activeDisplay() {
-  if (timer(1000,4)) { //Set the refresh rate
+  if (fpsControl(4)) { //Set the refresh rate
   display.setTextColor(ST7735_WHITE, ST7735_BLACK); //So you don't need to clear the screen
   
   showTemp(0,0,1.5);
