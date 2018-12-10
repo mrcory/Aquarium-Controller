@@ -88,25 +88,25 @@ void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
   display.setTextSize(1);
   display.drawChar(_X, _Y, 'R', ST77XX_WHITE, ST77XX_BLACK, 1); //Bar label
   display.setCursor(_X+8, _Y); display.print(ledC[0]); //Display value digits
-  drawHBar(_X,_Y + 8, 4, 25, map(ledC[0], 0, 255, 0, 100)); //Testing progress bar
+  drawHBar(_X,_Y + 8, 3, 25, map(ledC[0], 0, 255, 0, 100)); //Testing progress bar
 
   display.drawChar(_X+30,_Y, 'G', ST77XX_WHITE, ST77XX_BLACK, 1); //Bar label
   display.setCursor(_X+38, _Y); display.print(ledC[1]); //Display value digits
-  drawHBar(_X+30,_Y + 8, 4, 25, map(ledC[1], 0, 255, 0, 100)); //Testing progress bar
+  drawHBar(_X+30,_Y + 8, 3, 25, map(ledC[1], 0, 255, 0, 100)); //Testing progress bar
 
   display.drawChar(_X+60,_Y, 'B', ST77XX_WHITE, ST77XX_BLACK, 1); //Bar label
   display.setCursor(_X+68,_Y); display.print(ledC[2]); //Display value digits
-  drawHBar(_X+60,_Y+ 8, 4, 25, map(ledC[2], 0, 255, 0, 100)); //Testing progress bar
+  drawHBar(_X+60,_Y+ 8, 3, 25, map(ledC[2], 0, 255, 0, 100)); //Testing progress bar
 
   display.drawChar(_X+90,_Y, 'W', ST77XX_WHITE, ST77XX_BLACK, 1); //Bar label
   display.setCursor(_X+98,_Y); display.print(ledC[3]); //Display value digits
-  drawHBar(_X+90,_Y + 8, 4, 25, map(ledC[3], 0, 255, 0, 100)); //Testing progress bar
+  drawHBar(_X+90,_Y + 8, 3, 25, map(ledC[3], 0, 255, 0, 100)); //Testing progress bar
 
   display.drawChar(0,_Y + 15, 'P', ST77XX_WHITE, ST77XX_BLACK, 1);
-  drawHBar(_X+9,_Y + 18, 4, 50, map(ledP, 0, 255, 0, 100));
+  drawHBar(_X+9,_Y + 18, 3, 50, map(ledP, 0, 255, 0, 100));
 
   display.drawChar(_X+65,_Y + 15, 'B', ST77XX_WHITE, ST77XX_BLACK, 1);
-  drawHBar(_X+74,_Y + 18, 4, 50, map(ledC[4], 0, 255, 0, 100));
+  drawHBar(_X+74,_Y + 18, 3, 50, map(ledC[4], 0, 255, 0, 100));
 }
 
 //Refresh rate controller

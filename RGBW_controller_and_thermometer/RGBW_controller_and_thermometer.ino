@@ -117,7 +117,6 @@ bool firstRun = true; //Label for first loop
 #elif gpsRtc
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
-      gpsRead();
       if (GPS.time.isValid() == 1) {
         int _utcAdjust = GPS.time.hour() + utcOffset;
         if (DST) {_utcAdjust++;} //Adjust time for DST
