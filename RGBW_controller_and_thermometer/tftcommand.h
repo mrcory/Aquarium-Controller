@@ -110,7 +110,7 @@ void ledStatus(int _X, int _Y) { //Show LED value bars <location X, location Y>
 }
 
 //Refresh rate controller
-bool fpsControl(int _rate) {
+bool fpsControl(float _rate) {
   if (timer(1000/_rate,4)) {
     return true;
   } else {
