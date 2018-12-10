@@ -21,6 +21,10 @@ int crossFade = 5; //Crossfade time in seconds per step
 int tft_brightness = 25; //0-255 Controls a pwm pin
 int tft_pin = 2; //Reset pin(?)
 
+//OLED Settings
+#define oled_width 128
+#define oled_height 64
+
 
 //Enable Menu (Not coded yet)
 #define enableMenu false

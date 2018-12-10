@@ -120,7 +120,7 @@ bool fpsControl(int _rate) {
 
 #if tempWarnEnable
   void warnIcon(int _posX,int _posY) {
-    if (tempWarn) {
+    if (tempWarn == true) {
       display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_RED);
     } else {
       display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_BLACK);

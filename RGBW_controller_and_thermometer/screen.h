@@ -20,7 +20,7 @@ void displayUpdate() { //Update info display
         if (tempWarn == true) {
           display.setCursor(80,32);
           display.print(F("Temp WARN"));
-          
+          additionalWarn(); //Run additional temp warning commands
         }
       #endif
   

@@ -57,7 +57,7 @@ todo:
 
 //Setup our screen.
 #if screenOLED == true
-  Adafruit_SSD1306 display(128, 64, &Wire, 4); //Set the screen resolution
+  Adafruit_SSD1306 display(oled_width, oled_height, &Wire, 4); //Set the screen resolution
 #endif
 
 #if screenTFT == true
@@ -70,7 +70,7 @@ int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int configSaved; //Creating a flag
-int ledC[5] = {255,255,255,255,100};
+int ledC[5] = {255,255,255,255,100}; //Fill with a default value
 int ledTarget[5] = {0};
 bool menuActive = false;
 int oldTimer = 100;
@@ -78,6 +78,7 @@ int convOnTimes[times]; //Stores the timer on times in a function compatible for
 int convOffTimes[times]; //Store the timer off times in a function compatible format
 int currentTimer = 0; //The current timer being used. Determines what colors should be used.
 bool oldState = false; //Just used for triggering
+bool firstRun = true; //Label for first loop
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
@@ -117,25 +118,32 @@ bool oldState = false; //Just used for triggering
   TinyGPSPlus GPS; //If using GPS for time decare as RTC
     void updateTimeNow() {
       gpsRead();
-      int _utcAdjust = GPS.time.hour() + utcOffset;
-      if (DST) {_utcAdjust++;} //Adjust time for DST
-      if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
-      setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
-
-      //Print the time to serial monitor
-      Serial.print("GPS Time: ");
-      Serial.print(GPS.time.hour());
-      Serial.print(":");
-      Serial.print(GPS.time.minute());
-      Serial.print(":");
-      Serial.println(GPS.time.second());
-
-      Serial.print("Arduino Time: ");
-      Serial.print(hour());
-      Serial.print(":");
-      Serial.print(minute());
-      Serial.print(":");
-      Serial.println(second());
+      if (GPS.time.isValid() == 1) {
+        int _utcAdjust = GPS.time.hour() + utcOffset;
+        if (DST) {_utcAdjust++;} //Adjust time for DST
+        if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
+        setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
+  
+        //Print the time to serial monitor
+        Serial.print(F("Is Valid? "));
+        Serial.println(GPS.time.isValid());
+        
+        Serial.print("GPS Time: ");
+        Serial.print(GPS.time.hour());
+        Serial.print(":");
+        Serial.print(GPS.time.minute());
+        Serial.print(":");
+        Serial.println(GPS.time.second());
+  
+        Serial.print("Arduino Time: ");
+        Serial.print(hour());
+        Serial.print(":");
+        Serial.print(minute());
+        Serial.print(":");
+        Serial.println(second());
+      } else {
+        Serial.println(F("GPS Time not valid!"));
+      }
     }
 #else
   #error "No RTC defined. Check config.h"
@@ -174,7 +182,7 @@ void setup() {
 
 
   #if serialCommands //If not defined then don't create commands
-
+                     //See top od commands.h for reference
     cmdInit(&Serial);
     //Add Commands
     cmdAdd("ledpower", ledPower);
@@ -206,7 +214,7 @@ void setup() {
   }
 
   #if tempEnable
-    tempSetup();
+    tempSetup(); //Perform the needed setup actions from temp.h
   #endif
 
   #if screenEnable
@@ -228,8 +236,10 @@ void setup() {
 
 
 void loop() {
-
-  activeDisplay(); //Run the display
+  
+  #if screenEnable
+    activeDisplay(); //Run the display
+  #endif
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in
     gpsRead();
@@ -241,12 +251,6 @@ void loop() {
 
   //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
-
-  #if screenEnable
-    #if screenOLED
-      displayUpdate(); //Draw the screen for the display
-    #endif
-  #endif
 
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -266,7 +270,7 @@ void loop() {
     }
   #endif
 
-  if (timer(60000,2)) { //Update time every 24 hours
+  if (timer(timeToUpdate,2)) { //Update time
     updateTimeNow();
   }
 

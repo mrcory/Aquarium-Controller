@@ -24,7 +24,7 @@ void activeDisplay() {
   ledStatus(0,39);
 
   #if tempWarnEnable //If tempurature warning is enabled draw a warning icon.
-    warnIcon(97,13);
+    warnIcon(97,18);
   #endif
 
   screenReset(0,100,1);
