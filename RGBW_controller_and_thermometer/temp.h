@@ -26,7 +26,7 @@ void tempUpdate() { //Update temp and display
   if (tempHi <= temp) {
     tempHi = temp;
     }
-  if (tempLo >= temp) {
+  if (tempLo > temp && temp > 0) {
     tempLo = temp;
     }
 
