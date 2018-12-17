@@ -1,4 +1,5 @@
 //Menu Stuff
+//Will not be updated. Swapping to MQTT control
 
  
 const char ledLetter[] = {'R','G','B','W'};
@@ -131,6 +132,3 @@ void MenuPageOne() {
   
   menuRun();
 }
-
-
-
