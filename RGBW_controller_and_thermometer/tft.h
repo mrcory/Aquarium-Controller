@@ -36,10 +36,10 @@ void activeDisplay() {
   if (screenFirstRun == true) {
     screenReset(0,100,1);
     display.print("LED Status: ");
-    screenFirstRun = false
+    screenFirstRun = false;
   }
 
-  screenReset(72,100,1)
+  screenReset(72,100,1);
   if (ledState == 1) { 
     display.print("ON "); //needs to be 3 characters long to clear the screen
   } else {
