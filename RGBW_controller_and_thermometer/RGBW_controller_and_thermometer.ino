@@ -236,9 +236,7 @@ void setup() {
 
 void loop() {
   
-  #if screenEnable
-    activeDisplay(); //Run the display
-  #endif
+
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in
     gpsRead();
@@ -293,6 +291,10 @@ void loop() {
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
     gpsRead();
+  #endif
+
+  #if screenEnable
+    activeDisplay(); //Run the display
   #endif
 
 } //Loop end

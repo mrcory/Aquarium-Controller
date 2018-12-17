@@ -23,9 +23,9 @@ void activeDisplay() {
   showTime(0,24,1.5);
 
   showHiLo(97,0,0.5);
-  if (ledUpdate == 1) { //If leds are updateing, update the ledStatus bars
+  //if (ledStatus == 1) { //If leds are updateing, update the ledStatus bars
     ledStatus(0,39);
-  }
+  //}
   
   #if tempWarnEnable //If tempurature warning is enabled draw a warning icon.
     warnIcon(97,18);
