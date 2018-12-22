@@ -10,7 +10,7 @@ todo:
    Add button controls
 */
 
-//const String ver = "1.5.2-dev"; //Program Version
+//const String ver = "2.0-dev"; //Program Version
 //Last Tested version: 1.5.1-dev
 
 
@@ -102,9 +102,23 @@ bool firstRun = true; //Label for first loop
   #endif
 #endif
 
+//----WIFI Variabeles
+#if wifiEnable
+  char mySSID;
+  char wifiPassword;
+  char blynkToken;
+#endif
+
+
 //Some more includes
 #include "commands.h" //Functions for the commands below
 #include "lightmode.h" //New light controls
+
+
+#if wifiEnable
+  #include "wifi.h" //Blynk and wifi related stuff
+#endif
+
 
 
 #if ds3231 || ds1307 //If ds3231 or ds1307 being used, create proper timeUpdate function
@@ -193,6 +207,13 @@ void setup() {
     cmdAdd("configclear",configClear);
     cmdAdd("color",colorChange1);
     cmdAdd("time",updateTimeNow);
+
+    #if wifiEnable
+      cmdAdd("pass",wifiPass);
+      cmdAdd("ssid",wifiSSID);
+      cmdAdd("token",blynkSet);
+   #endif
+   
   #endif
 
   #if screenEnable && serialCommands
