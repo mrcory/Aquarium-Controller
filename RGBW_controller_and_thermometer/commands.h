@@ -4,12 +4,14 @@
  *  led <val> <val2> <val3> <val4> <val5> | <val>Red <val2>Green <val3>Blue <val4>Brightness [0-255] (Set all at once)
  *  ledpower | Turn leds on and off
  *  ledpowernow | Turn leds on and off instantly
- *  screen <val> | Change screen display
+ *  screen <val> | Change screen display - depreciated
  *  dst | Enable/Disable DST offset
  *  save | Save config
  *  load | Load config
  *  configclear | Clear config
  *  temprst | Reset temperature range
+ *  ssid <ssid> | Set your SSID
+ *  wifipass <password> | Set the password for wifi
  */
 
 
@@ -21,7 +23,7 @@ void ledPower() {
     int oldPage = screenPage; //Store old page location
     screenPage = 2; //Change page to "LED ON(OFF)"
    #if screenOLED 
-    activeDisplay(); delay(500); //Update and display for 1 second 
+    activeDisplay(); delay(500); //Update and display 
    #endif
     screenPage = oldPage; //Restore old page location
   #endif
@@ -48,8 +50,8 @@ void ledPowerNow() { //Instant on/off
 #endif
 
 void configSave() { //Save config
- EEPROM.write(0,1);
- int i=5;
+ EEPROM.write(0,1); //First bit is used as a flag for autoloading
+ int i=5; //Offset by 5
  EEPROM.put(i,ledC);
  i += sizeof(ledC);
  EEPROM.put(i,DST);
@@ -62,12 +64,18 @@ void configSave() { //Save config
  i += sizeof(tempUnit);
  EEPROM.put(i,ledCo);
  i+= sizeof(ledCo);
+ #if wifiEnable //If using wifi we need to save these values
+   EEPROM.put(i,mySSID);
+   i+= sizeof(mySSID);
+   EEPROM.put(wifiPassword;
+   i+= sizeof(wifiPassword);
+ #endif
  Serial.print(F("Config Saved Size: "));
  Serial.println(i);
 }
 
 void configLoad() { //Load config
- int i = 5;
+ int i = 5; //Offset by 5
  EEPROM.get(i,ledC);
  i += sizeof(ledC);
  EEPROM.get(i,DST);
@@ -80,6 +88,12 @@ void configLoad() { //Load config
  i += sizeof(tempUnit);
  EEPROM.put(i,ledCo);
  i+= sizeof(ledCo);
+ #if wifiEnable
+   EEPROM.put(i,mySSID);
+   i+= sizeof(mySSID);
+   EEPROM.put(wifiPassword;
+   i+= sizeof(wifiPassword);
+ #endif
  Serial.print(F("Config Loaded Size: "));
  Serial.println(i);
 }
@@ -97,6 +111,3 @@ void lightTimerAdd(int _timer) {
         {ledCo[_timer][a] = ledC[a];
       }
 }
-
-
-
