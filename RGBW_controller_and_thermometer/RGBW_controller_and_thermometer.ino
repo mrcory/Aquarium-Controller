@@ -120,9 +120,9 @@ bool ledHold = false; //Hold led adjustment
 
 
 #if wifiEnable
-#include <ESP8266_Lib.h>
-#include <BlynkSimpleShieldEsp8266.h>
-#include <Ethernet.h>
+  #include <ESP8266_Lib.h>
+  #include <BlynkSimpleShieldEsp8266.h>
+  #include <Ethernet.h>
   #include <Blynk.h>
   #include "wifi.h" //Blynk and wifi related stuff
 
@@ -151,10 +151,6 @@ bool ledHold = false; //Hold led adjustment
         if (DST) {_utcAdjust++;} //Adjust time for DST
         if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
         setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
-  
-        //Print the time to serial monitor
-        Serial.print(F("Is Valid? "));
-        Serial.println(GPS.time.isValid());
         
         Serial.print("GPS Time: ");
         Serial.print(GPS.time.hour());
