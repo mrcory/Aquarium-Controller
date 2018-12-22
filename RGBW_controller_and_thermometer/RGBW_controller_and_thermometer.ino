@@ -1,5 +1,4 @@
 
-
 /*LED Controller for Aquarium
    by: Cory McGahee
    Free for non-commercial use only.
@@ -21,6 +20,8 @@ todo:
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <EEPROM.h>
+
+
 
 #if waterFillEnable
   #include "water.h"
@@ -81,6 +82,7 @@ int convOffTimes[times]; //Store the timer off times in a function compatible fo
 int currentTimer = 0; //The current timer being used. Determines what colors should be used.
 bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
+bool ledHold = false; //Hold led adjustment
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
@@ -120,10 +122,16 @@ bool firstRun = true; //Label for first loop
 #if wifiEnable
 #include <ESP8266_Lib.h>
 #include <BlynkSimpleShieldEsp8266.h>
+#include <Ethernet.h>
   #include <Blynk.h>
   #include "wifi.h" //Blynk and wifi related stuff
 
+
+
   ESP8266 wifi(&espSerial);
+
+
+
 #endif
 
 
@@ -185,6 +193,8 @@ bool firstRun = true; //Label for first loop
 
 
 void setup() {
+
+
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
@@ -261,7 +271,15 @@ void setup() {
 
   #if wifiEnable
     espSerial.begin(espBaud);
-    Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
+      #ifdef blynk_server
+        Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_server,blynk_port);
+        #else
+      #ifdef blynk_ip
+        Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_ip,blynk_port);
+      #else
+        #error "No server target. Check configPlus.h for server."
+      #endif
+    #endif
   #endif
 
 }
@@ -293,12 +311,19 @@ void loop() {
   #endif
 
   if (timer(1000,0) && menuActive == false) { //Adjust LED every second
-    ledAdjust(1);
-  }
+    if (!ledHold) {
+      ledAdjust(1);
+    } else {
+      ledAdjust(0);
+  }}
 
   #if tempEnable
     if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
       tempUpdate();
+      
+      #if wifiEnable
+        sendTemp(); //Send temp to Blynk
+      #endif
     }
   #endif
 
