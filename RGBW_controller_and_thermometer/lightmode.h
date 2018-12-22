@@ -35,9 +35,6 @@ void colorChange1(bool _force) {
    }
 
    if ((currentTimer != oldTimer) || (_force)) {
-      //for (int i = 0; i < 5; i++) 
-      //  {ledC[i] = ledCo[currentTimer][i]; //Load ledC from stored values
-      //}
       ledUpdate = 1;
       Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
 
@@ -83,9 +80,7 @@ void ledAdjust(int _mode) { //New led controller
       ledUpdate = 1;
     }
 
-    //if (timer(crossFade*1000,3)) { //Every [crossfade]*1000 milliseconds change by one step
     colorFade();
-    //}
     colorChange1(false);
   }
 

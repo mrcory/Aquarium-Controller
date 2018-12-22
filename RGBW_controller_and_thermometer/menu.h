@@ -57,13 +57,13 @@ bool menuHold() {
   
 }
 
-//#if enableMenu && screenEnable //Set resistor values for buttons here
+//Set resistor values for buttons here
   #define _upVal 840
   #define _downVal 957
   #define _leftVal 979
   #define _rightVal 930
   #define _menuVal 700
-//#endif
+
 
 AnalogButtons analogButtons(A1, INPUT);
 
@@ -72,12 +72,6 @@ Button down = Button(957, &downClick);
 Button right = Button(930, &rightClick);
 Button left = Button(979, &leftClick);
 Button menu = Button(700, &menuClick, &menuHold);
-
-  //#if enableMenu && screenEnable
-
-  //#endif
-
-
 
 
 void menuRun() {
