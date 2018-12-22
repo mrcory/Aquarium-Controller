@@ -21,6 +21,8 @@ Libraries Used:
 	#include <Adafruit_SSD1306.h>  
 	#include <EEPROM.h>  
 	#include <AnalogButtons.h>  
+	Blynk Library
+	
 
 
 Features:
@@ -40,6 +42,7 @@ Features:
   Other
 	
 	Controllable via serial monitor
+	Blynk Support (In Progress)
 
 Hardware Used
 
@@ -49,6 +52,7 @@ Hardware Used
 	x1 DS18B20 (Waterproof)
 	x1 I2C OLED SSD1306 (128x64)
 	x1 Whatever Case (I will be 3d printing one after internal hardware is final.)
+	x1 ESP8266
 	(More to be listed)
 	
 Time Keeping Hardware
