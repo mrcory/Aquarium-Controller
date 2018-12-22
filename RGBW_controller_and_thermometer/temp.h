@@ -55,6 +55,6 @@ void tempSetup() { //Do all temp setup in one function
   tempRngRst(); //Reset temp min/max range
   #if serialCommands
     cmdAdd("temprst",tempRngRst);
+    
   #endif
 }
-
