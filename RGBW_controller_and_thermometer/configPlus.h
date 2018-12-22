@@ -29,9 +29,6 @@ int tft_pin = 2; //Backlight Pin
 //Enable Menu (Not coded yet)
 #define enableMenu false
 
-//Enable WIFI (We are using Blynk
-#define wifiEnable false
-
 //Disable or Enable Temperature warning
 #define tempWarnEnable false
 
