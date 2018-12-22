@@ -22,12 +22,13 @@ todo:
 #include <EEPROM.h>
 
 
-
 #if waterFillEnable
   #include "water.h"
 #endif
 
+
 #include "config.h" //Config file
+
 
 //Include the correct library for the screen used.
 #if screenTFT
@@ -40,7 +41,7 @@ todo:
 
 //Are we gonna enable serial monitor based control?
 #if serialCommands
-  #include <Cmd.h> //Comment out when not enabling Serial commands
+  #include <Cmd.h>
 #endif
 
 //Include library for time keeping.
@@ -72,7 +73,6 @@ int ledState = 0; //0 for turning off, 1 for turning on
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
-int configSaved; //Creating a flag
 int ledC[5] = {255,255,255,255,100}; //Fill with a default value
 int ledTarget[5] = {0};
 bool menuActive = false;
@@ -158,14 +158,11 @@ void setup() {
 
   updateTimeNow(); //Update time via selected time keeper
 
-  if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print(F("Saved "));
-    configLoad();
-  }
+  checkConfig(); //Check if we need to load the config at start
 
 
   #if serialCommands //If not defined then don't create commands
-                     //See top od commands.h for reference
+                     //See top of commands.h for reference
     cmdInit(&Serial);
     //Add Commands
     cmdAdd("ledpower", ledPower);

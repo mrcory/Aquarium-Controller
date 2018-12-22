@@ -105,6 +105,13 @@ void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loade
     Serial.println(F("Config Cleared"));
   }
 
+void checkConfig() { //Check if we need to load the config at start
+  if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
+    Serial.print(F("Saved "));
+    configLoad();
+  }
+}
+
 //-------------------------------------------------
 
 void lightTimerAdd(int _timer) {
