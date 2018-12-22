@@ -148,6 +148,17 @@ bool ledHold = false; //Hold led adjustment
 void setup() {
 
 
+  //------------------
+  //PWM Stuff
+  //https://forum.arduino.cc/index.php?topic=72092.0
+
+  int myEraser = 7;
+  TCCR2B &= ~myEraser;
+
+  int myPrescaler = 2; //Setting to 4000Hz
+  TCCR2B |= myPrescaler;
+
+
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
