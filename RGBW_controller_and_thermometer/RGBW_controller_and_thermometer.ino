@@ -7,6 +7,7 @@
    Credits:
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
    GPS incoming info function taken from example program
+   PWM Frequency code: https://forum.arduino.cc/index.php?topic=72092.0 : valerio_sperati
 todo:
    Add button controls
 */
@@ -147,16 +148,20 @@ bool ledHold = false; //Hold led adjustment
 
 void setup() {
 
-
+#if usingMega
   //------------------
   //PWM Stuff
   //https://forum.arduino.cc/index.php?topic=72092.0
+  //Thanks to: valerio_sperati
 
   int myEraser = 7;
   TCCR2B &= ~myEraser;
 
   int myPrescaler = 2; //Setting to 4000Hz
   TCCR2B |= myPrescaler;
+
+  Serial.print(F("PWM Adjusted"));
+#endif
 
 
 
