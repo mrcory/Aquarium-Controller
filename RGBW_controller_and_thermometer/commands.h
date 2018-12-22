@@ -10,8 +10,10 @@
  *  load | Load config
  *  configclear | Clear config
  *  temprst | Reset temperature range
+ *  ------------ Wifi Dependent
  *  ssid <ssid> | Set your SSID
  *  wifipass <password> | Set the password for wifi
+ *  token <Blynk Token> | Set the Blynk server token
  */
 
 
@@ -67,7 +69,7 @@ void configSave() { //Save config
  #if wifiEnable //If using wifi we need to save these values
    EEPROM.put(i,mySSID);
    i+= sizeof(mySSID);
-   EEPROM.put(wifiPassword;
+   EEPROM.put(i,wifiPassword);
    i+= sizeof(wifiPassword);
  #endif
  Serial.print(F("Config Saved Size: "));
@@ -91,7 +93,7 @@ void configLoad() { //Load config
  #if wifiEnable
    EEPROM.put(i,mySSID);
    i+= sizeof(mySSID);
-   EEPROM.put(wifiPassword;
+   EEPROM.put(i,wifiPassword);
    i+= sizeof(wifiPassword);
  #endif
  Serial.print(F("Config Loaded Size: "));
