@@ -1,5 +1,5 @@
 //Oh Yeah, we are gonna get some wifi in here. (Once I have the hardware)
-
+//V5 - Temp
 
 
 //Some Supporting functions
@@ -28,3 +28,10 @@
 #else
   #warning "Serial Commands are required to setup wifi."
 #endif
+
+//Blynk timer functions
+BlynkTimer temperature; //We will be pushing the current temperature so that it can be logged in a graph
+
+void sendTemp() {
+  Blynk.virtualWrite(V5,temp);
+}

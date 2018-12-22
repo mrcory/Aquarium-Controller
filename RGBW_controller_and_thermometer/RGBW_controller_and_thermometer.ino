@@ -1,3 +1,5 @@
+
+
 /*LED Controller for Aquarium
    by: Cory McGahee
    Free for non-commercial use only.
@@ -116,7 +118,12 @@ bool firstRun = true; //Label for first loop
 
 
 #if wifiEnable
+#include <ESP8266_Lib.h>
+#include <BlynkSimpleShieldEsp8266.h>
+  #include <Blynk.h>
   #include "wifi.h" //Blynk and wifi related stuff
+
+  ESP8266 wifi(&espSerial);
 #endif
 
 
@@ -252,12 +259,19 @@ void setup() {
       analogButtons.add(menu);
   #endif
 
+  #if wifiEnable
+    espSerial.begin(espBaud);
+    Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
+  #endif
+
 }
 
 
 void loop() {
   
-
+  #if wifiEnable
+    Blynk.run();
+  #endif
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in
     gpsRead();

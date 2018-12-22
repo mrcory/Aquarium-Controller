@@ -32,6 +32,14 @@ int tft_pin = 2; //Backlight Pin
 //Enable WIFI (We are using Blynk
 #define wifiEnable true
 
+//ESP Serial and Baud
+#define espSerial Serial3
+#define espBaud 9600
+
+//Blynk server and port
+#define blynk_server
+#define blynk_port
+
 //Disable or Enable Temperature warning
 #define tempWarnEnable false
 
