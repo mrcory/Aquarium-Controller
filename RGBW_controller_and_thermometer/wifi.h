@@ -1,24 +1,29 @@
 //Oh Yeah, we are gonna get some wifi in here. (Once I have the hardware)
 
-char mySSID;
-char myPassword;
 
 
 //Some Supporting functions
 
 #if serialCommands
-  void wifiSSID(_ssid) {
-    mySSID = _ssid; //Set SSID
+
+
+
+  void wifiSSID(int arg_cnt, char **args) {
+    mySSID = args[1]; //Set SSID
     configSave(); //Save the config
   }
 
-  void wifiPass(_password) {
-    myPassword = _password; //Set password
+  void wifiPass(int arg_cnt, char **args) {
+    wifiPassword = args[1]; //Set password
     configSave(); //Save the config
   }
 
-  cmdAdd("ssid",wifiSSID);
-  cmdAdd("wifipass",wifiPass);
+  void blynkSet(int arg_cnt, char **args){
+    blynkToken = args[1]; //Set Blynk server token
+    configSave(); //Save the config
+  }
+
+
 
 #else
   #warning "Serial Commands are required to setup wifi."
