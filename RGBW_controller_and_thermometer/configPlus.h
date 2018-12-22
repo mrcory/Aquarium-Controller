@@ -37,8 +37,9 @@ int tft_pin = 2; //Backlight Pin
 #define espBaud 9600
 
 //Blynk server and port
-#define blynk_server
-#define blynk_port
+#define blynk_server "blynk-cloud.com"
+//#define blynk_ip IPAddress(192,168,254,1)
+#define blynk_port 8442
 
 //Disable or Enable Temperature warning
 #define tempWarnEnable false
