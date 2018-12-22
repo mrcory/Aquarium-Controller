@@ -148,7 +148,8 @@ bool ledHold = false; //Hold led adjustment
 
 void setup() {
 
-#if usingMega
+//If using Mega2560, change the PWM Freq
+#if defined(ARDUINO_AVR_MEGA2560)
   //------------------
   //PWM Stuff
   //https://forum.arduino.cc/index.php?topic=72092.0

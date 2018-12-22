@@ -4,9 +4,6 @@ float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on 
 boolean enableTimer = true; //Disable or enable timer
 int crossFade = 5; //Crossfade time in seconds per step
 
-//Are you using a Mega2560
-#define usingMega true
-
 //Enable or disable serial commands
 #define serialCommands true //Disable to save sram and flash space
 
