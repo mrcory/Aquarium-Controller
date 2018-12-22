@@ -15,9 +15,10 @@ bool isNegative(int _ref) { //If _ref is negative return true
 }
 
 //Timing
-#define countDataAmount 5 //Number of timers
+#define countDataAmount 6 //Number of timers
 unsigned long countData[countDataAmount] = {0}; //Holds count information. (Adjust for numeber of timers needed.)
 //4 = fpsTimer
+//5 = Regular timer
 
 //Used by timer function
 int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
