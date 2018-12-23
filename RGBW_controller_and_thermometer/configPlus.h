@@ -20,10 +20,12 @@ int crossFade = 5; //Crossfade time in seconds per step
 //TFT Settings
 int tft_brightness = 25; //0-255 Controls a pwm pin
 int tft_pin = 2; //Backlight Pin
+const int tftRotation = 3; //Rotate the TFT
 
 //OLED Settings
 #define oled_width 128
 #define oled_height 64
+const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 
 //Enable Menu (Not coded yet)
@@ -56,9 +58,9 @@ void additionalWarn() {
 #endif
 
 #if waterFillEnable //If water fill is enabled define these
-  #define waterPin 0
-  #define waterSense 0
-  #define waterSense2 0
+  #define waterPin 0 //Pin that controls valve
+  #define waterSense 0  //1st Sensor for water level
+  #define waterSense2 0 //2nd Sensor for water level
   #define waterTimeMin 0
   #define waterTimeMax 1000
 #endif

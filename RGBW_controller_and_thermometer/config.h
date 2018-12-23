@@ -14,7 +14,7 @@ const int ledPinG = 10; //Green 10
 const int ledPinB = 11; //Blue 11
 const int ledPinW = 8; //White channel 8
 const int tempPin = 12; //DS18B20 pin
-const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
+
 
 //Various Configs
 const int ledPMin = 0; //Minimum led power output 0-255
@@ -29,7 +29,7 @@ int fadeTime = 10; //Fade time in minutes 0-255
 #define gpsRtc true //Requires arduino Mega
 #define timeToUpdate 5000 //Milliseconds between updates from RTC
 
-                          //Custom board will use Serial1 (19 and 18)
+
 #define gpsSerial Serial1 //Which Serial to use for the GPS (You could also change to software serial)
 #define gpsBaud 9600
 
