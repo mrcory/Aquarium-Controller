@@ -1,7 +1,7 @@
 //Contains functions for display
 
 #define hBarFill ST7735_BLUE
-
+bool screenFirstRun = true; //Flag for first run
 
 //BITMAPS
 const unsigned char clockBitmap [] PROGMEM = {
@@ -19,7 +19,10 @@ const unsigned char warnBitmap [] PROGMEM = {
 
 void showTime(int _posX,int _posY, float _size) {
   if (!_size) { _size = 1;};
-    display.drawBitmap(_posX,_posY,clockBitmap,9,9,ST77XX_WHITE); //Draw a clock icon that is 9x9
+    if (screenFirstRun == true) { //First run only
+      display.drawBitmap(_posX,_posY,clockBitmap,9,9,ST77XX_WHITE); //Draw a clock icon that is 9x9
+    }
+    
     display.setTextSize(_size);
     display.setCursor(_posX+11,_posY+2); //Write the time to the scren with an offset for the clock icon
     if (hour() <10) {display.print("0");}
@@ -115,10 +118,16 @@ bool fpsControl(unsigned long _rate) { //Return true after _rate
 
 #if tempWarnEnable
   void warnIcon(int _posX,int _posY) {
-    if (tempWarn == true) {
+    static bool oldWarn = false;
+    
+    if (tempWarn == true && tempWarn != oldWarn) {
       display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_RED);
     } else {
-      display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_BLACK);
+      if (tempWarn == false && tempWarn != oldWarn) {
+        display.drawBitmap(_posX,_posY,warnBitmap,9,9,ST77XX_BLACK);
     }
+    }
+
+    oldWarn = tempWarn;
   }
 #endif
