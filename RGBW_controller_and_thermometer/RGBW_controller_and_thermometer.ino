@@ -207,7 +207,7 @@ void setup() {
 
 
   //Do Some Setup
-  colorChange1(true); //Force a color change
+  colorChange1(true,currentTimer); //Force a color change
 
   ledP = ledPMin; //Set power to minimum
 

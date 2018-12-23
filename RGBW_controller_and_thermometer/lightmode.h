@@ -28,28 +28,30 @@ void controlSetup() {
   }
 }
 
-void colorChange1(bool _force) {
+void colorChange1(bool _force,byte _forceTimer) {
 
    if (currentTimer != oldTimer) {
      memcpy(ledTarget,ledCo[currentTimer],5*sizeof(int)); //Load ledTarget from stored values
    }
 
-   if ((currentTimer != oldTimer) || (_force)) {
+   if ((currentTimer != oldTimer) || !_force) {
       ledUpdate = 1;
       Serial.print(F("Color Change, Timer: ")); Serial.println(currentTimer); //Print out when color changes 
 
       oldTimer = currentTimer;
       memcpy(ledTarget,ledCo[currentTimer],5*sizeof(int)); //Load ledTarget from stored values
-      
+   }
 
+   if (_force) {
+    memcpy(ledTarget,ledCo[_forceTimer],5*sizeof(int));
    }
 
 
 }
 
 void timerCheck() {
-  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1(false);}
-  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1(false);}
+  if (ledCheck() == true && ledState == 0) {ledPower();colorChange1(false,0);}
+  if (ledCheck() == false && ledState == 1) {ledPower();colorChange1(false,0);}
 }
 
 void colorFade() {
@@ -81,10 +83,7 @@ void ledAdjust(int _mode) { //New led controller
     }
 
     colorFade();
-    colorChange1(false);
+    colorChange1(false,0);
   }
 
 }
-
-
-
