@@ -1,6 +1,5 @@
 //Setup TFT
 
-
 void screenSetup() { 
   display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
   analogWrite(tft_pin,tft_brightness);
@@ -16,19 +15,19 @@ void screenReset(int _X, int _Y, float _SIZE) {
 
 
 void activeDisplay() {
-  static bool screenFirstRun = true; //Flag for first run
   static bool flipFlop = true; //ledStatus will update every other refresh.
   
-  if (fpsControl(4000)) { //Set the refresh rate in milliseconds
+  if (fpsControl(2000)) { //Set the refresh rate in milliseconds
   display.setTextColor(ST7735_WHITE, ST7735_BLACK); //So you don't need to clear the screen
-  
-  showTemp(0,0,1.5);
-  showTime(0,24,1.5);
 
-  showHiLo(97,0,0.5);
+  if (flipFlop == false || screenFirstRun == true) { //Updates odd times
+    showTemp(0,0,1.5);
+    showTime(0,24,1.5);
 
+    showHiLo(97,0,0.5);
+  }
   
-  if (flipFlop == true) {
+  if (flipFlop == true) { //Updates even times
     ledStatus(0,39);
     
     screenReset(72,100,1);
