@@ -1,6 +1,8 @@
 # Aquarium-Controller
 4 Channel led controller and aquarium info display.
 
+!!! Added a wiki !!!
+
 Can be used without the display and temperature probe as just an led controller. (Version 1.3-dev)
 
 This is a project for my aquirium. It is a 4 channel (RGBW) controller and thermometer.
@@ -78,8 +80,13 @@ Just some functions
 
 Setup WIFI and Blynk token
 
+	Setup Part 1 (Custom server setup)
+		1:) Open configPlus.h
+		2:) Set the url or IPAddress and port for your Blynk server
+
+	Setup Part 2
 		1:) Open Serial Monitor and use these commands.
-		2:)ssid <ssid>
-		3:)wifipass <Password>
-		4:)token <Blynk Token> 
+		2:) ssid <ssid>
+		3:) wifipass <Password>
+		4:) token <Blynk Token> 
 		
