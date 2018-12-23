@@ -25,10 +25,6 @@
     configSave(); //Save the config
   }
 
-
-
-#else
-  #warning "Serial Commands are required to setup wifi."
 #endif
 
 
@@ -52,3 +48,9 @@ BLYNK_WRITE(V1)
 {
   ledHold = param.asInt();
 }
+
+#define serialBypass false
+
+#if !serialCommands && !serialBypass
+  #error "Wifi requires that serial commands be enabled for wifi configuration. To bypass define serialBypass true."
+#endif
