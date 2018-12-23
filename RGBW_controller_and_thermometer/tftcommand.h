@@ -18,6 +18,10 @@ const unsigned char warnBitmap [] PROGMEM = {
 
 
 void showTime(int _posX,int _posY, float _size) {
+
+  static byte myHour;
+  static byte myMinute;
+  
   if (!_size) { _size = 1;};
     if (screenFirstRun == true) { //First run only
       display.drawBitmap(_posX,_posY,clockBitmap,9,9,ST77XX_WHITE); //Draw a clock icon that is 9x9
@@ -25,11 +29,14 @@ void showTime(int _posX,int _posY, float _size) {
     
     display.setTextSize(_size);
     display.setCursor(_posX+11,_posY+2); //Write the time to the scren with an offset for the clock icon
-    if (hour() <10) {display.print("0");}
-    display.print(hour());
+
+    myHour = hour();
+    if (myHour <10) {display.print(F("0"));}
+    display.print(myHour);
     display.print(F(":"));
-    display.print(minute());
-    if (minute() <10) {display.print("0");}
+    myMinute = minute();
+    if (myMinute <10) {display.print(F("0"));}
+    display.print(myMinute);
     display.print(F(" ")); //Cover errant extra 0 that shows up by morning. (Lazy fix)
 }
 
