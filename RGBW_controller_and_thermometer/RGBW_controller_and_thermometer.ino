@@ -1,4 +1,7 @@
 
+
+
+
 /*LED Controller for Aquarium
    by: Cory McGahee
    Free for non-commercial use only.
@@ -158,13 +161,13 @@ void setup() {
   int myEraser = 7;
   TCCR2B &= ~myEraser;
 
-  int myPrescaler = 2; //Setting to 4000Hz
+  int myPrescaler = 1; //Setting to 4000Hz
   TCCR2B |= myPrescaler;
 
   Serial.print(F("PWM Adjusted"));
 #endif
 
-
+Serial.println("p3");
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
@@ -237,16 +240,26 @@ void setup() {
   #endif
 
   #if wifiEnable
+  Serial.println("P1");
     espSerial.begin(espBaud);
+  Serial.println("a1");
+    //Blynk.connectWiFi(mySSID,wifiPassword);
+  Serial.println("a2");
+    
       #ifdef blynk_server
         Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_server,blynk_port);
+        //Blynk.config(blynkToken,blynk_server,blynk_port);
         #else
       #ifdef blynk_ip
-        Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_ip,blynk_port);
+       Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_ip,blynk_port);
+        //Blynk.config(blynkToken,blynk_ip,blynk_port);
       #else
         #error "No server target. Check configPlus.h for server."
       #endif
     #endif
+    Serial.println("p2");
+    
+    
   #endif
 
 }
@@ -255,7 +268,12 @@ void setup() {
 void loop() {
   
   #if wifiEnable
+  
+  if (Blynk.connected() == true) {
     Blynk.run();
+  } else {
+    //Blynk.connect(3000); //Attempt to connect for 3 seconds.
+  }
   #endif
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in

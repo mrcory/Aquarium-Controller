@@ -1,4 +1,4 @@
-//Temperature Functions 
+ //Temperature Functions 
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -23,7 +23,7 @@ void tempUpdate() { //Update temp and display
   }//Set temp from first sensor
 
   //Figure low and high
-  if (tempHi <= temp && temp < 150) {
+  if (tempHi <= temp && temp < 100) {
     tempHi = temp;
     }
   if (tempLo > temp && temp > 0) {
