@@ -1,6 +1,6 @@
 //Contains functions for display
 
-#define colon ':' //Saving a little space
+#define hBarFill ST7735_BLUE
 
 
 //BITMAPS
@@ -24,22 +24,19 @@ void showTime(int _posX,int _posY, float _size) {
     display.setCursor(_posX+11,_posY+2); //Write the time to the scren with an offset for the clock icon
     if (hour() <10) {display.print("0");}
     display.print(hour());
-    display.print(colon);
+    display.print(F(":"));
     display.print(minute());
     if (minute() <10) {display.print("0");}
-    //display.print(colon);
-    //if (second() <10) {display.print("0");}
-    //display.print(second());
-    display.print(" "); //Cover errant extra 0 that shows up by morning. (Lazy fix)
+    display.print(F(" ")); //Cover errant extra 0 that shows up by morning. (Lazy fix)
 }
 
 void showHiLo(int _posX,int _posY, float _size) { //97,0
   display.setTextSize(_size); //Reset cursor size for safety
   display.setCursor(_posX,_posY); //Set cursor position
-  display.print("High: ");
+  display.print(F("High: "));
   display.print(tempHi,1); //Display tempHi with 1 decimal place
   display.setCursor(_posX,_posY+8); //Set cursor position
-  display.print("Low : ");
+  display.print(F("Low : "));
   display.print(tempLo,1); //Display tempLo with 1 decimal place
         
 }
@@ -64,13 +61,12 @@ void showTemp(int _posX,int _posY, float _size) { //0,0
 }
 
 
+
 void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
   int aLocX = map(percent, 0, 100, 0, width);
   display.drawLine(locX, locY, locX + width, locY, ST77XX_WHITE); //Draw outline of progress bar
   display.drawLine(locX, locY + height, locX + width, locY + height, ST77XX_WHITE); //Draw lower outline of progress bar
   
-
-  //if (locX - (locX + aLocX > 1) ) { //If value is 0 then don't fill the bar
     for (int i = 1; i < height; i++) { //Draw body of progress bar
       
       
@@ -78,9 +74,8 @@ void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a
         display.drawLine(locX + aLocX, locY + i, locX + width, locY + i, ST77XX_BLACK); //Fill rest of bar in background color
       }
 
-      display.drawLine(locX, locY + i, locX + aLocX, locY + i, ST77XX_WHITE); //Fill visible bar
+      display.drawLine(locX, locY + i, locX + aLocX, locY + i, hBarFill); //Fill visible bar
     }
-  //}
 
 }
 
