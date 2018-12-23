@@ -9,8 +9,6 @@ I am currently running this on a Mega 2560.
 Fritzing picture is for my old circut design.
 I have moved to a custom PCB.
 
-Using this schematic for the buttons.
-https://raw.githubusercontent.com/rlogiacco/AnalogButtons/master/schematic.png
 
 
 Libraries Used:  
@@ -77,3 +75,11 @@ Usage Info:
 Just some functions
 
         drawHBar(x,y,height,width,percentage) This uses the Adafruit graphics library
+
+Setup WIFI and Blynk token
+
+		1:) Open Serial Monitor and use these commands.
+		2:)ssid <ssid>
+		3:)wifipass <Password>
+		4:)token <Blynk Token> 
+		
