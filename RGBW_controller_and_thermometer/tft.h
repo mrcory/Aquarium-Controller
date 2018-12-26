@@ -53,6 +53,18 @@ void activeDisplay() {
     screenFirstRun = false;
   }
 
+#if wifiEnable
+  static bool oldBlynk = false;
+  if (Blynk.connected() == true && oldBlynk == false) {
+    blynkLogo(100,60,"0x2632");
+    oldBlynk = true;
+    } else {
+  if (Blynk.connected() == false && oldBlynk == true) {
+    blynkLogo(100,60,"0x0000");
+    oldBlynk = false;
+  }
+  }
+#endif
   
   }
 }

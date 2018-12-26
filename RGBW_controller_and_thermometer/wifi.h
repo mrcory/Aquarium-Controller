@@ -6,28 +6,6 @@
 
 //Some Supporting functions
 
-#if serialCommands
-
-
-
-  void wifiSSID(int arg_cnt, char **args) {
-    mySSID = args[1]; //Set SSID
-    configSave(); //Save the config
-  }
-
-  void wifiPass(int arg_cnt, char **args) {
-    wifiPassword = args[1]; //Set password
-    configSave(); //Save the config
-  }
-
-  void blynkSet(int arg_cnt, char **args){
-    blynkToken = args[1]; //Set Blynk server token
-    configSave(); //Save the config
-  }
-
-#endif
-
-
 void sendTemp() {
   Blynk.virtualWrite(V5,temp);
 }
@@ -35,19 +13,32 @@ void sendTemp() {
 //Send all the data we want to access
 
 void sendData() {
-  Blynk.virtualWrite(V10,ledC[0]); //R
+  Blynk.virtualWrite(V14,ledC[0]); //R
   Blynk.virtualWrite(V11,ledC[1]); //G
   Blynk.virtualWrite(V12,ledC[2]); //B
   Blynk.virtualWrite(V13,ledC[3]); //W
   Blynk.virtualWrite(V13,ledC[4]); //Bright
 
+  Blynk.virtualWrite(V15,ledTarget[0]);
   
 }
 
 BLYNK_WRITE(V1)
 {
   ledHold = param.asInt();
+
 }
+
+BLYNK_WRITE(V10) {
+  if (ledHold == true) {
+    ledTarget[0] = param[0].asInt();
+    ledTarget[1] = param[1].asInt();
+    ledTarget[2] = param[2].asInt();
+  }
+}
+
+
+
 
 #define serialBypass false
 

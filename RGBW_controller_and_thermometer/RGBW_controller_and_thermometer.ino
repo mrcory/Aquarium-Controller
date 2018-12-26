@@ -1,4 +1,4 @@
-
+#define BLYNK_PRINT Serial
 
 
 
@@ -88,35 +88,27 @@ bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
 
+
+      char buf_mySSID[200];
+      char buf_wifiPassword[200];
+      char buf_token[33];
+
 //Include other files
 #include "universalFunc.h" //Some universal functions
+
+
+
+//----WIFI Variabeles
+//#if wifiEnable
+  String mySSID;
+  String wifiPassword;
+  String blynkToken;
+//#endif
+
 
 #if tempEnable
   #include "temp.h" //Tempurature functions and variables
 #endif
-
-#if screenEnable
-  #if screenOLED == true
-    #include "screencommands.h" //Supporting functions for below.
-    #include "screen.h" //Used for controlling the display.
-  #if enableMenu
-    #include "menu.h" //Menu stuff. (Probably to be removed and replaced.
-  #endif
-#endif
-
-  #if screenTFT == true
-    #include "tftcommand.h" //Supporting functions for below.
-    #include "tft.h" //Used for controlling the display.
-  #endif
-#endif
-
-//----WIFI Variabeles
-#if wifiEnable
-  char mySSID;
-  char wifiPassword;
-  char blynkToken;
-#endif
-
 
 //Some more includes
 #include "commands.h" //Functions for the commands below
@@ -134,6 +126,22 @@ bool ledHold = false; //Hold led adjustment
 #endif
 
 
+
+#if screenEnable
+  #if screenOLED == true
+    #include "screencommands.h" //Supporting functions for below.
+    #include "screen.h" //Used for controlling the display.
+  #if enableMenu
+    #include "menu.h" //Menu stuff. (Probably to be removed and replaced.
+  #endif
+#endif
+
+  #if screenTFT == true
+    #include "tftcommand.h" //Supporting functions for below.
+    #include "tft.h" //Used for controlling the display.
+  #endif
+#endif
+
 #include "time.h" //Time stuff moved here
 
 
@@ -144,7 +152,6 @@ bool ledHold = false; //Hold led adjustment
   #define _rightVal 930
   #define _menuVal 700
 #endif
-
 
 
 
@@ -195,11 +202,11 @@ Serial.println("p3");
     cmdAdd("color",colorChange1);
     cmdAdd("time",updateTimeNow);
 
-    #if wifiEnable
+   // #if wifiEnable
       cmdAdd("pass",wifiPass);
       cmdAdd("ssid",wifiSSID);
       cmdAdd("token",blynkSet);
-   #endif
+  // #endif
    
   #endif
 
@@ -246,12 +253,28 @@ Serial.println("p3");
     //Blynk.connectWiFi(mySSID,wifiPassword);
   Serial.println("a2");
     
-      #ifdef blynk_server
-        Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_server,blynk_port);
-        //Blynk.config(blynkToken,blynk_server,blynk_port);
+      #if defined(blynk_server)
+
+      //Convert the stored strings to Char
+
+      mySSID.toCharArray(buf_mySSID,200);
+
+      
+      wifiPassword.toCharArray(buf_token,33);
+
+      
+      wifiPassword.toCharArray(buf_wifiPassword,200);
+
+
+      //Can't get the Serial based config for token working
+      //Please don't steal my token
+      
+        Blynk.begin("f9101ceb11074d8baa6c57746017baf0",wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
+        //Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
+        //Blynk.begin(blynkToken,mySSID,char(wifiPassword));
         #else
-      #ifdef blynk_ip
-       Blynk.begin(blynkToken,mySSID,wifiPassword,blynk_ip,blynk_port);
+      #if defined(blynk_ip)
+      Blynk.begin(buf_token,wifi,buf_mySSID,buf_wifiPassword,blynk_ip,blynk_port);
         //Blynk.config(blynkToken,blynk_ip,blynk_port);
       #else
         #error "No server target. Check configPlus.h for server."
@@ -262,17 +285,28 @@ Serial.println("p3");
     
   #endif
 
+
+
+Serial.print("SSID: "); Serial.println(mySSID);
+Serial.print("Pass: "); Serial.println(wifiPassword);
+Serial.print("Token: "); Serial.println(blynkToken);
 }
 
 
 void loop() {
+
+
   
+  if ( ledHold == true) {
+    Serial.println("TRUE");
+  }
   #if wifiEnable
   
   if (Blynk.connected() == true) {
     Blynk.run();
   } else {
     //Blynk.connect(3000); //Attempt to connect for 3 seconds.
+    Serial.println("Blynk, Attempt to connect.");
   }
   #endif
 

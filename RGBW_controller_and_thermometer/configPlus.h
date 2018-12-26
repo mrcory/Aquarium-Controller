@@ -32,11 +32,13 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 #define enableMenu false
 
 //Enable WIFI (We are using Blynk
-#define wifiEnable false
+#define wifiEnable true
+
+
 
 //ESP Serial and Baud
 #define espSerial Serial3
-#define espBaud 9600
+#define espBaud 115200
 
 //Blynk server and port
 #define blynk_server "blynk-cloud.com"
