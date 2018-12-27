@@ -12,7 +12,6 @@
    GPS incoming info function taken from example program
    PWM Frequency code: https://forum.arduino.cc/index.php?topic=72092.0 : valerio_sperati
 todo:
-   Add button controls
 */
 
 //const String ver = "2.0-dev"; //Program Version
@@ -88,10 +87,15 @@ bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
 
+#if wifiEnable
+  int ledWifi[4] = {0};
 
-      char buf_mySSID[200];
-      char buf_wifiPassword[200];
-      char buf_token[33];
+#endif
+
+
+      char buf_mySSID[150];
+      char buf_wifiPassword[150];
+      char buf_token[150];
 
 //Include other files
 #include "universalFunc.h" //Some universal functions
@@ -174,7 +178,6 @@ void setup() {
   Serial.print(F("PWM Adjusted"));
 #endif
 
-Serial.println("p3");
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
@@ -202,11 +205,9 @@ Serial.println("p3");
     cmdAdd("color",colorChange1);
     cmdAdd("time",updateTimeNow);
 
-   // #if wifiEnable
       cmdAdd("pass",wifiPass);
       cmdAdd("ssid",wifiSSID);
       cmdAdd("token",blynkSet);
-  // #endif
    
   #endif
 
@@ -250,20 +251,14 @@ Serial.println("p3");
   Serial.println("P1");
     espSerial.begin(espBaud);
   Serial.println("a1");
-    //Blynk.connectWiFi(mySSID,wifiPassword);
-  Serial.println("a2");
     
       #if defined(blynk_server)
 
       //Convert the stored strings to Char
 
-      mySSID.toCharArray(buf_mySSID,200);
-
-      
-      wifiPassword.toCharArray(buf_token,33);
-
-      
-      wifiPassword.toCharArray(buf_wifiPassword,200);
+      mySSID.toCharArray(buf_mySSID,150);
+      wifiPassword.toCharArray(buf_token,150);
+      wifiPassword.toCharArray(buf_wifiPassword,150);
 
 
       //Can't get the Serial based config for token working
@@ -287,9 +282,9 @@ Serial.println("p3");
 
 
 
-Serial.print("SSID: "); Serial.println(mySSID);
-Serial.print("Pass: "); Serial.println(wifiPassword);
-Serial.print("Token: "); Serial.println(blynkToken);
+Serial.print(F("SSID: ")); Serial.println(mySSID);
+Serial.print(F("Pass: ")); Serial.println(wifiPassword);
+Serial.print(f("Token: ")); Serial.println(blynkToken);
 }
 
 
@@ -297,9 +292,6 @@ void loop() {
 
 
   
-  if ( ledHold == true) {
-    Serial.println("TRUE");
-  }
   #if wifiEnable
   
   if (Blynk.connected() == true) {
@@ -318,7 +310,6 @@ void loop() {
     analogButtons.check();
   #endif
 
-  //if (ledCheck() == true) {Serial.println("true");}
   timerCheck();
 
   #if serialCommands
@@ -359,8 +350,17 @@ void loop() {
     ledP = ledPMin;
   }
 
+#if wifiEnable
+  //Use this when LED contol is being bypassed
+  if (ledHold == true) {
+    analogWrite(ledPinR, map(ledC[0], 0, 255, 0, ledP)); //Set power red
+    analogWrite(ledPinG, map(ledC[1], 0, 255, 0, ledP)); //Set power green
+    analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
+    analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
+  }
+#endif
 
-  if (ledUpdate == 1) { //Write LED Output
+  if (ledUpdate == 1 && ledHold != true) { //Write LED Output
     analogWrite(ledPinR, map(ledC[0], 0, 255, 0, ledP)); //Set power red
     analogWrite(ledPinG, map(ledC[1], 0, 255, 0, ledP)); //Set power green
     analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue

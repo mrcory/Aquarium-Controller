@@ -111,8 +111,7 @@ void configSave() { //Save config
   i += sizeof(tempUnit);
   EEPROM.put(i, ledCo);
   i += sizeof(ledCo);
-//#if wifiEnable //If using wifi we need to save these values
-
+  //Set offset manually
   i = 90; //Manual offset
   writeString(i,mySSID);
   i+= 75;
@@ -120,7 +119,6 @@ void configSave() { //Save config
   i+= 50;
   writeString(i,blynkToken);
   i+= 100;
-//#endif
   Serial.print(F("Config Saved Size: "));
   Serial.println(i);
 }
@@ -139,8 +137,7 @@ void configLoad() { //Load config
   i += sizeof(tempUnit);
   EEPROM.put(i, ledCo);
   i += sizeof(ledCo);
-//#if wifiEnable
-
+  //Manually offset
   i = 90;
   mySSID = read_String(i);
   i+= 75;
@@ -207,10 +204,3 @@ void blynkSet(int arg_cnt, char **args) {
 }
 
 #endif
-
-
-
-
-
-
-

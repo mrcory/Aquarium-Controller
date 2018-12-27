@@ -29,14 +29,26 @@ BLYNK_WRITE(V1)
 
 }
 
+//Values for manual LED control
 BLYNK_WRITE(V10) {
-  if (ledHold == true) {
-    ledTarget[0] = param[0].asInt();
-    ledTarget[1] = param[1].asInt();
-    ledTarget[2] = param[2].asInt();
-  }
+    ledWifi[0] = param.asInt();
 }
 
+BLYNK_WRITE(V11) {
+  ledWifi[1] = param.asInt();
+}
+
+BLYNK_WRITE(V12) {
+  ledWifi[2] = param.asInt();
+}
+
+BLYNK_WRITE(V13) {
+  ledWifi[3] = param.asInt();
+}
+
+BLYNK_WRITE(V14) {
+  ledWifi[4] = param.asInt();
+}
 
 
 
