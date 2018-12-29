@@ -298,8 +298,10 @@ void loop() {
   if (Blynk.connected() == true) {
     Blynk.run();
   } else {
-    //Blynk.connect(3000); //Attempt to connect for 3 seconds.
     Serial.println("Blynk, Attempt to connect.");
+    Blynk.connect(3000); //Attempt to connect for 3 seconds.
+    if (Blynk.connected() == true) {Serial.println("Connected!!!");}
+    
   }
   #endif
 

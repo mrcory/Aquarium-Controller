@@ -60,7 +60,7 @@ void activeDisplay() {
     oldBlynk = true;
     } else {
   if (Blynk.connected() == false && oldBlynk == true) {
-    blynkLogo(100,60,"0x0000");
+    blynkLogo(100,60,ST77XX_BLACK);
     oldBlynk = false;
   }
   }

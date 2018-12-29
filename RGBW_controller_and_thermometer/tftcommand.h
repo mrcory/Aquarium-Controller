@@ -89,7 +89,7 @@ void showHiLo(int _posX,int _posY, float _size) { //97,0
         
 }
 
-void showTemp(int _posX,int _posY, float _size) { //0,0
+void showTemp(int _posX,int _posY, float _size) {
       //Update temperature display
       display.setCursor(_posX,_posY);
       display.setTextSize(_size);
