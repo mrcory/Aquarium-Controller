@@ -263,8 +263,9 @@ void setup() {
 
       //Can't get the Serial based config for token working
       //Please don't steal my token
+      //Okay, changed to a selfhosted server. Public shouldn't be able to access it.
       
-        Blynk.begin("f9101ceb11074d8baa6c57746017baf0",wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
+        Blynk.begin("bda7e092b03d40229442c0be17bd1521",wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
         //Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
         //Blynk.begin(blynkToken,mySSID,char(wifiPassword));
         #else
@@ -284,7 +285,7 @@ void setup() {
 
 Serial.print(F("SSID: ")); Serial.println(mySSID);
 Serial.print(F("Pass: ")); Serial.println(wifiPassword);
-Serial.print(f("Token: ")); Serial.println(blynkToken);
+Serial.print(F("Token: ")); Serial.println(blynkToken);
 }
 
 

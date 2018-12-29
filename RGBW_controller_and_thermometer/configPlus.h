@@ -41,9 +41,9 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 #define espBaud 115200
 
 //Blynk server and port
-#define blynk_server "blynk-cloud.com"
+#define blynk_server "mrcory.net"
 //#define blynk_ip IPAddress(192,168,254,1)
-#define blynk_port 8442
+#define blynk_port 8080 //8442 if using Blynk Cloud
 
 //Disable or Enable Temperature warning
 #define tempWarnEnable false
