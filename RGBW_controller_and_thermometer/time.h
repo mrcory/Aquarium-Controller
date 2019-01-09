@@ -33,7 +33,9 @@
         Serial.println(F("GPS Time not valid!"));
       }
     }
+#elif blynkRtc
+
 #else
   #error "No RTC defined. Check config.h"
-    }
+    
 #endif

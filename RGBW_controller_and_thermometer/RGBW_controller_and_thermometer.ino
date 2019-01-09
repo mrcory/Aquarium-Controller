@@ -23,6 +23,9 @@ todo:
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <EEPROM.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+
 
 
 #if waterFillEnable
@@ -61,6 +64,7 @@ todo:
 #if gpsRtc //If using a GPS device include lib
   #include <TinyGPS++.h>
 #endif
+
 
 //Setup our screen.
 #if screenOLED == true
@@ -157,10 +161,14 @@ bool ledHold = false; //Hold led adjustment
   #define _menuVal 700
 #endif
 
-
+  WiFiUDP ntpUDP;
+  NTPClient timeClient(ntpUDP);
 
 
 void setup() {
+
+
+
 
 //If using Mega2560, change the PWM Freq
 #if defined(ARDUINO_AVR_MEGA2560)
@@ -186,7 +194,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
 
-  updateTimeNow(); //Update time via selected time keeper
+  
 
   checkConfig(); //Check if we need to load the config at start
 
@@ -282,6 +290,18 @@ void setup() {
   #endif
 
 
+#if blynkRtc
+
+  
+
+  //rtc.begin();
+
+#endif
+
+  updateTimeNow(); //Update time via selected time keeper
+
+
+
 
 Serial.print(F("SSID: ")); Serial.println(mySSID);
 Serial.print(F("Pass: ")); Serial.println(wifiPassword);
@@ -290,6 +310,8 @@ Serial.print(F("Token: ")); Serial.println(blynkToken);
 
 
 void loop() {
+
+  
 
 
   
@@ -300,7 +322,7 @@ void loop() {
   } else {
     Serial.println("Blynk, Attempt to connect.");
     Blynk.connect(3000); //Attempt to connect for 3 seconds.
-    if (Blynk.connected() == true) {Serial.println("Connected!!!");}
+    if (Blynk.connected() == true) {Serial.println("Connected!1!");}
     
   }
   #endif
@@ -402,5 +424,12 @@ void DSTset() { //Set DST
   static void gpsRead() {
   while (gpsSerial.available() > 0)
     GPS.encode(gpsSerial.read());
+  }
+#endif
+
+#if blynkRtc
+
+void updateTimeNow() {
+    timeClient.update();
   }
 #endif
