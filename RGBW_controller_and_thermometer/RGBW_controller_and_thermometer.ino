@@ -265,21 +265,16 @@ void setup() {
       //Convert the stored strings to Char
 
       mySSID.toCharArray(buf_mySSID,150);
-      wifiPassword.toCharArray(buf_token,150);
+      token.toCharArray(buf_token,150);
       wifiPassword.toCharArray(buf_wifiPassword,150);
 
 
-      //Can't get the Serial based config for token working
-      //Please don't steal my token
       //Okay, changed to a selfhosted server. Public shouldn't be able to access it.
       
         Blynk.begin(buf_blynkToken,wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
-        //Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
-        //Blynk.begin(blynkToken,mySSID,char(wifiPassword));
         #else
       #if defined(blynk_ip)
       Blynk.begin(buf_token,wifi,buf_mySSID,buf_wifiPassword,blynk_ip,blynk_port);
-        //Blynk.config(blynkToken,blynk_ip,blynk_port);
       #else
         #error "No server target. Check configPlus.h for server."
       #endif
