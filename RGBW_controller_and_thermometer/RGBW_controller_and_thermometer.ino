@@ -273,7 +273,7 @@ void setup() {
       //Please don't steal my token
       //Okay, changed to a selfhosted server. Public shouldn't be able to access it.
       
-        Blynk.begin("bda7e092b03d40229442c0be17bd1521",wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
+        Blynk.begin(buf_blynkToken,wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
         //Blynk.begin(blynkToken,wifi,mySSID,wifiPassword);
         //Blynk.begin(blynkToken,mySSID,char(wifiPassword));
         #else
