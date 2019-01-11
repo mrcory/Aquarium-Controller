@@ -119,8 +119,9 @@ void configSave() { //Save config
   i+= 50;
   writeString(i,blynkToken);
   i+= 100;
-  Serial.print(F("Config Saved Size: "));
-  Serial.println(i);
+  Serial.print(F("[CONFIG] Saved | "));
+  Serial.print(i);
+  Serial.print(F(" bytes"));
 }
 
 void configLoad() { //Load config
@@ -146,9 +147,9 @@ void configLoad() { //Load config
   blynkToken = read_String(i);
   i+= 100;
 
-//#endif
-  Serial.print(F("Config Loaded Size: "));
-  Serial.println(i);
+  Serial.print(F("[Config] Loaded | "));
+  Serial.print(i);
+  Serial.println(F(" bytes"));
 }
 
 void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually
@@ -180,11 +181,8 @@ void wifiSSID(int arg_cnt, char **args) {
   Serial.print("Old SSID: ");
   Serial.println(mySSID);
   mySSID = String(args[1]);
-  //mySSID.toCharArray(buf_mySSID,100);
   Serial.print("SSID: "); Serial.println(mySSID);
   configSave();
-
- // writeString(100,mySSID);
 }
 
 void wifiPass(int arg_cnt, char **args) {
