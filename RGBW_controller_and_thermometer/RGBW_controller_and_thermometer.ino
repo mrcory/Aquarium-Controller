@@ -14,7 +14,7 @@
 todo:
 */
 
-//const String ver = "2.0-dev"; //Program Version
+//const String ver = "2.0.1-dev"; //Program Version
 //Last Tested version: 1.5.1-dev
 
 
@@ -183,7 +183,6 @@ void setup() {
   int myPrescaler = 1; //Setting to 4000Hz
   TCCR2B |= myPrescaler;
 
-  Serial.print(F("PWM Adjusted"));
 #endif
 
 
@@ -256,9 +255,8 @@ void setup() {
   #endif
 
   #if wifiEnable
-  Serial.println("P1");
+  
     espSerial.begin(espBaud);
-  Serial.println("a1");
     
       #if defined(blynk_server)
 
@@ -279,7 +277,6 @@ void setup() {
         #error "No server target. Check configPlus.h for server."
       #endif
     #endif
-    Serial.println("p2");
     
     
   #endif
