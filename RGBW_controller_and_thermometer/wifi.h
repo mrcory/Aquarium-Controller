@@ -30,23 +30,23 @@ BLYNK_WRITE(V1)
 }
 
 //Values for manual LED control
-BLYNK_WRITE(V10) {
+BLYNK_WRITE(V10) { //R
     ledWifi[0] = param.asInt();
 }
 
-BLYNK_WRITE(V11) {
+BLYNK_WRITE(V11) { //G
   ledWifi[1] = param.asInt();
 }
 
-BLYNK_WRITE(V12) {
+BLYNK_WRITE(V12) {//B
   ledWifi[2] = param.asInt();
 }
 
-BLYNK_WRITE(V13) {
+BLYNK_WRITE(V13) { //W
   ledWifi[3] = param.asInt();
 }
 
-BLYNK_WRITE(V14) {
+BLYNK_WRITE(V14) { //Brightness
   ledWifi[4] = param.asInt();
 }
 

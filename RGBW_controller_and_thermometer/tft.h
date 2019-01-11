@@ -41,7 +41,7 @@ void activeDisplay() {
     flipFlop = !flipFlop;
   }
   
-  #if tempWarnEnable //If tempurature warning is enabled draw a warning icon.
+  #if tempWarnEnable //If temperature warning is enabled draw a warning icon.
     warnIcon(97,18);
   #endif
 
