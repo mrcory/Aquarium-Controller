@@ -370,10 +370,10 @@ void loop() {
 #if wifiEnable
   //Use this when LED contol is being bypassed
   if (ledHold == true) {
-    analogWrite(ledPinR, map(ledC[0], 0, 255, 0, ledP)); //Set power red
-    analogWrite(ledPinG, map(ledC[1], 0, 255, 0, ledP)); //Set power green
-    analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
-    analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
+    analogWrite(ledPinR, map(ledWifi[0], 0, 255, 0, ledWifi[4])); //Set power red
+    analogWrite(ledPinG, map(ledWifi[1], 0, 255, 0, ledWifi[4])); //Set power green
+    analogWrite(ledPinB, map(ledWifi[2], 0, 255, 0, ledWifi[4])); //Set power blue
+    analogWrite(ledPinW, map(ledWifi[3], 0, 255, 0, ledWifi[4])); //Set power white
   }
 #endif
 
