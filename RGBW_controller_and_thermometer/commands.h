@@ -143,7 +143,7 @@ void configLoad() { //Load config
   i+= 75;
   wifiPassword = read_String(i);
   i+= 50;
-  //blynkToken = read_String(i);
+  blynkToken = read_String(i);
   i+= 100;
 
 //#endif
