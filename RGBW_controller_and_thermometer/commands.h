@@ -154,12 +154,11 @@ void configLoad() { //Load config
 
 void configClear() { //Set 0 to 0 so config will not autoload (Can stil be loaded manually
   EEPROM.write(0, 0);
-  Serial.println(F("Config Cleared"));
+  Serial.println(F("[Config] Cleared"));
 }
 
 void checkConfig() { //Check if we need to load the config at start
   if (EEPROM.read(0) == 1) { //If 0 is 1 the autoload config
-    Serial.print(F("Saved "));
     configLoad();
   }
 }
@@ -178,27 +177,27 @@ void lightTimerAdd(int _timer) {
 
 
 void wifiSSID(int arg_cnt, char **args) {
-  Serial.print("Old SSID: ");
+  Serial.print(F("Old SSID: "));
   Serial.println(mySSID);
   mySSID = String(args[1]);
-  Serial.print("SSID: "); Serial.println(mySSID);
+  Serial.print(F("SSID: ")); Serial.println(mySSID);
   configSave();
 }
 
 void wifiPass(int arg_cnt, char **args) {
-  Serial.print("Old Pass: ");
+  Serial.print(F("Old Pass: "));
   Serial.println(wifiPassword);
   wifiPassword = String(args[1]); //Set password
   configSave(); //Save the config
-  Serial.print("Pass: "); Serial.println(wifiPassword);
+  Serial.print(F("Pass: ")); Serial.println(wifiPassword);
 }
 
 void blynkSet(int arg_cnt, char **args) {
-  Serial.print("Old Token: ");
+  Serial.print(F("Old Token: "));
   Serial.println(blynkToken);
   blynkToken = String(args[1]); //Set Blynk server token
   configSave(); //Save the config
-  Serial.print("Token: "); Serial.println(blynkToken);
+  Serial.print(F("Token: ")); Serial.println(blynkToken);
 }
 
 #endif

@@ -312,9 +312,9 @@ void loop() {
   if (Blynk.connected() == true) {
     Blynk.run();
   } else {
-    Serial.println("Blynk, Attempt to connect.");
+    Serial.println("[BLYNK] Attempting to connect...");
     Blynk.connect(3000); //Attempt to connect for 3 seconds.
-    if (Blynk.connected() == true) {Serial.println("Connected!1!");}
+    if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
     
   }
   #endif
@@ -400,11 +400,11 @@ void DSTset() { //Set DST
 
   if (DST) { //If DST currently enable then disable it
     DST = false;
-    Serial.println(F("DST Disabled")); //Confirm via serial
+    Serial.println(F("[TIME] DST Disabled")); //Confirm via serial
     }
   else { //If DST current disabled the enable it
     DST = true;
-    Serial.println(F("DST Enabled")); //Confirm via Serial
+    Serial.println(F("[TIME] DST Enabled")); //Confirm via Serial
     }
   updateTimeNow(); //Update time and recreate alarms
 
