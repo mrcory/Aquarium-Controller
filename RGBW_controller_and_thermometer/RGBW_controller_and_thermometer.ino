@@ -92,7 +92,7 @@ bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
 
 #if wifiEnable
-  int ledWifi[4] = {0};
+  int ledWifi[5] = {0};
 
 #endif
 
