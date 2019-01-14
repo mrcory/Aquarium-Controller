@@ -13,13 +13,6 @@ void sendTemp() {
 //Send all the data we want to access
 
 void sendData() {
-  Blynk.virtualWrite(V14,ledC[0]); //R
-  Blynk.virtualWrite(V11,ledC[1]); //G
-  Blynk.virtualWrite(V12,ledC[2]); //B
-  Blynk.virtualWrite(V13,ledC[3]); //W
-  Blynk.virtualWrite(V13,ledC[4]); //Bright
-
-  Blynk.virtualWrite(V15,ledTarget[0]);
   
 }
 
