@@ -31,12 +31,6 @@ void activeDisplay() {
     ledStatus(0,39);
     
     screenReset(72,100,1);
-    
-    if (ledState == 1) { 
-      display.print(F("ON ")); //needs to be 3 characters long to clear the screen
-        } else {
-      display.print(F("OFF"));
-      }
   
     flipFlop = !flipFlop;
   }
@@ -49,18 +43,18 @@ void activeDisplay() {
   
   if (screenFirstRun == true) {
     screenReset(0,100,1);
-    display.print(F("LED Status: "));
+    display.drawBitmap(0,108,blynk_small,31,32,ST7735_WHITE);
     screenFirstRun = false;
   }
 
 #if wifiEnable
   static bool oldBlynk = false;
   if (Blynk.connected() == true && oldBlynk == false) {
-    blynkLogo(100,60,"0x2632");
+    blynkLogo(133,92,0x2632);
     oldBlynk = true;
     } else {
   if (Blynk.connected() == false && oldBlynk == true) {
-    blynkLogo(100,60,ST77XX_BLACK);
+    blynkLogo(133,92,ST77XX_BLACK);
     oldBlynk = false;
   }
   }
