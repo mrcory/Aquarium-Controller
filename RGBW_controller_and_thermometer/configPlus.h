@@ -9,6 +9,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable/disable Temperature
 #define tempEnable true
+#define ambientAir false //Is there a second DS18b20 for air temp?
 
 //Enable/disable Screen
 #define screenEnable true
