@@ -23,8 +23,6 @@ todo:
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <EEPROM.h>
-#include <NTPClient.h>
-#include <WiFiUdp.h>
 
 
 
@@ -160,8 +158,6 @@ bool ledHold = false; //Hold led adjustment
   #define _menuVal 700
 #endif
 
-  WiFiUDP ntpUDP;
-  NTPClient timeClient(ntpUDP);
 
 
 void setup() {
