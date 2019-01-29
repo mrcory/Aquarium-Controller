@@ -4,6 +4,8 @@ int waterPin; //Water control pin
 int waterSense; //Water sensor pin
 int waterSense2; //Upper water sensor
 
+int pumpControl; //Pump control pin
+
 int waterTimeMin;
 int waterTimeMax;
 
@@ -36,6 +38,10 @@ void waterFillStopCheck() {
   if (waterLevelCheck(waterSense) true || waterLevelCheck(waterSense2) true || waterOveride() true) {
     waterOn = false;
   }
+}
+
+bool waterDrain() {
+  
 }
 
 #include "waterbutton.h" //Temporary button control while menu is not done
