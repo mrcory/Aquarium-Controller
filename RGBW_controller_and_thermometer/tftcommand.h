@@ -146,7 +146,7 @@ void showTemp(int _posX,int _posY, float _size) {
 void drawHBar(int locX, int locY, int height, int width, int percent) { //Draw a progrss bar
   int aLocX = map(percent, 0, 100, 0, width);
   display.drawLine(locX, locY, locX + width, locY, progressEdge); //Draw outline of progress bar
-  display.drawLine(locX, locY + height, locX + width, locY + height, progressFill); //Draw lower outline of progress bar
+  display.drawLine(locX, locY + height, locX + width, locY + height, progressEdge); //Draw lower outline of progress bar
   
     for (int i = 1; i < height; i++) { //Draw body of progress bar
       

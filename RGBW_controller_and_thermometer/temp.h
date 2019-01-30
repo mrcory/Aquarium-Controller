@@ -37,7 +37,7 @@ void tempUpdate() { //Update temp and display
   }
 
   #if tempWarnEnable
-    if (tempHi >= tempWarnHi || tempLo <= tempWarnLo) {
+    if (temp > tempWarnHi || temp < tempWarnLo) {
       tempWarn = true;
       additionalWarn(); //Run additional temp warning commands
     }
