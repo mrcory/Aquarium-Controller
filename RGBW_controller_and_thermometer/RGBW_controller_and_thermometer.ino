@@ -82,7 +82,6 @@ float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int ledC[5] = {255}; //Fill with a default value
 int ledTarget[5] = {0};
-bool menuActive = false;
 int oldTimer = 100;
 int convOnTimes[times]; //Stores the timer on times in a function compatible format
 int convOffTimes[times]; //Store the timer off times in a function compatible format
@@ -138,9 +137,6 @@ bool ledHold = false; //Hold led adjustment
   #if screenOLED == true
     #include "screencommands.h" //Supporting functions for below.
     #include "screen.h" //Used for controlling the display.
-  #if enableMenu
-    #include "menu.h" //Menu stuff. (Probably to be removed and replaced.
-  #endif
 #endif
 
   #if screenTFT == true
@@ -152,13 +148,7 @@ bool ledHold = false; //Hold led adjustment
 #include "time.h" //Time stuff moved here
 
 
-#if enableMenu && screenEnable //Set resistor values for buttons here
-  #define _upVal 840
-  #define _downVal 957
-  #define _leftVal 979
-  #define _rightVal 930
-  #define _menuVal 700
-#endif
+
 
 
 
@@ -245,13 +235,6 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-  #if enableMenu //If menu is enabled, then add button functions
-      analogButtons.add(up);
-      analogButtons.add(down);
-      analogButtons.add(right);
-      analogButtons.add(left);
-      analogButtons.add(menu);
-  #endif
 
   #if wifiEnable
   
@@ -322,9 +305,7 @@ void loop() {
     gpsRead();
   #endif
 
-  #if enableMenu
-    analogButtons.check();
-  #endif
+
 
   timerCheck();
 
@@ -336,7 +317,7 @@ void loop() {
     gpsRead();
   #endif
 
-  if (timer(1000,0) && menuActive == false) { //Adjust LED every second
+  if (timer(1000,0)) { //Adjust LED every second
     if (!ledHold) {
       ledAdjust(1);
     } else {
