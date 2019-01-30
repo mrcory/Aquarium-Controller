@@ -26,9 +26,6 @@ todo:
 
 
 
-
-
-
 #include "config.h" //Config file
 
 #if waterFillEnable
@@ -147,8 +144,11 @@ bool ledHold = false; //Hold led adjustment
 
 #include "time.h" //Time stuff moved here
 
-
-
+#if blynkRTC
+#include <WidgetRTC.h>
+WidgetRTC rtc;
+BlynkTimer timer1;
+#endif
 
 
 
@@ -265,11 +265,8 @@ void setup() {
 
 
 #if blynkRtc
-
-  
-
-  //rtc.begin();
-
+  rtc.begin();
+  setSyncInterval(timeToUpdate/1000);
 #endif
 
   updateTimeNow(); //Update time via selected time keeper
@@ -285,7 +282,6 @@ Serial.print(F("Token: ")); Serial.println(blynkToken);
 
 void loop() {
 
-  
 
 
   
@@ -293,6 +289,7 @@ void loop() {
   
   if (Blynk.connected() == true) {
     Blynk.run();
+    //timer1.run();
   } else {
     Serial.println("[BLYNK] Attempting to connect...");
     Blynk.connect(3000); //Attempt to connect for 3 seconds.
@@ -402,6 +399,6 @@ void DSTset() { //Set DST
 #if blynkRtc
 
 void updateTimeNow() {
-    timeClient.update();
+    
   }
 #endif

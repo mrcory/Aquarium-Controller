@@ -5,8 +5,8 @@
 
 //Temperature Settings
 char tempUnit = 'F'; //What unit do you want? (C or F)
-int tempWarnHi = 78; //High temp warning. (Set with the same unit as above)
-int tempWarnLo = 74; //Low temp warning. (Set with the same unit as above)
+float tempWarnHi = 79; //High temp warning. (Set with the same unit as above)
+float tempWarnLo = 74; //Low temp warning. (Set with the same unit as above)
 
 //Pin Connections 
 const int ledPinR = 9; //Red 9
@@ -55,7 +55,7 @@ int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
 //Colors (0-255)
 //Red Grn Blu Wht Pwr     
 int ledCo [5] [5] {
-  {255,255,200,255,35},
+  {255,255,200,255,30},
   {255,255,200,255,55},
   {255,125,19 ,50 ,35}
 };
