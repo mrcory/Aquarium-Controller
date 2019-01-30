@@ -14,7 +14,7 @@
 todo:
 */
 
-//const String ver = "2.1.0-dev"; //Program Version
+//const String ver = "2.2.0-dev"; //Program Version
 //Last Tested version: 2.0.1-dev
 
 
@@ -26,12 +26,14 @@ todo:
 
 
 
-#if waterFillEnable
-  #include "water.h"
-#endif
+
 
 
 #include "config.h" //Config file
+
+#if waterFillEnable
+  #include "water.h"
+#endif
 
 
 //Include the correct library for the screen used.
@@ -162,7 +164,9 @@ bool ledHold = false; //Hold led adjustment
 
 void setup() {
 
-
+#if waterFillEnable
+  waterSetup();
+#endif
 
 
 //If using Mega2560, change the PWM Freq
