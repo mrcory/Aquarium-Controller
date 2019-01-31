@@ -43,6 +43,9 @@ BLYNK_WRITE(V14) { //Brightness
   ledWifi[4] = param.asInt();
 }
 
+BLYNK_WRITE(V20) { //Water Change
+  waterChangeTrigger = param.asInt();
+}
 
 
 #define serialBypass false

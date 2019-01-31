@@ -4,15 +4,16 @@ For example a float valve that will physically cut off the water. Also, you coul
 power for the valve through a switch that is actuated by a float. 
 */
 
-bool waterOn = false;
+int waterStage = 0; //0:OFF 1:Drain 2:FILL
+bool waterChangeTrigger = false;
+bool waterOn = false; //Fill toggle
 bool waterDrain = false;
 bool waterFail = false;
 
-void waterSetup() {
-  pinMode(waterPin,OUTPUT); //Set control pin to output
-  pinMode(waterSense,INPUT); //Set sensor pin
+bool waterSafe() { //Return true if water safety not tripped
+  //waterOn = false;; //Force water to turn off
+  return !waterFail;
 }
-
 
 bool waterLevelCheck(byte _pin) { //Return true if waterSense pin is high
   if (digitalRead(_pin) == HIGH) {
@@ -27,13 +28,59 @@ bool waterOveride() { //Timer overide
 }
 
 void waterFillStopCheck() {
-  if (waterLevelCheck(waterSense) == true || waterLevelCheck(waterSense2) == true || waterOveride() == true) {
+  if (waterLevelCheck(waterSenseHi) == true || waterLevelCheck(waterSenseLo) == true || waterOveride() == true) {
     waterOn = false;
   }
 }
 
-bool waterSafe() { //Return true if water safety not tripped
-  waterOn = false;; //Force water to turn off
-  return !waterFail;
+void waterSetup() {
+  pinMode(waterFill,OUTPUT); //Set control pin to output
+  pinMode(waterSenseLo,INPUT); //Set sensor pin
+  pinMode(waterSenseHi,INPUT);
 }
 
+void waterRun() { //Function to run in loop
+  /*
+  if (waterLevelCheck(waterSenseHi) == true || waterSafe() == true) { //Safety Check
+    waterOn = false; 
+  }
+  */
+
+  #if wifiEnable
+    if (waterChangeTrigger == true && waterStage == 0) { //Blynk Control
+      waterStage = 1;
+    }
+  #endif
+  
+  if (waterSafe() == true && waterStage == 1) {
+    digitalWrite(pumpControl, HIGH); //Run the pump
+
+    if (waterLevelCheck(waterSenseLo) == true) {
+       waterStage++; //Go to fill stage
+
+      #if wifiEnable
+        Blynk.notify("{DEVICE_NAME} water drained. Starting fill.");
+      #endif
+    
+    }
+  } else {
+    digitalWrite(pumpControl, LOW); //Stop the pump
+  }
+
+//-----
+
+  if (waterSafe() == true && waterStage == 2) {
+    digitalWrite(waterFill, HIGH);
+
+    if (waterLevelCheck(waterSenseHi) == true) {
+      waterStage = 0;
+
+      #if wifiEnable
+        Blynk.notify("{DEVICE_NAME} water has been filled");
+      #endif
+    }
+  } else {
+    digitalWrite(waterFill, LOW);
+  }
+  
+}

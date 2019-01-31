@@ -28,9 +28,7 @@ todo:
 
 #include "config.h" //Config file
 
-#if waterFillEnable
-  #include "water.h"
-#endif
+
 
 
 //Include the correct library for the screen used.
@@ -123,6 +121,13 @@ bool ledHold = false; //Hold led adjustment
   #include <BlynkSimpleShieldEsp8266.h>
   #include <Ethernet.h>
   #include <Blynk.h>
+#endif
+
+#if waterFillEnable
+  #include "water.h"
+#endif
+
+#if wifiEnable
   #include "wifi.h" //Blynk and wifi related stuff
 
   ESP8266 wifi(&espSerial);

@@ -48,6 +48,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 #define tempWarnEnable true
 
 //Disable or Enable Water Fill
+//Requires wifi to trigger. Some setup work to allow code to work without wifi is included.
 #define waterFillEnable true
 
 #if tempWarnEnable //If above is true, this will be included in the program.
@@ -59,12 +60,12 @@ void additionalWarn() {
 #endif
 
 #if waterFillEnable //If water fill is enabled define these
-int waterPin = A1; //Water control pin
-int waterSense = A2; //Water sensor pin
-int waterSense2 = A3; //Upper water sensor
+#define waterFill A1 //Water control pin
+#define waterSenseLo A2 //Water sensor pin
+#define waterSenseHi A3 //Upper water sensor
 
-int pumpControl = A4; //Pump control pin
+#define pumpControl A4 //Pump control pin
 
-int waterTimeMin = 0;
-int waterTimeMax = 1000;
+#define waterTimeMin 0
+#define waterTimeMax 1000
 #endif
