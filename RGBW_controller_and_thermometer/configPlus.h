@@ -9,6 +9,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable/disable Temperature
 #define tempEnable true
+#define ambientAir false //Is there a second DS18b20 for air temp?
 
 //Enable/disable Screen
 #define screenEnable true
@@ -18,7 +19,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define screenTFT true
 
 //TFT Settings
-int tft_brightness = 25; //0-255 Controls a pwm pin
+int tft_brightness = 20; //0-255 Controls a pwm pin
 int tft_pin = 2; //Backlight Pin
 const int tftRotation = 3; //Rotate the TFT
 
@@ -28,8 +29,6 @@ const int tftRotation = 3; //Rotate the TFT
 const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled)
 
 
-//Enable Menu (Not coded yet)
-#define enableMenu false
 
 //Enable WIFI (We are using Blynk
 #define wifiEnable true
@@ -41,15 +40,15 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 #define espBaud 115200
 
 //Blynk server and port
-#define blynk_server "mrcory.net"
+#define blynk_server "blynk.mrcory.net"
 //#define blynk_ip IPAddress(192,168,254,1)
 #define blynk_port 8080 //8442 if using Blynk Cloud
 
 //Disable or Enable Temperature warning
-#define tempWarnEnable false
+#define tempWarnEnable true
 
 //Disable or Enable Water Fill
-#define waterFillEnable false
+#define waterFillEnable true
 
 #if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
@@ -60,9 +59,12 @@ void additionalWarn() {
 #endif
 
 #if waterFillEnable //If water fill is enabled define these
-  #define waterPin 0 //Pin that controls valve
-  #define waterSense 0  //1st Sensor for water level
-  #define waterSense2 0 //2nd Sensor for water level
-  #define waterTimeMin 0
-  #define waterTimeMax 1000
+int waterPin = A1; //Water control pin
+int waterSense = A2; //Water sensor pin
+int waterSense2 = A3; //Upper water sensor
+
+int pumpControl = A4; //Pump control pin
+
+int waterTimeMin = 0;
+int waterTimeMax = 1000;
 #endif

@@ -14,7 +14,7 @@
 todo:
 */
 
-//const String ver = "2.0.1-dev"; //Program Version
+//const String ver = "2.2.0-dev"; //Program Version
 //Last Tested version: 2.0.1-dev
 
 
@@ -23,17 +23,14 @@ todo:
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <EEPROM.h>
-#include <NTPClient.h>
-#include <WiFiUdp.h>
 
 
+
+#include "config.h" //Config file
 
 #if waterFillEnable
   #include "water.h"
 #endif
-
-
-#include "config.h" //Config file
 
 
 //Include the correct library for the screen used.
@@ -82,7 +79,6 @@ float ledP = 0; //Led Intensity 1-255 Don't adjust
 int screenPage = 1; //What page to be displayed on the screen
 int ledC[5] = {255}; //Fill with a default value
 int ledTarget[5] = {0};
-bool menuActive = false;
 int oldTimer = 100;
 int convOnTimes[times]; //Stores the timer on times in a function compatible format
 int convOffTimes[times]; //Store the timer off times in a function compatible format
@@ -138,9 +134,6 @@ bool ledHold = false; //Hold led adjustment
   #if screenOLED == true
     #include "screencommands.h" //Supporting functions for below.
     #include "screen.h" //Used for controlling the display.
-  #if enableMenu
-    #include "menu.h" //Menu stuff. (Probably to be removed and replaced.
-  #endif
 #endif
 
   #if screenTFT == true
@@ -151,22 +144,19 @@ bool ledHold = false; //Hold led adjustment
 
 #include "time.h" //Time stuff moved here
 
-
-#if enableMenu && screenEnable //Set resistor values for buttons here
-  #define _upVal 840
-  #define _downVal 957
-  #define _leftVal 979
-  #define _rightVal 930
-  #define _menuVal 700
+#if blynkRTC
+#include <WidgetRTC.h>
+WidgetRTC rtc;
+BlynkTimer timer1;
 #endif
 
-  WiFiUDP ntpUDP;
-  NTPClient timeClient(ntpUDP);
 
 
 void setup() {
 
-
+#if waterFillEnable
+  waterSetup();
+#endif
 
 
 //If using Mega2560, change the PWM Freq
@@ -245,13 +235,6 @@ void setup() {
   controlSetup(); //Convert times and other setup stuff.
   timerSetup(); //Start counters
 
-  #if enableMenu //If menu is enabled, then add button functions
-      analogButtons.add(up);
-      analogButtons.add(down);
-      analogButtons.add(right);
-      analogButtons.add(left);
-      analogButtons.add(menu);
-  #endif
 
   #if wifiEnable
   
@@ -282,11 +265,8 @@ void setup() {
 
 
 #if blynkRtc
-
-  
-
-  //rtc.begin();
-
+  rtc.begin();
+  setSyncInterval(timeToUpdate/1000);
 #endif
 
   updateTimeNow(); //Update time via selected time keeper
@@ -302,7 +282,6 @@ Serial.print(F("Token: ")); Serial.println(blynkToken);
 
 void loop() {
 
-  
 
 
   
@@ -310,6 +289,7 @@ void loop() {
   
   if (Blynk.connected() == true) {
     Blynk.run();
+    //timer1.run();
   } else {
     Serial.println("[BLYNK] Attempting to connect...");
     Blynk.connect(3000); //Attempt to connect for 3 seconds.
@@ -322,9 +302,7 @@ void loop() {
     gpsRead();
   #endif
 
-  #if enableMenu
-    analogButtons.check();
-  #endif
+
 
   timerCheck();
 
@@ -336,7 +314,7 @@ void loop() {
     gpsRead();
   #endif
 
-  if (timer(1000,0) && menuActive == false) { //Adjust LED every second
+  if (timer(1000,0)) { //Adjust LED every second
     if (!ledHold) {
       ledAdjust(1);
     } else {
@@ -421,6 +399,6 @@ void DSTset() { //Set DST
 #if blynkRtc
 
 void updateTimeNow() {
-    timeClient.update();
+    
   }
 #endif
