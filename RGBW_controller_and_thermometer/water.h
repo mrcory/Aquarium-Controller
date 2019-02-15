@@ -9,6 +9,7 @@ bool waterChangeTrigger = false;
 bool waterOn = false; //Fill toggle
 bool waterDrain = false;
 bool waterFail = false;
+byte waterMode = 0; //Water Mode 0-Normal 1-Autofill
 
 bool waterSafe() { //Return true if water safety not tripped
   //waterOn = false;; //Force water to turn off

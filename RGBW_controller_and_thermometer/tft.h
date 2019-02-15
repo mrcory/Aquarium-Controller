@@ -40,13 +40,7 @@ void activeDisplay() {
   #endif
 
   #if waterFillEnable
-    if (waterOn == true) {
-      display.drawBitmap(90,90,upMap,30,15,ST7735_WHITE);
-    }  
-
-    if (waterDrain == true) {
-      display.drawBitmap(90,90,downMap,30,15,ST7735_WHITE);
-    }
+    drawIcon();
   #endif
     
     flipFlop = !flipFlop;

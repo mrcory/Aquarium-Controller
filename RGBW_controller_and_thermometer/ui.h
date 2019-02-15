@@ -9,3 +9,5 @@
 #define text 0xFFFF
 
 #define warnColor 0xF800
+
+#define iconColor 0xFFFF
