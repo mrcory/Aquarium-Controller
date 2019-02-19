@@ -163,7 +163,7 @@ void setup() {
   waterSetup();
 #endif
 
-
+/*
 //If using Mega2560, change the PWM Freq
 #if defined(ARDUINO_AVR_MEGA2560)
   //------------------
@@ -178,7 +178,7 @@ void setup() {
   TCCR2B |= myPrescaler;
 
 #endif
-
+*/
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
