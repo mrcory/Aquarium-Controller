@@ -21,7 +21,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 //TFT Settings
 int tft_brightness = 20; //0-255 Controls a pwm pin
 int tft_pin = 2; //Backlight Pin
-const int tftRotation = 3; //Rotate the TFT
+const int tftRotation = 1; //Rotate the TFT
 
 //OLED Settings
 #define oled_width 128
