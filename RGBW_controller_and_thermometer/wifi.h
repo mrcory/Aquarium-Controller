@@ -3,6 +3,12 @@
  * V5 - Temp
  */
 
+//Feedback
+void wifiFeedback() {
+  Serial.print(F("SSID: ")); Serial.println(mySSID);
+  Serial.print(F("Pass: ")); Serial.println(wifiPassword);
+  Serial.print(F("Token: ")); Serial.println(blynkToken);
+}
 
 //Some Supporting functions
 

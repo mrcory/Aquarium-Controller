@@ -25,10 +25,6 @@ bool waterLevelCheck(byte _pin) { //Return true if waterSense pin is high
   }
 }
 
-bool waterOveride() { //Timer overide
-  return false;
-}
-
 void waterFillStopCheck() {
   if (waterLevelCheck(waterSenseHi) == true || waterLevelCheck(waterSenseLo) == true || waterOveride() == true) {
     waterOn = false;

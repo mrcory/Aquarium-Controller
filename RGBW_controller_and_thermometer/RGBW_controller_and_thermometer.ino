@@ -278,9 +278,10 @@ void setup() {
 
 
 
-Serial.print(F("SSID: ")); Serial.println(mySSID);
-Serial.print(F("Pass: ")); Serial.println(wifiPassword);
-Serial.print(F("Token: ")); Serial.println(blynkToken);
+if (debugMe() == true) {
+  wifiFeedback(); //Print wifi info
+}
+
 }
 
 
