@@ -26,7 +26,7 @@ void activeDisplay() {
   if (flipFlop == false || screenFirstRun == true) { //Updates odd times
     showTemp(0,0,1.5);
     showTime(0,24,1.5);
-    showHiLo(97,0,0.5);
+    showHiLo(93,0,0.5);
 
     flipFlop = !flipFlop;
   }
@@ -36,7 +36,7 @@ void activeDisplay() {
     ledStatus(0,39,text,backGround);
 
   #if tempWarnEnable //If temperature warning is enabled draw a warning icon.
-    warnIcon(97,18);
+    warnIcon(93,18);
   #endif
 
   #if waterFillEnable

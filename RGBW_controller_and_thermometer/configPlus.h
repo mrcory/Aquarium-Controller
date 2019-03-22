@@ -49,7 +49,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 
 //Disable or Enable Water Fill
 //Requires wifi to trigger. Some setup work to allow code to work without wifi is included.
-#define waterFillEnable true
+#define waterFillEnable false
 
 #if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
