@@ -43,18 +43,19 @@ void waterSetup() {
   if (senseMode == 2) {
     pinMode(waterSenseLo,INPUT); //Set sensor pin
   }
+  if (debugMe == true) { Serial.println("[Water] Water Change Enabled");}
 }
 
 
 void waterRun() { //Function to run in loop
-  /*
-  if (waterLevelCheck(waterSenseHi) == true || waterSafe() == true) { //Safety Check
-    waterOn = false; 
+
+  if (waterSafe() == false) { //If water is not safe then force pins to low
+    digitalWrite(pumpControl,LOW);
+    digitalWrite(waterFill,LOW); 
   }
-  */
 
   #if wifiEnable
-    if (waterChangeTrigger == true && waterStage == 0) { //Blynk Control
+    if (waterChangeTrigger == true && waterStage == 0 && waterSafe() == true) { //Blynk Control
       waterStage = 1;
       timerReset(6);
       waterChangeTrigger = false; //Reset Trigger
