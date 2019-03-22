@@ -11,6 +11,7 @@ bool waterDrain = false;
 bool waterFail = false;
 byte waterMode = 0; //Water Mode 0-Normal 1-Autofill
 
+
 bool waterSafe() { //Return true if water safety not tripped
   //waterOn = false;; //Force water to turn off
   return !waterFail;
@@ -36,8 +37,12 @@ void waterFillStopCheck() {
 
 void waterSetup() {
   pinMode(waterFill,OUTPUT); //Set control pin to output
-  pinMode(waterSenseLo,INPUT); //Set sensor pin
+  digitalWrite(waterFill,LOW);
   pinMode(waterSenseHi,INPUT);
+
+  if (senseMode == 2) {
+    pinMode(waterSenseLo,INPUT); //Set sensor pin
+  }
 }
 
 void waterRun() { //Function to run in loop

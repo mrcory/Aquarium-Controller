@@ -152,5 +152,3 @@ void showTemp(int _posX,int _posY) { //0,0
    display.setTextColor(WHITE); //Set text color so it is visible
     delay(250); //Give some time for the temp probe to start
   }
-
-}

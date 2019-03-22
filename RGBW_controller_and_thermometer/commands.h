@@ -59,8 +59,8 @@ void ledPower() {
 #if screenEnable
   int oldPage = screenPage; //Store old page location
   screenPage = 2; //Change page to "LED ON(OFF)"
-#if screenOLED
-  activeDisplay(); delay(500); //Update and display
+#if screenOLED && screenEnable
+  //displayUpdate(); delay(500); //Update and display
 #endif
   screenPage = oldPage; //Restore old page location
 #endif
