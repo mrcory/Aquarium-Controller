@@ -45,6 +45,7 @@ void waterSetup() {
   }
 }
 
+
 void waterRun() { //Function to run in loop
   /*
   if (waterLevelCheck(waterSenseHi) == true || waterSafe() == true) { //Safety Check
@@ -55,31 +56,60 @@ void waterRun() { //Function to run in loop
   #if wifiEnable
     if (waterChangeTrigger == true && waterStage == 0) { //Blynk Control
       waterStage = 1;
+      timerReset(6);
+      waterChangeTrigger = false; //Reset Trigger
+      
+      if (debugMe == true) { Serial.println("[Water] Water Draining");}
+      
     }
   #endif
   
   if (waterSafe() == true && waterStage == 1) {
     digitalWrite(pumpControl, HIGH); //Run the pump
 
-    if (waterLevelCheck(waterSenseLo) == true) {
-       waterStage++; //Go to fill stage
+  if (senseMode == 1) { //Single Sensor mode will use a timer
+    if (timer(drainTime,6) == true) {
+      waterStage++;
+      timerReset(6);
+      digitalWrite(pumpControl, LOW); //Stop the pump
 
-      #if wifiEnable
-        Blynk.notify("{DEVICE_NAME} water drained. Starting fill.");
-      #endif
-    
+      if (debugMe == true) { Serial.println("[Water] Water Filling");}
+      
+        #if wifiEnable
+          Blynk.notify("{DEVICE_NAME} water drained. Starting fill.");
+        #endif
     }
+    
   } else {
-    digitalWrite(pumpControl, LOW); //Stop the pump
+    digitalWrite(pumpControl,LOW); //Make sure pump is turned off
   }
+
+  if (senseMode == 2) {
+      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime,6) == true) { //Timer overide in case of sensor failure
+        waterStage++; //Go to fill stage
+        timerReset(6);
+        digitalWrite(pumpControl, LOW); //Stop the pump
+
+        if (debugMe == true) { Serial.println("[Water] Water Filling");}
+        
+        #if wifiEnable
+          Blynk.notify("{DEVICE_NAME} water drained. Starting fill.");
+        #endif
+      
+      }
+  }
+}
 
 //-----
 
   if (waterSafe() == true && waterStage == 2) {
     digitalWrite(waterFill, HIGH);
 
-    if (waterLevelCheck(waterSenseHi) == true) {
+    if (waterLevelCheck(waterSenseHi) == true || timer(fillTime,6) == true) {
       waterStage = 0;
+      digitalWrite(waterFill, LOW);
+
+      if (debugMe == true) { Serial.println("[Water] Water Fill Complete");}
 
       #if wifiEnable
         Blynk.notify("{DEVICE_NAME} water has been filled");

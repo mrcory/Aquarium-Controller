@@ -230,21 +230,21 @@ bool fpsControl(unsigned long _rate) { //Return true after _rate
     static byte lastDrawn = 0;
     static bool drawn = false;
 
-    if (waterOn == true && drawn == false) {
+    if (waterStage == 1 && lastDrawn != 1) {
       display.drawBitmap(90,90,blankMap,30,15,backGround);
-      display.drawBitmap(90,90,upMap,30,15,iconColor);
+      display.drawBitmap(90,90,downMap,30,15,iconColor);
       lastDrawn = 1;
       drawn = true;
     }
 
-    if (waterDrain == true && drawn == false) {
+    if (waterStage == 2 && lastDrawn != 2) {
       display.drawBitmap(90,90,blankMap,30,15,backGround);
-      display.drawBitmap(90,90,downMap,30,15,iconColor);
+      display.drawBitmap(90,90,upMap,30,15,iconColor);
       lastDrawn = 2;
       drawn = true;
     }
     
-    if (drawn == true && waterDrain == false && waterOn == false) { //Clear the icon area
+    if (drawn == true && waterStage == 0) { //Clear the icon area
       display.drawBitmap(90,90,blankMap,30,15,backGround);
       drawn = false;
       lastDrawn = 0;

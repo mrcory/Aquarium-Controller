@@ -286,7 +286,9 @@ Serial.print(F("Token: ")); Serial.println(blynkToken);
 
 void loop() {
 
-
+  #if waterFillEnable
+    waterRun();
+  #endif
 
   
   #if wifiEnable

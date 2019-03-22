@@ -9,14 +9,14 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable/disable Temperature
 #define tempEnable true
-#define ambientAir false //Is there a second DS18b20 for air temp?
+#define ambientAir false //Is there a second DS18b20 for air temp? (Not coded)
 
 //Enable/disable Screen
-#define screenEnable false
+#define screenEnable true
 
 //Choose a screen
 #define screenOLED false
-#define screenTFT false
+#define screenTFT true
 
 //TFT Settings
 int tft_brightness = 20; //0-255 Controls a pwm pin
@@ -50,7 +50,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 
 //Disable or Enable Water Fill
 //Requires wifi to trigger. Some setup work to allow code to work without wifi is included.
-#define waterFillEnable false
+#define waterFillEnable true
 
 #if tempWarnEnable //If above is true, this will be included in the program.
 //Add aditional functions to be run when temperature warning has been triggered.
@@ -64,10 +64,10 @@ void additionalWarn() {
 #define waterFill A1 //Water control pin
 #define waterSenseLo A2 //Water sensor pin
 #define waterSenseHi A3 //Upper water sensor
-static byte senseMode = 1 //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
+static byte senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
 
 #define pumpControl A4 //Pump control pin
 
-#define waterTimeMin 0
-#define waterTimeMax 1000
+static unsigned long drainTime = 3000; //Millis to drain timeout
+static unsigned long fillTime = 3000; //Millis to fill timeout
 #endif

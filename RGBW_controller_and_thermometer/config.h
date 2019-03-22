@@ -2,6 +2,8 @@
    Variables for configureing various things.
 */
 
+//Enable Debug Serial
+static bool debugMe = true;
 
 //Temperature Settings
 char tempUnit = 'F'; //What unit do you want? (C or F)
