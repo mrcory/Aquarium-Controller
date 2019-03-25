@@ -9,7 +9,6 @@
    Credits:
    Temp sensor code http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
    GPS incoming info function taken from example program
-   PWM Frequency code: https://forum.arduino.cc/index.php?topic=72092.0 : valerio_sperati
 todo:
 */
 
@@ -162,22 +161,7 @@ void setup() {
   waterSetup();
 #endif
 
-/*
-//If using Mega2560, change the PWM Freq
-#if defined(ARDUINO_AVR_MEGA2560)
-  //------------------
-  //PWM Stuff
-  //https://forum.arduino.cc/index.php?topic=72092.0
-  //Thanks to: valerio_sperati
 
-  int myEraser = 7;
-  TCCR2B &= ~myEraser;
-
-  int myPrescaler = 1; //Setting to 4000Hz
-  TCCR2B |= myPrescaler;
-
-#endif
-*/
 
   #if gpsRtc
     gpsSerial.begin(gpsBaud); //Start the serial port for the gps unit
@@ -278,7 +262,7 @@ void setup() {
 
 
 
-if (debugMe() == true) {
+if (debugMe == true) {
   wifiFeedback(); //Print wifi info
 }
 
@@ -358,6 +342,7 @@ void loop() {
     analogWrite(ledPinG, map(ledWifi[1], 0, 255, 0, ledWifi[4])); //Set power green
     analogWrite(ledPinB, map(ledWifi[2], 0, 255, 0, ledWifi[4])); //Set power blue
     analogWrite(ledPinW, map(ledWifi[3], 0, 255, 0, ledWifi[4])); //Set power white
+    ledUpdate = 1;
   }
 #endif
 

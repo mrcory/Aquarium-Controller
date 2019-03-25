@@ -76,7 +76,4 @@ if (screenFirstRun == true) {
 #endif
   
   }
-  //if (drain == true) {
-    //waterBitmapDisplay(90,90,1250,0x5F82,ST7735_WHITE); //Animated test (Not using)
-  //}
 }

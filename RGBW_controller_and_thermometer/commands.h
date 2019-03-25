@@ -56,12 +56,9 @@ void ledPower() {
     oldState = false;
   }
   ledUpdate = 1; //There has been a change, update analogWrite
-#if screenEnable
+#if screenOLED && screenEnable
   int oldPage = screenPage; //Store old page location
   screenPage = 2; //Change page to "LED ON(OFF)"
-#if screenOLED && screenEnable
-  //displayUpdate(); delay(500); //Update and display
-#endif
   screenPage = oldPage; //Restore old page location
 #endif
 }
