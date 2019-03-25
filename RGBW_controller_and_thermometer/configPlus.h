@@ -68,6 +68,6 @@ static byte senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode 
 
 #define pumpControl A4 //Pump control pin
 
-static unsigned long drainTime = 10000; //Millis to drain timeout
-static unsigned long fillTime = 10000; //Millis to fill timeout
+int drainTime = 10; //seconds to drain timeout
+int fillTime = 10; //seconds to fill timeout
 #endif

@@ -26,7 +26,7 @@ bool waterLevelCheck(byte _pin) { //Return true if waterSense pin is high
 }
 
 void waterFillStopCheck() {
-  if (waterLevelCheck(waterSenseHi) == true || waterLevelCheck(waterSenseLo) == true || waterOveride() == true) {
+  if (waterLevelCheck(waterSenseHi) == true || waterLevelCheck(waterSenseLo) == true) {
     waterOn = false;
   }
 }
@@ -65,7 +65,7 @@ void waterRun() { //Function to run in loop
     digitalWrite(pumpControl, HIGH); //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
-    if (timer(drainTime,6) == true) {
+    if (timer(drainTime*1000,6) == true) {
       waterStage++;
       timerReset(6);
       digitalWrite(pumpControl, LOW); //Stop the pump
@@ -82,7 +82,7 @@ void waterRun() { //Function to run in loop
   }
 
   if (senseMode == 2) {
-      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime,6) == true) { //Timer overide in case of sensor failure
+      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,6) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
         timerReset(6);
         digitalWrite(pumpControl, LOW); //Stop the pump
@@ -102,7 +102,7 @@ void waterRun() { //Function to run in loop
   if (waterSafe() == true && waterStage == 2) {
     digitalWrite(waterFill, HIGH);
 
-    if (waterLevelCheck(waterSenseHi) == true || timer(fillTime,6) == true) {
+    if (waterLevelCheck(waterSenseHi) == true || timer(fillTime*1000,6) == true) {
       waterStage = 0;
       digitalWrite(waterFill, LOW);
 
