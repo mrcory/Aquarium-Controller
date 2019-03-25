@@ -16,21 +16,22 @@
         if (isNegative(_utcAdjust)) {_utcAdjust = (_utcAdjust + 24);}
         setTime(_utcAdjust,GPS.time.minute(),GPS.time.second(),GPS.date.month(),GPS.date.day(),GPS.date.year());
       }
-        
-        Serial.print(F("[TIME] GPS: "));
-        Serial.print(GPS.time.hour());
-        Serial.print(":");
-        Serial.print(GPS.time.minute());
-        Serial.print(":");
-        Serial.print(GPS.time.second());
-  
-        Serial.print(F(" | Arduino: "));
-        Serial.print(hour());
-        Serial.print(":");
-        Serial.print(minute());
-        Serial.print(":");
-        Serial.println(second());
 
+        if (debugMe == true) {
+          Serial.print(F("[TIME] GPS: "));
+          Serial.print(GPS.time.hour());
+          Serial.print(":");
+          Serial.print(GPS.time.minute());
+          Serial.print(":");
+          Serial.print(GPS.time.second());
+    
+          Serial.print(F(" | Arduino: "));
+          Serial.print(hour());
+          Serial.print(":");
+          Serial.print(minute());
+          Serial.print(":");
+          Serial.println(second());
+        }
     }
 #elif blynkRtc
 
