@@ -40,9 +40,9 @@ void tempUpdate() { //Update temp and display
     if (temp > tempWarnHi || temp < tempWarnLo) {
       tempWarn = true;
       additionalWarn(); //Run additional temp warning commands
-    } else {
-      tempWarn = false();
     }
+
+    
   #endif
 }
 
