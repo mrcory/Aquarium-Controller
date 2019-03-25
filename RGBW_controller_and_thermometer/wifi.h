@@ -1,6 +1,9 @@
 //Oh Yeah, we are gonna get some wifi in here. (Once I have the hardware)
 /*
  * V5 - Temp
+ * 
+ * v30 - Fill Timeout
+ * v31 - Drain Timeout
  */
 
 //Feedback
@@ -52,6 +55,14 @@ BLYNK_WRITE(V14) { //Brightness
 #if waterFillEnable
   BLYNK_WRITE(V20) { //Water Change
     waterChangeTrigger = param.asInt();
+  }
+
+  BLYNK_WRITE(v30) {
+    fillTime = param.asInt();
+  }
+
+  BLYNK_WRITE(v31) {
+    drainTime = param.asInt();
   }
 #endif
 
