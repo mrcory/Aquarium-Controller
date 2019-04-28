@@ -4,6 +4,8 @@ For example a float valve that will physically cut off the water. Also, you coul
 power for the valve through a switch that is actuated by a float. 
 */
 
+#define readThreshold 750
+
 int waterStage = 0; //0:OFF 1:Drain 2:FILL
 bool waterChangeTrigger = false;
 bool waterOn = false; //Fill toggle
@@ -18,7 +20,7 @@ bool waterSafe() { //Return true if water safety not tripped
 }
 
 bool waterLevelCheck(byte _pin) { //Return true if waterSense pin is high
-  if (digitalRead(_pin) == HIGH) {
+  if (analogRead(_pin) >= readThreshold) {
     return true;
   } else {
     return false;
@@ -32,9 +34,10 @@ void waterFillStopCheck() {
 }
 
 void waterSetup() {
-  pinMode(waterFill,OUTPUT); //Set control pin to output
-  digitalWrite(waterFill,LOW);
+  analogWrite(waterFill,0);
   pinMode(waterSenseHi,INPUT);
+  
+  //pinMode(waterDrain,OUTPUT);
 
   if (senseMode == 2) {
     pinMode(waterSenseLo,INPUT); //Set sensor pin
@@ -46,8 +49,8 @@ void waterSetup() {
 void waterRun() { //Function to run in loop
 
   if (waterSafe() == false) { //If water is not safe then force pins to low
-    digitalWrite(pumpControl,LOW);
-    digitalWrite(waterFill,LOW); 
+    analogWrite(pumpControl,0);
+    analogWrite(waterFill,0); 
   }
 
   #if wifiEnable
@@ -62,13 +65,13 @@ void waterRun() { //Function to run in loop
   #endif
   
   if (waterSafe() == true && waterStage == 1) {
-    digitalWrite(pumpControl, HIGH); //Run the pump
+    analogWrite(pumpControl, 256); //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
-    if (timer(drainTime*1000,6) == true) {
+    if (timer(drainTime*1000,7) == true) {
       waterStage++;
       timerReset(6);
-      digitalWrite(pumpControl, LOW); //Stop the pump
+      analogWrite(pumpControl, 0); //Stop the pump
 
       if (debugMe == true) { Serial.println("[Water] Water Filling");}
       
@@ -78,14 +81,14 @@ void waterRun() { //Function to run in loop
     }
     
   } else {
-    digitalWrite(pumpControl,LOW); //Make sure pump is turned off
+    analogWrite(pumpControl,0); //Make sure pump is turned off
   }
 
   if (senseMode == 2) {
-      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,6) == true) { //Timer overide in case of sensor failure
+      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,7) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
         timerReset(6);
-        digitalWrite(pumpControl, LOW); //Stop the pump
+        analogWrite(pumpControl, 0); //Stop the pump
 
         if (debugMe == true) { Serial.println("[Water] Water Filling");}
         
@@ -100,11 +103,11 @@ void waterRun() { //Function to run in loop
 //-----
 
   if (waterSafe() == true && waterStage == 2) {
-    digitalWrite(waterFill, HIGH);
+    analogWrite(waterFill, 256);
 
-    if (waterLevelCheck(waterSenseHi) == true || timer(fillTime*1000,6) == true) {
+    if (waterLevelCheck(waterSenseHi) == true) { // || timer(fillTime*1000,7) == true) {
       waterStage = 0;
-      digitalWrite(waterFill, LOW);
+      analogWrite(waterFill, 0);
 
       if (debugMe == true) { Serial.println("[Water] Water Fill Complete");}
 
@@ -113,7 +116,7 @@ void waterRun() { //Function to run in loop
       #endif
     }
   } else {
-    digitalWrite(waterFill, LOW);
+    analogWrite(waterFill, 0);
   }
   
 }

@@ -168,7 +168,7 @@ void setup() {
   #endif
 
   Wire.begin();
-  Serial.begin(9600);
+  Serial.begin(38400);
 
   
 
@@ -261,16 +261,18 @@ void setup() {
 
 
 
-
+#if wifiEnable
 if (debugMe == true) {
   wifiFeedback(); //Print wifi info
 }
+#endif
 
 }
 
 
 void loop() {
 
+  //Serial.println(analogRead(waterSenseHi));
   #if waterFillEnable
     waterRun();
   #endif
@@ -307,6 +309,7 @@ void loop() {
 
   if (timer(1000,0)) { //Adjust LED every second
     if (!ledHold) {
+      
       ledAdjust(1);
     } else {
       ledAdjust(0);
@@ -352,6 +355,7 @@ void loop() {
     analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
+    //Serial.print("Old Timer "); Serial.println(oldTimer);
   }
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)

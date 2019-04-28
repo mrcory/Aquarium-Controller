@@ -50,7 +50,7 @@ int ledOnTimes [5] [2]{ //Times to turn on (24 hour)
 int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
-  {19,00}
+  {20,00}
 };
 
 

@@ -17,6 +17,11 @@ void wifiFeedback() {
 
 void sendTemp() {
   Blynk.virtualWrite(V5,temp);
+  Blynk.virtualWrite(V31,fillTime);
+  Blynk.virtualWrite(V33,drainTime);
+  Blynk.virtualWrite(V41,DST);
+  Blynk.virtualWrite(V43,tft_brightness);
+  
 }
 
 //Send all the data we want to access
@@ -57,17 +62,24 @@ BLYNK_WRITE(V14) { //Brightness
     waterChangeTrigger = param.asInt();
   }
 
-  BLYNK_WRITE(v30) {
+  BLYNK_WRITE(V30) {
     fillTime = param.asInt();
   }
 
-  BLYNK_WRITE(v31) {
+  BLYNK_WRITE(V32) {
     drainTime = param.asInt();
+  }
+
+  BLYNK_WRITE(V40) {
+    DST = param.asInt();
+  }
+
+  BLYNK_WRITE(V42) {
+    tft_brightness = param.asInt();
   }
 #endif
 
 #define serialBypass false
-
 #if !serialCommands && !serialBypass
   #error "Wifi requires that serial commands be enabled for wifi configuration. To bypass define serialBypass true."
 #endif

@@ -61,13 +61,13 @@ void additionalWarn() {
 #endif
 
 #if waterFillEnable //If water fill is enabled define these
-#define waterFill A1 //Water control pin
-#define waterSenseLo A2 //Water sensor pin
-#define waterSenseHi A3 //Upper water sensor
+#define waterFill A2 //Water control pin
+#define waterSenseLo 10 //Water sensor pin
+#define waterSenseHi A9 //Upper water sensor
 static byte senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
 
-#define pumpControl A4 //Pump control pin
+#define pumpControl A1 //Pump control pin
 
-int drainTime = 10; //seconds to drain timeout
-int fillTime = 10; //seconds to fill timeout
+unsigned long drainTime = 10; //seconds to drain timeout
+unsigned long fillTime = 600; //seconds to fill timeout
 #endif
