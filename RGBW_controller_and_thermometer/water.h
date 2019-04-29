@@ -4,7 +4,7 @@ For example a float valve that will physically cut off the water. Also, you coul
 power for the valve through a switch that is actuated by a float. 
 */
 
-#define readThreshold 750
+#define readThreshold 750 //Minimum reading required to trigger analogRead
 
 int waterStage = 0; //0:OFF 1:Drain 2:FILL
 bool waterChangeTrigger = false;
@@ -37,8 +37,6 @@ void waterSetup() {
   analogWrite(waterFill,0);
   pinMode(waterSenseHi,INPUT);
   
-  //pinMode(waterDrain,OUTPUT);
-
   if (senseMode == 2) {
     pinMode(waterSenseLo,INPUT); //Set sensor pin
   }
