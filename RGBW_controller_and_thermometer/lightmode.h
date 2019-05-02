@@ -41,7 +41,6 @@ void colorChange1(bool _force,byte _forceTimer) {
     memcpy(ledTarget,ledCo[_forceTimer],5*sizeof(int));
    }
 
-  //oldTimer = currentTimer;
 }
 
 void timerCheck() {

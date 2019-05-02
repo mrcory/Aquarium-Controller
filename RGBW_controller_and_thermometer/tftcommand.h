@@ -2,6 +2,7 @@
 #include "ui.h"
 
 bool screenFirstRun = true; //Flag for first run
+bool oldWarn = false;
 
 //BITMAPS
 const unsigned char clockBitmap [] PROGMEM = {
@@ -211,7 +212,6 @@ bool fpsControl(unsigned long _rate) { //Return true after _rate
 
 #if tempWarnEnable
   void warnIcon(int _posX,int _posY) {
-    static bool oldWarn = false;
     
     if (tempWarn == true && tempWarn != oldWarn) {
       display.drawBitmap(_posX,_posY,warnBitmap,9,9,warnColor);

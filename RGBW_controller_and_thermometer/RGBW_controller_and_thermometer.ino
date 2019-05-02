@@ -272,7 +272,6 @@ if (debugMe == true) {
 
 void loop() {
 
-  //Serial.println(analogRead(waterSenseHi));
   #if waterFillEnable
     waterRun();
   #endif
@@ -282,7 +281,6 @@ void loop() {
   
   if (Blynk.connected() == true) {
     Blynk.run();
-    //timer1.run();
   } else {
     Serial.println("[BLYNK] Attempting to connect...");
     Blynk.connect(3000); //Attempt to connect for 3 seconds.
@@ -355,7 +353,6 @@ void loop() {
     analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
-    //Serial.print("Old Timer "); Serial.println(oldTimer);
   }
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
