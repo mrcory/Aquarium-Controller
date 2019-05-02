@@ -4,6 +4,8 @@
  * 
  * v30 - Fill Timeout
  * v31 - Drain Timeout
+ * v35 - Report waterSenseHi
+ * v36 - Trigger water Fill
  */
 
 //Feedback
@@ -21,8 +23,14 @@ void sendTemp() {
   Blynk.virtualWrite(V33,drainTime);
   Blynk.virtualWrite(V41,DST);
   Blynk.virtualWrite(V43,tft_brightness);
+
+#if waterFillEnable
+  Blynk.virtualWrite(V35,analogRead(waterSenseHi));
+#endif
   
 }
+
+
 
 //Send all the data we want to access
 
@@ -57,6 +65,10 @@ BLYNK_WRITE(V14) { //Brightness
   ledWifi[4] = param.asInt();
 }
 
+  BLYNK_WRITE(V40) {
+    DST = param.asInt();
+  }
+
 #if waterFillEnable
   BLYNK_WRITE(V20) { //Water Change
     waterChangeTrigger = param.asInt();
@@ -70,12 +82,12 @@ BLYNK_WRITE(V14) { //Brightness
     drainTime = param.asInt();
   }
 
-  BLYNK_WRITE(V40) {
-    DST = param.asInt();
-  }
-
   BLYNK_WRITE(V42) {
     tft_brightness = param.asInt();
+  }
+
+  BLYNK_WRITE(V36) {
+    waterStage = param.asInt();
   }
 #endif
 
