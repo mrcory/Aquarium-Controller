@@ -18,7 +18,9 @@ void wifiFeedback() {
 //Some Supporting functions
 
 void sendTemp() {
-  Blynk.virtualWrite(V5,temp);
+  #if tempEnable
+    Blynk.virtualWrite(V5,temp);
+  #endif
   Blynk.virtualWrite(V31,fillTime);
   Blynk.virtualWrite(V33,drainTime);
   Blynk.virtualWrite(V41,DST);

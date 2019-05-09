@@ -25,9 +25,11 @@ void activeDisplay() {
 
 //---Flip Frame
   if (flipFlop == false || screenFirstRun == true) { //Updates odd times
+#if tempEnable
     showTemp(0,0,1.5);
     showTime(0,24,1.5);
     showHiLo(93,0,0.5);
+#endif
 
     flipFlop = !flipFlop;
   }
@@ -36,7 +38,7 @@ void activeDisplay() {
   if (flipFlop == true) { //Updates even times
     ledStatus(0,39,text,backGround);
 
-  #if tempWarnEnable //If temperature warning is enabled draw a warning icon.
+  #if tempWarnEnable && tempEnable //If temperature warning is enabled draw a warning icon.
     warnIcon(93,18);
   #endif
 

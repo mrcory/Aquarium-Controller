@@ -127,16 +127,18 @@ void showTime(int _posX,int _posY, float _size) {
 
 }
 
-void showHiLo(int _posX,int _posY, float _size) { //97,0
-  display.setTextSize(_size); //Reset cursor size for safety
-  display.setCursor(_posX,_posY); //Set cursor position
-  display.print(F("High: "));
-  display.print(tempHi,1); //Display tempHi with 1 decimal place
-  display.setCursor(_posX,_posY+8); //Set cursor position
-  display.print(F("Low : "));
-  display.print(tempLo,1); //Display tempLo with 1 decimal place
-        
-}
+#if tempEnable
+  void showHiLo(int _posX,int _posY, float _size) { //97,0
+    display.setTextSize(_size); //Reset cursor size for safety
+    display.setCursor(_posX,_posY); //Set cursor position
+    display.print(F("High: "));
+    display.print(tempHi,1); //Display tempHi with 1 decimal place
+    display.setCursor(_posX,_posY+8); //Set cursor position
+    display.print(F("Low : "));
+    display.print(tempLo,1); //Display tempLo with 1 decimal place
+          
+  }
+
 
 void showTemp(int _posX,int _posY, float _size) {
       //Update temperature display
@@ -150,12 +152,16 @@ void showTemp(int _posX,int _posY, float _size) {
       }
       display.setCursor(_posX+8,_posY); //Set cursor position
       display.setTextSize(_size*2); //Make it large
-      if (temp < 100) {
-        display.print(temp,_size); //Display temp with 1 decimal place
-      } else {
-        display.print(F("!Err"));
-      }
+      #if tempEnable
+        if (temp < 100) {
+          display.print(temp,_size); //Display temp with 1 decimal place
+        } else {
+          display.print(F("!Err"));
+        }
+      #endif
 }
+
+#endif
 
 
 
@@ -210,7 +216,7 @@ bool fpsControl(unsigned long _rate) { //Return true after _rate
   }
 }
 
-#if tempWarnEnable
+#if tempWarnEnable && tempEnable
   void warnIcon(int _posX,int _posY) {
     
     if (tempWarn == true && tempWarn != oldWarn) {

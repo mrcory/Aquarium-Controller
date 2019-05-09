@@ -8,7 +8,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define serialCommands true //Disable to save sram and flash space
 
 //Enable/disable Temperature
-#define tempEnable true
+#define tempEnable false
 #define ambientAir false //Is there a second DS18b20 for air temp? (Not coded)
 
 //Enable/disable Screen
