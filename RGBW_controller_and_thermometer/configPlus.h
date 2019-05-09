@@ -33,12 +33,12 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 //Enable WIFI (We are using Blynk
 #define wifiEnable true
 #define BLYNK_PRINT Serial //Get feedback from Blynk via Serial
-
+byte connectTimeout = 5; //Timeout to limit reconnection attempts by blynk. (Doesn't count initial connection)
 
 
 //ESP Serial and Baud
 #define espSerial Serial3
-#define espBaud 115200
+#define espBaud 9600
 
 //Blynk server and port
 #define blynk_server "blynk.mrcory.net"
