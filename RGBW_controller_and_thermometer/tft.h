@@ -16,6 +16,7 @@ void screenReset(int _X, int _Y, float _SIZE) {
 
 void activeDisplay() {
   
+  
   static bool flipFlop = true; //ledStatus will update every other refresh.
   
   if (fpsControl(2000)) { //Set the refresh rate in milliseconds
