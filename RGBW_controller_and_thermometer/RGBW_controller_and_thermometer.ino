@@ -311,11 +311,11 @@ void loop() {
   #if tempEnable
     if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
       tempUpdate();
-      
-      #if wifiEnable
-        sendTemp(); //Send temp to Blynk
-      #endif
     }
+  #endif
+
+  #if wifiEnable
+    sendBlynk(); //Send data to Blynk
   #endif
 
   if (timer(timeToUpdate,2)) { //Update time

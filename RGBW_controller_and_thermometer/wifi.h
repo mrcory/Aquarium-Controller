@@ -17,7 +17,7 @@ void wifiFeedback() {
 
 //Some Supporting functions
 
-void sendTemp() {
+void sendBlynk() {
   #if tempEnable
     Blynk.virtualWrite(V5,temp);
   #endif
