@@ -27,8 +27,12 @@ void activeDisplay() {
   if (flipFlop == false || screenFirstRun == true) { //Updates odd times
 #if tempEnable
     showTemp(0,0,1.5);
-    showTime(0,24,1.5);
     showHiLo(93,0,0.5);
+    showTime(0,24,1.5);
+#endif
+
+#if !tempEnable
+    showTime(0,0,3);
 #endif
 
     flipFlop = !flipFlop;

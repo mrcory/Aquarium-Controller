@@ -118,7 +118,8 @@ void showTime(int _posX,int _posY, float _size) {
     display.setCursor(_posX+11,_posY+2); //Write the time to the scren with an offset for the clock icon
 
     myHour = hour();
-    if (myHour <10) {display.print(F("0"));}
+    if (myHour >12) {myHour = myHour-12;}
+    if (myHour <10) {display.print(F(" "));}
     display.print(myHour);
     display.print(F(":"));
     myMinute = minute();

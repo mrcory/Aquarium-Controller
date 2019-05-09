@@ -377,7 +377,6 @@ void loop() {
 
   #if blyncRtc
     timer1.run();
-    
   #endif
 
 } //Loop end
@@ -408,12 +407,12 @@ void DSTset() { //Set DST
 
 #if blynkRtc
 
-void updateTimeNow() {
+void updateTimeNow() { //Blank function
     //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
   }
 #endif
 
-void timeTemp() {
+void timeTemp() { //Temp
   Serial.print(hour()); Serial.print(":");Serial.print(minute());Serial.print(":");Serial.println(second());
 }
 
