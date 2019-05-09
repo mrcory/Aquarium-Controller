@@ -149,9 +149,9 @@ byte connectAttempt = 0;
 
 #include "time.h" //Time stuff moved here
 
-#if blynkRTC
+#if blynkRtc
 #include <WidgetRTC.h>
-WidgetRTC rtc;
+WidgetRTC RTC;
 BlynkTimer timer1;
 #endif
 
@@ -256,8 +256,8 @@ void setup() {
 
 
 #if blynkRtc
-  rtc.begin();
-  setSyncInterval(timeToUpdate/1000);
+  RTC.begin();
+  setSyncInterval(blynkRtcInterval);
 #endif
 
   updateTimeNow(); //Update time via selected time keeper
@@ -302,7 +302,6 @@ void loop() {
 
   if (timer(1000,0)) { //Adjust LED every second
     if (!ledHold) {
-      
       ledAdjust(1);
     } else {
       ledAdjust(0);
@@ -376,6 +375,11 @@ void loop() {
   }
   #endif
 
+  #if blyncRtc
+    timer1.run();
+    
+  #endif
+
 } //Loop end
 
 
@@ -405,6 +409,11 @@ void DSTset() { //Set DST
 #if blynkRtc
 
 void updateTimeNow() {
-    
+    //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
   }
 #endif
+
+void timeTemp() {
+  Serial.print(hour()); Serial.print(":");Serial.print(minute());Serial.print(":");Serial.println(second());
+}
+

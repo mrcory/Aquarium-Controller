@@ -28,9 +28,11 @@ int fadeTime = 10; //Fade time in minutes 0-255
 //Time Keeping. Only one can be true
 #define ds3231 false
 #define ds1307 false
-#define gpsRtc true //Requires arduino Mega
-#define blynkRtc false //Use internet for time (BROKEN!!!)
-#define timeToUpdate 10000 //Milliseconds between updates from RTC
+#define gpsRtc false //Requires arduino Mega
+#define timeToUpdate 100000 //Milliseconds between updates from RTC
+
+#define blynkRtc true //Use internet for time (BROKEN!!!)
+#define blynkRtcInterval 30 //If using BlynkRTC this is the update interval in seconds
 
 
 #define gpsSerial Serial1 //Which Serial to use for the GPS (You could also change to software serial)
