@@ -82,6 +82,8 @@ byte currentTimer = 0; //The current timer being used. Determines what colors sh
 bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
+byte connectAttempt = 0;
+
 
 #if wifiEnable
   int ledWifi[5] = {0};
@@ -239,7 +241,8 @@ void setup() {
 
       //Okay, changed to a selfhosted server. Public shouldn't be able to access it.
       
-        Blynk.begin(buf_token,wifi,buf_mySSID,buf_wifiPassword,blynk_server,blynk_port);
+      Blynk.config(wifi,buf_token,blynk_server,blynk_port);
+      Blynk.connectWiFi(buf_mySSID,buf_wifiPassword);
         #else
       #if defined(blynk_ip)
       Blynk.begin(buf_token,wifi,buf_mySSID,buf_wifiPassword,blynk_ip,blynk_port);
@@ -272,22 +275,14 @@ if (debugMe == true) {
 
 void loop() {
 
+  //analogWrite(tft_pin,tft_brightness); //Temp
+
   #if waterFillEnable
     waterRun();
   #endif
 
   
-  #if wifiEnable
-  
-  if (Blynk.connected() == true) {
-    Blynk.run();
-  } else {
-    Serial.println("[BLYNK] Attempting to connect...");
-    Blynk.connect(3000); //Attempt to connect for 3 seconds.
-    if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
-    
-  }
-  #endif
+
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in
     gpsRead();
@@ -361,6 +356,24 @@ void loop() {
 
   #if screenEnable
     activeDisplay(); //Run the display
+  #endif
+
+
+  #if wifiEnable
+  
+  if (Blynk.connected() == true) {
+    Blynk.run();
+    if (connectTimeout != 0) {
+      connectAttempt = 0; //Reset timeout counter if successfully connected
+    }
+  } else {
+    if (connectAttempt < connectTimeout) {
+      Serial.print("[BLYNK] Attempting to connect... | Attempt #"); Serial.println(connectAttempt);
+      Blynk.connect(3000); //Attempt to connect for 3 seconds.
+      if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
+      connectAttempt++; //Increment timeout timer
+    }
+  }
   #endif
 
 } //Loop end
