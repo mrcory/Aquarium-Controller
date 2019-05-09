@@ -66,7 +66,7 @@ void waterRun() { //Function to run in loop
     analogWrite(pumpControl, 256); //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
-    if (timer(drainTime*1000,7) == true) {
+    if (timer(drainTime*1000,6) == true) {
       waterStage++;
       timerReset(6);
       analogWrite(pumpControl, 0); //Stop the pump
@@ -83,7 +83,7 @@ void waterRun() { //Function to run in loop
   }
 
   if (senseMode == 2) {
-      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,7) == true) { //Timer overide in case of sensor failure
+      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,6) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
         timerReset(6);
         analogWrite(pumpControl, 0); //Stop the pump
