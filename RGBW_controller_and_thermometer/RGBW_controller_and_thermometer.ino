@@ -77,7 +77,7 @@ int ledTarget[5] = {0};
 int oldTimer = 100;
 int convOnTimes[times]; //Stores the timer on times in a function compatible format
 int convOffTimes[times]; //Store the timer off times in a function compatible format
-int currentTimer = 0; //The current timer being used. Determines what colors should be used.
+int currentTimer = 4; //The current timer being used. Determines what colors should be used.
 bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
@@ -214,12 +214,6 @@ void setup() {
 
   ledP = ledPMin; //Set power to minimum
 
-  if (fadeTime > 0) { //If a fadetime has been set solve for fadeStep to match it
-    fadeStep = (ledC[4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
-  } else {
-    fadeStep = 255; //If fateTime is set to 0 then just turn on and off completely
-  }
-
   #if tempEnable
     tempSetup(); //Perform the needed setup actions from temp.h
   #endif
@@ -281,6 +275,25 @@ if (debugMe == true) {
 
 void loop() {
 
+  #if wifiEnable
+  
+  if (Blynk.connected() == true) {
+    Blynk.run();
+    if (connectTimeout != 0) {
+      connectAttempt = 0; //Reset timeout counter if successfully connected
+    }
+  } else {
+    if (connectAttempt < connectTimeout) {
+      Serial.print("[BLYNK] Attempting to connect... | Attempt #"); Serial.println(connectAttempt);
+      Blynk.connect(3000); //Attempt to connect for 3 seconds.
+      if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
+      connectAttempt++; //Increment timeout timer
+    }
+  }
+  #endif
+
+  //ledUpdate = 1;
+
   //analogWrite(tft_pin,tft_brightness); //Temp
 
   #if waterFillEnable
@@ -296,7 +309,7 @@ void loop() {
 
 
 
-  timerCheck();
+  //timerCheck();
 
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -311,7 +324,13 @@ void loop() {
       ledAdjust(1);
     } else {
       ledAdjust(0);
-  }}
+  }
+  
+  timerCheck();
+  //ledUpdate = 1;
+  Serial.print("led: "); Serial.println(ledState);
+  //Serial.print("Timer: "); Serial.println(currentTimer);
+  }
 
   #if tempEnable
     if (timer(tempTime*1000,1)) { //Timer for tempUpdate()
@@ -353,6 +372,8 @@ void loop() {
     analogWrite(ledPinB, map(ledC[2], 0, 255, 0, ledP)); //Set power blue
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
+
+    Serial.print("analogWrite | LedP "); Serial.print(ledP); Serial.print(" | Fadestep "); Serial.println(fadeStep);
   }
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
@@ -364,22 +385,7 @@ void loop() {
   #endif
 
 
-  #if wifiEnable
-  
-  if (Blynk.connected() == true) {
-    Blynk.run();
-    if (connectTimeout != 0) {
-      connectAttempt = 0; //Reset timeout counter if successfully connected
-    }
-  } else {
-    if (connectAttempt < connectTimeout) {
-      Serial.print("[BLYNK] Attempting to connect... | Attempt #"); Serial.println(connectAttempt);
-      Blynk.connect(3000); //Attempt to connect for 3 seconds.
-      if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
-      connectAttempt++; //Increment timeout timer
-    }
-  }
-  #endif
+
 
   #if blyncRtc
     timer1.run();
@@ -423,8 +429,4 @@ void updateTimeNow() { //Blank function
           Serial.println(second());
   }
 #endif
-
-void timeTemp() { //Temp
-  Serial.print(hour()); Serial.print(":");Serial.print(minute());Serial.print(":");Serial.println(second());
-}
 

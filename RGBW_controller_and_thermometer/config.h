@@ -43,24 +43,27 @@ const int utcOffset = -5; //Timezone offset from UTC
 
 const int times = 3; //How many timers?
 
-int ledOnTimes [3] [2]{ //Times to turn on (24 hour)
+int ledOnTimes [5] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
-  {17,00}
+  {17,00},
+  {20,01}
 };
-int ledOffTimes [3] [2]{ //Times to turn off (24 hour)
+int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
-  {20,00}
+  {20,00},
+  {9,29}
 };
 
 
 //Colors (0-255)
 //Red Grn Blu Wht Pwr     
-int ledCo [3] [5] {
+int ledCo [5] [5] {
   {255,255,200,255,30},
   {255,255,200,255,55},
-  {255,125,19 ,50 ,35}
+  {255,125,19 ,50 ,35},
+  {0,0,0,0,0}
 };
 
 #include "configPlus.h" //Extra and advanced config
