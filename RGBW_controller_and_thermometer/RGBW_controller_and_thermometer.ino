@@ -328,7 +328,7 @@ void loop() {
   
   timerCheck();
   //ledUpdate = 1;
-  Serial.print("led: "); Serial.println(ledState);
+  //Serial.print("led: "); Serial.println(ledState);
   //Serial.print("Timer: "); Serial.println(currentTimer);
   }
 
@@ -373,7 +373,7 @@ void loop() {
     analogWrite(ledPinW, map(ledC[3], 0, 255, 0, ledP)); //Set power white
     ledUpdate = 0; //Don't analogwrite unless needed
 
-    Serial.print("analogWrite | LedP "); Serial.print(ledP); Serial.print(" | Fadestep "); Serial.println(fadeStep);
+    //Serial.print("analogWrite | LedP "); Serial.print(ledP); Serial.print(" | Fadestep "); Serial.println(fadeStep);
   }
 
   #if gpsRtc //If using GPS for RTC read the serial buffer in (2 for safety)
