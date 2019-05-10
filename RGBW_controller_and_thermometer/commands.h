@@ -56,6 +56,7 @@ void ledPower() {
     oldState = false;
   }
   ledUpdate = 1; //There has been a change, update analogWrite
+  
 #if screenOLED && screenEnable
   int oldPage = screenPage; //Store old page location
   screenPage = 2; //Change page to "LED ON(OFF)"
@@ -103,6 +104,7 @@ void configSave() { //Save config
   //i += sizeof(ledC);
   EEPROM.put(i, DST);
   i += sizeof(DST);
+  /*
   EEPROM.put(i, enableTimer);
   i += sizeof(enableTimer);
   EEPROM.put(i, fadeTime);
@@ -112,6 +114,7 @@ void configSave() { //Save config
   EEPROM.put(i, ledCo);
   i += sizeof(ledCo);
   //Set offset manually
+  */
   i = 90; //Manual offset
   writeString(i,mySSID);
   i+= 75;
