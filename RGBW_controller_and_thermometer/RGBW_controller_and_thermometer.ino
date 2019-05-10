@@ -414,7 +414,13 @@ void DSTset() { //Set DST
 #if blynkRtc
 
 void updateTimeNow() { //Blank function
-    //setTime(timeNow.hour(),timeNow.minute(),timeNow.second(),timeNow.month(),timeNow.day(),timeNow.year());
+    setTime(hour(),minute(),second(),month(),day(),year());
+          Serial.print(F("[TIME} "));
+          Serial.print(hour());
+          Serial.print(":");
+          Serial.print(minute());
+          Serial.print(":");
+          Serial.println(second());
   }
 #endif
 
