@@ -127,11 +127,11 @@ void configSave() { //Save config
 void configLoad() { //Load config
   
   int i = 5; //Offset by 5 
+  EEPROM.get(i, DST);
+  i += sizeof(DST);
   /*
   //EEPROM.get(i, ledC);
   //i += sizeof(ledC);
-  EEPROM.get(i, DST);
-  i += sizeof(DST);
   EEPROM.get(i, enableTimer);
   i += sizeof(enableTimer);
   EEPROM.get(i, fadeTime);
