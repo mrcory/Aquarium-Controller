@@ -415,7 +415,7 @@ void DSTset() { //Set DST
 
 void updateTimeNow() { //Blank function
     setTime(hour(),minute(),second(),month(),day(),year());
-          Serial.print(F("[TIME} "));
+          Serial.print(F("[TIME] "));
           Serial.print(hour());
           Serial.print(":");
           Serial.print(minute());
