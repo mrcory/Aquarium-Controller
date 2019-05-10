@@ -75,9 +75,12 @@ void ledPowerNow() { //Instant on/off
 }
 
 #if serialCommands
+
+#if screenOLED
 void screenChange(int arg_cnt, char **args) {
   screenPage = cmdStr2Num(args[1], 10);
 }
+#endif
 
 //Serial command "led"
 void ledChange(int arg_cnt, char **args) { //First argument will me the command name
@@ -96,8 +99,8 @@ void ledChange(int arg_cnt, char **args) { //First argument will me the command 
 void configSave() { //Save config
   EEPROM.write(0, 1); //First bit is used as a flag for autoloading
   int i = 5; //Offset by 5
-  EEPROM.put(i, ledC);
-  i += sizeof(ledC);
+  //EEPROM.put(i, ledC);
+  //i += sizeof(ledC);
   EEPROM.put(i, DST);
   i += sizeof(DST);
   EEPROM.put(i, enableTimer);
@@ -122,19 +125,21 @@ void configSave() { //Save config
 }
 
 void configLoad() { //Load config
-  int i = 5; //Offset by 5
-  EEPROM.get(i, ledC);
-  i += sizeof(ledC);
+  
+  int i = 5; //Offset by 5 
+  /*
+  //EEPROM.get(i, ledC);
+  //i += sizeof(ledC);
   EEPROM.get(i, DST);
   i += sizeof(DST);
   EEPROM.get(i, enableTimer);
   i += sizeof(enableTimer);
   EEPROM.get(i, fadeTime);
   i += sizeof(fadeTime);
-  EEPROM.get(i, tempUnit);
+  //EEPROM.get(i, tempUnit);
   i += sizeof(tempUnit);
   EEPROM.put(i, ledCo);
-  i += sizeof(ledCo);
+  i += sizeof(ledCo); */
   //Manually offset
   i = 90;
   mySSID = read_String(i);
