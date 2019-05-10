@@ -69,25 +69,31 @@ todo:
 #endif
 
 //Internal Variables
-byte ledState = 0; //0 for turning off, 1 for turning on
-byte ledUpdate = 1;
+int ledC[5] = {255}; //Fill with a default value
+int ledState = 0; //0 for turning off, 1 for turning on
+int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
-byte screenPage = 1; //What page to be displayed on the screen
-byte ledC[5] = {255}; //Fill with a default value
 int ledTarget[5] = {0};
-byte oldTimer = 100;
+int oldTimer = 100;
 int convOnTimes[times]; //Stores the timer on times in a function compatible format
 int convOffTimes[times]; //Store the timer off times in a function compatible format
-byte currentTimer = 0; //The current timer being used. Determines what colors should be used.
+int currentTimer = 0; //The current timer being used. Determines what colors should be used.
 bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
-byte connectAttempt = 0;
+int connectAttempt = 0;
 
+int myHour;
+int myMinute;
+
+bool oldBlynk = false;
+
+#if screenEnable && screenOLED
+  byte screenPage = 1; //What page to be displayed on the screen
+#endif
 
 #if wifiEnable
   int ledWifi[5] = {0};
-
 #endif
 
 
@@ -197,7 +203,7 @@ void setup() {
    
   #endif
 
-  #if screenEnable && serialCommands
+  #if screenEnable && serialCommands && screenOLED
     cmdAdd("screen", screenChange);
   #endif
 

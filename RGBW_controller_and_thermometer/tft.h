@@ -70,7 +70,6 @@ if (screenFirstRun == true) {
 }
 
 #if wifiEnable
-  static bool oldBlynk = false;
   if (Blynk.connected() == true && oldBlynk == false) {
     blynkLogo(130,90,0x2632);
     oldBlynk = true;

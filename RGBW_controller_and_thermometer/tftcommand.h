@@ -105,9 +105,6 @@ void waterBitmapDisplay(int _x, int _y,unsigned long _frameDelay, uint16_t _colo
 
 
 void showTime(int _posX,int _posY, float _size) {
-
-  static byte myHour;
-  static byte myMinute;
   
   if (!_size) { _size = 1;};
     if (screenFirstRun == true) { //First run only

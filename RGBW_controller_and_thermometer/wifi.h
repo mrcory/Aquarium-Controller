@@ -21,12 +21,14 @@ void sendBlynk() {
   #if tempEnable
     Blynk.virtualWrite(V5,temp);
   #endif
-  Blynk.virtualWrite(V31,fillTime);
-  Blynk.virtualWrite(V33,drainTime);
+
+
   Blynk.virtualWrite(V41,DST);
-  //Blynk.virtualWrite(V43,tft_brightness);
+  Blynk.virtualWrite(V43,tft_brightness);
 
 #if waterFillEnable
+  Blynk.virtualWrite(V31,fillTime);
+  Blynk.virtualWrite(V33,drainTime);
   Blynk.virtualWrite(V35,analogRead(waterSenseHi));
 #endif
   

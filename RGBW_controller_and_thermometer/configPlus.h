@@ -8,8 +8,10 @@ int crossFade = 5; //Crossfade time in seconds per step
 #define serialCommands true //Disable to save sram and flash space
 
 //Enable/disable Temperature
-#define tempEnable false
+#define tempEnable true
 #define ambientAir false //Is there a second DS18b20 for air temp? (Not coded)
+
+const int tempTime = 10; //Temp update interval in seconds 0-255
 
 //Enable/disable Screen
 #define screenEnable true
@@ -20,7 +22,7 @@ int crossFade = 5; //Crossfade time in seconds per step
 
 //TFT Settings
 int tft_brightness = 20; //0-255 Controls a pwm pin
-int tft_pin = 2; //Backlight Pin
+const int tft_pin = 2; //Backlight Pin
 const int tftRotation = 1; //Rotate the TFT
 
 //OLED Settings
@@ -33,7 +35,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 //Enable WIFI (We are using Blynk
 #define wifiEnable true
 #define BLYNK_PRINT Serial //Get feedback from Blynk via Serial
-byte connectTimeout = 5; //Timeout to limit reconnection attempts by blynk. (Doesn't count initial connection)
+int connectTimeout = 5; //Timeout to limit reconnection attempts by blynk. (Doesn't count initial connection)
 
 
 //ESP Serial and Baud
@@ -46,7 +48,7 @@ byte connectTimeout = 5; //Timeout to limit reconnection attempts by blynk. (Doe
 #define blynk_port 8080 //8442 if using Blynk Cloud
 
 //Disable or Enable Temperature warning
-#define tempWarnEnable true
+#define tempWarnEnable false
 
 //Disable or Enable Water Fill
 //Requires wifi to trigger. Some setup work to allow code to work without wifi is included.
@@ -64,7 +66,7 @@ void additionalWarn() {
 #define waterFill A2 //Water control pin
 #define waterSenseLo 10 //Water sensor pin
 #define waterSenseHi A9 //Upper water sensor
-static byte senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
+const int senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
 
 #define pumpControl A1 //Pump control pin
 

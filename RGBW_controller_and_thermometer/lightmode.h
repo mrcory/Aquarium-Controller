@@ -28,7 +28,7 @@ void controlSetup() {
   }
 }
 
-void colorChange1(bool _force,byte _forceTimer) {
+void colorChange1(bool _force,int _forceTimer) {
 
    if ((currentTimer != oldTimer) && _force == false) {
       ledUpdate = 1;

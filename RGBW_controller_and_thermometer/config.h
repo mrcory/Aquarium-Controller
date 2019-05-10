@@ -3,7 +3,7 @@
 */
 
 //Enable Debug Serial
-static bool debugMe = true;
+bool debugMe = true;
 
 //Temperature Settings
 char tempUnit = 'F'; //What unit do you want? (C or F)
@@ -20,7 +20,6 @@ const int tempPin = 12; //DS18B20 pin
 
 //Various Configs
 const int ledPMin = 0; //Minimum led power output 0-255
-const int tempTime = 4; //Temp update interval in seconds 0-255
 int fadeTime = 10; //Fade time in minutes 0-255
 
 
