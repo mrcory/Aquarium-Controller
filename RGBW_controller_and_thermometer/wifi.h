@@ -95,7 +95,7 @@ BLYNK_WRITE(V14) { //Brightness
   }
 #endif
 
-#define serialBypass false
+
 #if !serialCommands && !serialBypass
-  #error "Wifi requires that serial commands be enabled for wifi configuration. To bypass define serialBypass true."
+  #error "Wifi requires that serial commands be enabled for wifi configuration. To bypass define serialBypass true in configPlus.h"
 #endif
