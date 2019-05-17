@@ -46,14 +46,12 @@ const int times = 3; //How many timers?
 int ledOnTimes [5] [2]{ //Times to turn on (24 hour)
   {9,30},
   {12,01},
-  {17,00},
-  {20,01}
+  {17,00}
 };
 int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
   {12,00},
   {16,59},
-  {20,00},
-  {9,29}
+  {20,00}
 };
 
 
@@ -62,8 +60,7 @@ int ledOffTimes [5] [2]{ //Times to turn off (24 hour)
 int ledCo [5] [5] {
   {255,255,200,255,30},
   {255,255,200,255,55},
-  {255,125,19 ,50 ,35},
-  {0,0,0,0,0}
+  {255,125,19 ,50 ,35}
 };
 
 #include "configPlus.h" //Extra and advanced config
