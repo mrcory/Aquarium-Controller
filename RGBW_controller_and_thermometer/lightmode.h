@@ -34,7 +34,7 @@ void controlSetup() {
 
 void calculateFade() {
   if (fadeTime > 0) { //If a fadetime has been set solve for fadeStep to match it
-    fadeStep = (ledCo[currentTimer][4] / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
+    fadeStep = (255 / (fadeTime * 60.0)); //Make fadeStep from fadeTime or make it instant (255)
   } else {
     fadeStep = 255; //If fateTime is set to 0 then just turn on and off completely
   }
@@ -58,14 +58,24 @@ void colorChange1(bool _force,int _forceTimer) {
 }
 
 void timerCheck() {
-  //colorChange1(false,0);
+  colorChange1(false,0);
   if (ledCheck() == true && ledState == 0) {colorChange1(false,0);ledPower();}
   if (ledCheck() == false && ledState == 1) {colorChange1(false,0);ledPower();}
 }
 
 void colorFade() {
+  for (int i=0;i<=5;i++) {
+    if (ledC[i] != ledTarget[i]) {
+      memcpy(ledTarget,ledC[currentTimer],5*sizeof(int));
+      i = 6;
+      ledUpdate = 1;
+    }
+  }
+
   
-  for (int i=0;i<=5;i++) {{
+  
+  /*
+  for (int i=0;i<=5;i++) {
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
         ledC[i] += crossFade;
@@ -73,8 +83,11 @@ void colorFade() {
     }
       if (ledC[i] > ledTarget[i]) {
         ledC[i] -= crossFade;
-        ledUpdate = 1;
-}}}}}
+        ledUpdate = 1;}
+      }
+    }
+  */
+  }
 
 
 
