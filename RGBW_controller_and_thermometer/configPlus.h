@@ -5,7 +5,7 @@ boolean enableTimer = true; //Disable or enable timer
 int crossFade = 5; //Crossfade time in seconds per step
 
 //Enable or disable serial commands
-#define serialCommands false //Disable to save sram and flash space
+#define serialCommands true //Disable to save sram and flash space
 #define serialBypass true 
 
 //Enable/disable Temperature
@@ -36,7 +36,7 @@ const int displayAddress = 0x3c; //Display i2c address (Woking with my ebay oled
 //Enable WIFI (We are using Blynk
 #define wifiEnable true
 #define BLYNK_PRINT Serial //Get feedback from Blynk via Serial
-int connectTimeout = 5; //Timeout to limit reconnection attempts by blynk. (Doesn't count initial connection)
+int connectTimeout = 15; //Timeout to limit reconnection attempts by blynk. (Doesn't count initial connection)
 
 
 //ESP Serial and Baud
