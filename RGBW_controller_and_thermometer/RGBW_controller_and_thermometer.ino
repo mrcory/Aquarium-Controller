@@ -69,7 +69,7 @@ todo:
 #endif
 
 //Internal Variables
-int ledC[5] = {255}; //Fill with a default value
+int ledC[5]; //Fill with a default value
 int ledState = 0; //0 for turning off, 1 for turning on
 int ledUpdate = 1;
 float ledP = 0; //Led Intensity 1-255 Don't adjust
@@ -77,7 +77,7 @@ int ledTarget[5] = {0};
 int oldTimer = 100;
 int convOnTimes[times]; //Stores the timer on times in a function compatible format
 int convOffTimes[times]; //Store the timer off times in a function compatible format
-int currentTimer = 4; //The current timer being used. Determines what colors should be used.
+int currentTimer = 2; //The current timer being used. Determines what colors should be used.
 bool oldState = false; //Just used for triggering
 bool firstRun = true; //Label for first loop
 bool ledHold = false; //Hold led adjustment
@@ -126,7 +126,7 @@ bool oldBlynk = false;
   #include <ESP8266_Lib.h>
   #include <BlynkSimpleShieldEsp8266.h>
   #include <Ethernet.h>
-  #include <Blynk.h>
+  //#include <Blynk.h>
 #endif
 
 #if waterFillEnable
@@ -269,6 +269,8 @@ if (debugMe == true) {
   wifiFeedback(); //Print wifi info
 }
 #endif
+
+calculateFade();
 
 }
 
