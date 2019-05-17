@@ -64,18 +64,22 @@ void timerCheck() {
 }
 
 void colorFade() {
-  for (int i=0;i<=5;i++) {
+  /*
+  for (int i=0;i<=4;i++) {
     if (ledC[i] != ledTarget[i]) {
-      memcpy(ledTarget,ledC[currentTimer],5*sizeof(int));
+      for (int x=0;x<=4;x++) {
+        ledTarget[x] = ledCo[currentTimer][x];
+      }
+      //memcpy(ledTarget,ledC[currentTimer],5*sizeof(int));
       i = 6;
       ledUpdate = 1;
     }
   }
-
+*/
   
   
-  /*
-  for (int i=0;i<=5;i++) {
+  
+  for (int i=0;i<5;i++) {
     if (ledC[i] != ledTarget[i]) {
       if (ledC[i] < ledTarget[i]) {
         ledC[i] += crossFade;
@@ -86,7 +90,7 @@ void colorFade() {
         ledUpdate = 1;}
       }
     }
-  */
+  
   }
 
 
