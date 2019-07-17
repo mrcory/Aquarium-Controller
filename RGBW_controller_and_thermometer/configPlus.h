@@ -71,6 +71,6 @@ const int senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (U
 
 #define pumpControl A1 //Pump control pin
 
-int drainTime = 60; //seconds to drain timeout
-int fillTime = 600; //seconds to fill timeout
+unsigned long drainTime = 90; //seconds to drain timeout
+unsigned long fillTime = 600; //seconds to fill timeout
 #endif

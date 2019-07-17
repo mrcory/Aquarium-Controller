@@ -12,6 +12,9 @@ bool waterOn = false; //Fill toggle
 bool waterDrain = false;
 bool waterFail = false;
 int waterMode = 0; //Water Mode 0-Normal 1-Autofill
+unsigned long convDrainTime = drainTime*1000;
+
+
 
 
 bool waterSafe() { //Return true if water safety not tripped
@@ -63,10 +66,13 @@ void waterRun() { //Function to run in loop
   #endif
   
   if (waterSafe() == true && waterStage == 1) {
+    convDrainTime = drainTime*1000;
+    Serial.print("VAL: ");
+    Serial.println(convDrainTime);
     analogWrite(pumpControl, 256); //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
-    if (timer(drainTime*1000,6) == true) {
+    if (timer(convDrainTime,6) == true) {
       waterStage++;
       timerReset(6);
       analogWrite(pumpControl, 0); //Stop the pump
@@ -83,7 +89,7 @@ void waterRun() { //Function to run in loop
   }
 
   if (senseMode == 2) {
-      if (waterLevelCheck(waterSenseLo) == true || timer(drainTime*1000,6) == true) { //Timer overide in case of sensor failure
+      if (waterLevelCheck(waterSenseLo) == true || timer(convDrainTime,6) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
         timerReset(6);
         analogWrite(pumpControl, 0); //Stop the pump
