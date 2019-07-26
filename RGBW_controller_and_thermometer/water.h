@@ -107,6 +107,7 @@ void waterRun() { //Function to run in loop
 //-----
 
   if (waterSafe() == true && waterStage == 2) {
+    analogWrite(pumpControl,0); //Double sure pump is off
     analogWrite(waterFill, 256);
 
     if (waterLevelCheck(waterSenseHi) == true) { // || timer(fillTime*1000,7) == true) {
