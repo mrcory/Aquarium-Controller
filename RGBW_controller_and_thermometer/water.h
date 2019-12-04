@@ -69,7 +69,7 @@ void waterRun() { //Function to run in loop
     convDrainTime = drainTime*1000;
     Serial.print("VAL: ");
     Serial.println(convDrainTime);
-    analogWrite(pumpControl, 256); //Run the pump
+    analogWrite(pumpControl, 255); //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
     if (timer(convDrainTime,6) == true) {
@@ -108,7 +108,7 @@ void waterRun() { //Function to run in loop
 
   if (waterSafe() == true && waterStage == 2) {
     analogWrite(pumpControl,0); //Double sure pump is off
-    analogWrite(waterFill, 256);
+    analogWrite(waterFill, 255);
 
     if (waterLevelCheck(waterSenseHi) == true) { // || timer(fillTime*1000,7) == true) {
       waterStage = 0;
