@@ -4,15 +4,15 @@ For example a float valve that will physically cut off the water. Also, you coul
 power for the valve through a switch that is actuated by a float. 
 */
 
-#define readThreshold 750 //Minimum reading required to trigger analogRead
+#define readThreshold 750                      //Minimum reading required to trigger analogRead
 
-int waterStage = 0; //0:OFF 1:Drain 2:FILL
+int waterStage = 0;                            //0:OFF 1:Drain 2:FILL
 bool waterChangeTrigger = false;
-bool waterOn = false; //Fill toggle
+bool waterOn = false;                          //Fill toggle
 bool waterDrain = false;
 bool waterFail = false;
-int waterMode = 0; //Water Mode 0-Normal 1-Autofill
-unsigned long convDrainTime = drainTime*1000;
+int waterMode = 0;                             //Water Mode 0-Normal 1-Autofill
+unsigned long convDrainTime = drainTime*1000;  //Convert drain time from seconds to milliseconds
 
 
 
