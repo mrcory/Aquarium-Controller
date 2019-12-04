@@ -431,4 +431,3 @@ void updateTimeNow() { //Blank function
           Serial.println(second());
   }
 #endif
-
