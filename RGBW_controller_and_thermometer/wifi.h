@@ -1,4 +1,3 @@
-//Oh Yeah, we are gonna get some wifi in here. (Once I have the hardware)
 /*
  * V5 - Temp
  * 
