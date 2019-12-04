@@ -24,7 +24,7 @@ unsigned long countData[countDataAmount] = {0}; //Holds count information. (Adju
 //7 = Test water
 
 //Used by timer function
-int millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
+unsigned long millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData
   unsigned long _count;
   if (_mode == 0) {
     countData[_id]= millis();
