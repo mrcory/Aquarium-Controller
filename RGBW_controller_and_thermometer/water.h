@@ -13,6 +13,7 @@ bool waterDrain = false;
 bool waterFail = false;
 int waterMode = 0;                             //Water Mode 0-Normal 1-Autofill
 unsigned long convDrainTime = drainTime*1000;  //Convert drain time from seconds to milliseconds
+unsigned long newDrainTime = drainTime;                      //Using for Blynk settings
 
 
 
@@ -48,6 +49,11 @@ void waterSetup() {
 
 
 void waterRun() { //Function to run in loop
+
+   if(newDrainTime != drainTime) {
+    drainTime = newDrainTime;
+    convDrainTime = drainTime*1000;
+   }
 
   if (waterSafe() == false) { //If water is not safe then force pins to low
     analogWrite(pumpControl,0);

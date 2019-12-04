@@ -27,7 +27,7 @@ void sendBlynk() {
 
 #if waterFillEnable
   Blynk.virtualWrite(V31,fillTime);
-  Blynk.virtualWrite(V33,drainTime);
+  Blynk.virtualWrite(V33,convDrainTime);
   Blynk.virtualWrite(V35,analogRead(waterSenseHi));
 #endif
   
@@ -82,7 +82,7 @@ BLYNK_WRITE(V14) { //Brightness
   }
 
   BLYNK_WRITE(V32) {
-    drainTime = param.asInt();
+    newDrainTime = param.asInt();
   }
 
   //BLYNK_WRITE(V42) {
