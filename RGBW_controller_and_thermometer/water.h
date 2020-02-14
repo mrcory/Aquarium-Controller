@@ -21,7 +21,6 @@ unsigned long newFillTime = fillTime;         //Using for Blynk settings
 
 
 bool waterSafe() { //Return true if water safety not tripped
-  //waterOn = false;; //Force water to turn off
   return !waterFail;
 }
 

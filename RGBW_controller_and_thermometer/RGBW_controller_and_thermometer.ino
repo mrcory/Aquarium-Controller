@@ -12,7 +12,7 @@
 todo:
 */
 
-//const String ver = "3.0.1-dev"; //Program Version
+//const String ver = "3.1.0-dev"; //Program Version
 //Last Tested version: 3.0.1-dev
 
 
@@ -298,9 +298,6 @@ void loop() {
   }
   #endif
 
-  //ledUpdate = 1;
-
-  //analogWrite(tft_pin,tft_brightness); //Temp
 
   #if waterFillEnable
     waterRun();
@@ -312,10 +309,6 @@ void loop() {
   #if gpsRtc //If using GPS for RTC read the serial buffer in
     gpsRead();
   #endif
-
-
-
-  //timerCheck();
 
   #if serialCommands
     cmdPoll(); //Poll for commands via Serial
@@ -333,9 +326,6 @@ void loop() {
   }
   
   timerCheck();
-  //ledUpdate = 1;
-  //Serial.print("led: "); Serial.println(ledState);
-  //Serial.print("Timer: "); Serial.println(currentTimer);
   }
 
   #if tempEnable
@@ -347,6 +337,7 @@ void loop() {
   #if wifiEnable
     sendBlynk(); //Send data to Blynk
   #endif
+  
 
   if (timer(timeToUpdate,2)) { //Update time
     updateTimeNow();

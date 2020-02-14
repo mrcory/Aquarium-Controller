@@ -75,35 +75,6 @@ void blynkLogo(int _x,int _y,uint16_t _color) {
   display.drawBitmap(_x,_y,blynk_small,30,30,_color);
 }
 
-/* Just keeping for reference
-void waterBitmapDisplay(int _x, int _y,unsigned long _frameDelay, uint16_t _color1, uint16_t _color2) { //Test for animated bitmap
-  static unsigned long timer;
-  static int frame = 0;
-  static bool resetTime = true;
-
-  if (resetTime) { //Set time to millis()
-    timer = millis();
-    resetTime = false;
-  }
-
-  if (millis() - timer >= _frameDelay) {
-    if (frame == 0) {Serial.print("[DEBUG] ");
-      display.drawBitmap(_x,_y,waterBitmap,30,30,_color1);
-      timer = millis();
-      frame = 1;
-    } else {
-    if (frame == 1) {Serial.print("[DEBUG1] ");
-      display.drawBitmap(_x,_y,waterBitmap,30,30,_color2); 
-      timer = millis();
-      frame = 0;
-    }
-    }
-  }
-  
-}
-*/
-
-
 void showTime(int _posX,int _posY, float _size) {
   
   if (!_size) { _size = 1;};

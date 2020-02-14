@@ -18,12 +18,8 @@ bool ledCheck() {
     }
   }
 
-  return _state;
-
-  
+  return _state;  
 }
-
-
 
 void controlSetup() {
   for (int i=0;i<times;i++) {
@@ -64,20 +60,6 @@ void timerCheck() {
 }
 
 void colorFade() {
-  /*
-  for (int i=0;i<=4;i++) {
-    if (ledC[i] != ledTarget[i]) {
-      for (int x=0;x<=4;x++) {
-        ledTarget[x] = ledCo[currentTimer][x];
-      }
-      //memcpy(ledTarget,ledC[currentTimer],5*sizeof(int));
-      i = 6;
-      ledUpdate = 1;
-    }
-  }
-*/
-  
-  
   
   for (int i=0;i<5;i++) {
     if (ledC[i] != ledTarget[i]) {
@@ -92,8 +74,6 @@ void colorFade() {
     }
   
   }
-
-
 
 void ledAdjust(int _mode) { //New led controller
 
@@ -111,9 +91,6 @@ void ledAdjust(int _mode) { //New led controller
     }
 
     colorFade();
-    //colorChange1(false,0);
   }
 
 }
-
-
