@@ -13,7 +13,9 @@ bool waterDrain = false;
 bool waterFail = false;
 int waterMode = 0;                             //Water Mode 0-Normal 1-Autofill
 unsigned long convDrainTime = drainTime*1000;  //Convert drain time from seconds to milliseconds
-unsigned long newDrainTime = drainTime;                      //Using for Blynk settings
+unsigned long newDrainTime = drainTime;       //Using for Blynk settings
+unsigned long convFillTime = fillTime*1000;    //Convert fill time from seconds to milliseconds
+unsigned long newFillTime = fillTime;         //Using for Blynk settings
 
 
 
@@ -55,12 +57,17 @@ void waterRun() { //Function to run in loop
     convDrainTime = drainTime*1000;
    }
 
+   if(newFillTime != fillTime) {
+    fillTime = newFillTime;
+    convFillTime = fillTime*1000;
+   }
+
   if (waterSafe() == false) { //If water is not safe then force pins to low
     analogWrite(pumpControl,0);
     analogWrite(waterFill,0); 
   }
 
-  #if wifiEnable
+  #if wifiEnable //Trigger water change cycle via Blynk app
     if (waterChangeTrigger == true && waterStage == 0 && waterSafe() == true) { //Blynk Control
       waterStage = 1;
       timerReset(6);
@@ -97,7 +104,7 @@ void waterRun() { //Function to run in loop
   if (senseMode == 2) {
       if (waterLevelCheck(waterSenseLo) == true || timer(convDrainTime,6) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
-        timerReset(6);
+        timerReset(6); //Reset timer
         analogWrite(pumpControl, 0); //Stop the pump
 
         if (debugMe == true) { Serial.println("[Water] Water Filling");}
@@ -110,14 +117,21 @@ void waterRun() { //Function to run in loop
   }
 }
 
-//-----
+//-----Next Stage
 
-  if (waterSafe() == true && waterStage == 2) {
+  if (waterStage == 2) { //This stage just resets the timer and continues. Needed to allow topping off the tank
+    timerReset(6);       // with the safety timer without first draining.
+    waterStage++;
+  }
+
+ //----Next Stage
+
+  if (waterSafe() == true && waterStage == 3) {
     analogWrite(pumpControl,0); //Double sure pump is off
     analogWrite(waterFill, 255);
 
-    if (waterLevelCheck(waterSenseHi) == true) { // || timer(fillTime*1000,7) == true) {
-      waterStage = 0;
+    if (waterLevelCheck(waterSenseHi) == true || timer(convFillTime,6) == true) {
+      waterStage = 0;          //Reset water change state to 0
       analogWrite(waterFill, 0);
 
       if (debugMe == true) { Serial.println("[Water] Water Fill Complete");}

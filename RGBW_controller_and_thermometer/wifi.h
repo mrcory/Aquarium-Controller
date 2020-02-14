@@ -26,7 +26,7 @@ void sendBlynk() {
   Blynk.virtualWrite(V43,tft_brightness);
 
 #if waterFillEnable
-  Blynk.virtualWrite(V31,fillTime);
+  Blynk.virtualWrite(V31,convFillTime);
   Blynk.virtualWrite(V33,convDrainTime);
   Blynk.virtualWrite(V35,analogRead(waterSenseHi));
 #endif
@@ -35,7 +35,7 @@ void sendBlynk() {
 
 
 
-//Send all the data we want to access
+//Receive all the data we want
 
 void sendData() {
   
@@ -78,7 +78,7 @@ BLYNK_WRITE(V14) { //Brightness
   }
 
   BLYNK_WRITE(V30) {
-    fillTime = param.asInt();
+    newFillTime = param.asInt();
   }
 
   BLYNK_WRITE(V32) {
