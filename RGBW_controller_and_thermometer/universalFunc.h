@@ -21,7 +21,7 @@ unsigned long countData[countDataAmount] = {0}; //Holds count information. (Adju
 //4 = fpsTimer
 //5 = Regular timer
 //6 = Water timer
-//7 = Test water
+//7 = Blynk.run() timer
 
 //Used by timer function
 unsigned long millisCount(int _mode, int _id) { //_mode: 0-Start 1-Stop | _id Identity number (allow more by editing the length of countData

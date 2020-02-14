@@ -279,19 +279,22 @@ calculateFade();
 void loop() {
 
   #if wifiEnable
-  
-  if (Blynk.connected() == true) {
-    Blynk.run();
-    if (connectTimeout != 0) {
-      connectAttempt = 0; //Reset timeout counter if successfully connected
+
+  if (timer(500,7) == true) { //Only run Blynk every 500mss
+   if (Blynk.connected() == true) {
+      Blynk.run();
+      if (connectTimeout != 0) {
+        connectAttempt = 0; //Reset timeout counter if successfully connected
+      }
+    } else {
+      if (connectAttempt < connectTimeout) {
+        Serial.print("[BLYNK] Attempting to connect... | Attempt #"); Serial.println(connectAttempt);
+        Blynk.connect(3000); //Attempt to connect for 3 seconds.
+        if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
+        connectAttempt++; //Increment timeout timer
+      }
     }
-  } else {
-    if (connectAttempt < connectTimeout) {
-      Serial.print("[BLYNK] Attempting to connect... | Attempt #"); Serial.println(connectAttempt);
-      Blynk.connect(3000); //Attempt to connect for 3 seconds.
-      if (Blynk.connected() == true) {Serial.println("[BLYNK] Connected!");}
-      connectAttempt++; //Increment timeout timer
-    }
+    timerReset(7);
   }
   #endif
 
