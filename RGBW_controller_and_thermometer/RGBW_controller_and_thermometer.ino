@@ -126,7 +126,6 @@ bool oldBlynk = false;
   #include <ESP8266_Lib.h>
   #include <BlynkSimpleShieldEsp8266.h>
   #include <Ethernet.h>
-  //#include <Blynk.h>
 #endif
 
 #if waterFillEnable
@@ -250,6 +249,8 @@ void setup() {
         #error "No server target. Check configPlus.h for server."
       #endif
     #endif
+
+    Blynk.syncAll();
     
     
   #endif
