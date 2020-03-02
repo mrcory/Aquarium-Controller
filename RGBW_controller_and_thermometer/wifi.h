@@ -21,6 +21,13 @@ void wifiFeedback() {
 void sendBlynk() {
   #if tempEnable
     Blynk.virtualWrite(V5,temp);
+
+    #ifdef sendTempEnable
+      bridge1.virtualWrite(V52,tempUnit);
+      if timer(8,3000)) { //Send temp every 3 seconds
+        bridge1.virtualWrite(V51,temp);
+      }
+    #endif
   #endif
 
 

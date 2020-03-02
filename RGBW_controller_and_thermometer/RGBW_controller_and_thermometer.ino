@@ -160,7 +160,11 @@ WidgetRTC RTC;
 BlynkTimer timer1;
 #endif
 
-
+#ifdef enableTempSend
+  //------Personal Change
+  WidgetBridge bridge1(V50);
+  //------
+#endif
 
 void setup() {
 
@@ -175,7 +179,7 @@ void setup() {
   #endif
 
   Wire.begin();
-  Serial.begin(38400);
+  Serial.begin(74880);
 
   
 
