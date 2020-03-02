@@ -3,7 +3,7 @@
 #define enableTempSend //Uncomment to allow sending temperature via bridge
 
 //Target  to send temperature to
-char targetToken = "";
+#define targetToken ""
 
 float fadeStep = 5; //Increase/Decrease per step (Will be properly set based on fadeTime
 boolean enableTimer = true; //Disable or enable timer

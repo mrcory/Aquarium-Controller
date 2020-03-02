@@ -22,11 +22,10 @@ void sendBlynk() {
   #if tempEnable
     Blynk.virtualWrite(V5,temp);
 
-    #ifdef sendTempEnable
+    #ifdef enableTempSend
       bridge1.virtualWrite(V52,tempUnit);
-      if timer(8,3000)) { //Send temp every 3 seconds
-        bridge1.virtualWrite(V51,temp);
-      }
+      bridge1.virtualWrite(V51,temp);
+      Serial.println("[BLYNK] Data Send");
     #endif
   #endif
 
@@ -48,6 +47,12 @@ void sendBlynk() {
 
 void sendData() {
   
+}
+
+BLYNK_CONNECTED() {
+ #ifdef enableTempSend
+   bridge1.setAuthToken(targetToken); // Token of target hardware
+ #endif
 }
 
 BLYNK_WRITE(V1)

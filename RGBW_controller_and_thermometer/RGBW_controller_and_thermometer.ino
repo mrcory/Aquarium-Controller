@@ -133,9 +133,15 @@ bool oldBlynk = false;
 #endif
 
 #if wifiEnable
-  #include "wifi.h" //Blynk and wifi related stuff
 
-  ESP8266 wifi(&espSerial);
+  #ifdef enableTempSend
+    //------Personal Change
+    WidgetBridge bridge1(V50);
+    //------
+  #endif
+    #include "wifi.h" //Blynk and wifi related stuff
+  
+    ESP8266 wifi(&espSerial);
 #endif
 
 
@@ -160,11 +166,7 @@ WidgetRTC RTC;
 BlynkTimer timer1;
 #endif
 
-#ifdef enableTempSend
-  //------Personal Change
-  WidgetBridge bridge1(V50);
-  //------
-#endif
+
 
 void setup() {
 
@@ -180,8 +182,10 @@ void setup() {
 
   Wire.begin();
   Serial.begin(74880);
-
   
+  #ifdef enableTempSend
+    Serial.println("[BLYNK] Temp send enabled.");
+  #endif
 
   checkConfig(); //Check if we need to load the config at start
 
@@ -339,7 +343,9 @@ void loop() {
   #endif
 
   #if wifiEnable
-    sendBlynk(); //Send data to Blynk
+    if (timer(3000,8)) { //Send temp every 3 seconds
+     sendBlynk(); //Send data to Blynk
+    }
   #endif
   
 
