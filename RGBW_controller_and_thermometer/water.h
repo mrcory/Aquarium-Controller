@@ -16,9 +16,57 @@ unsigned long convDrainTime = drainTime*1000;  //Convert drain time from seconds
 unsigned long newDrainTime = drainTime;       //Using for Blynk settings
 unsigned long convFillTime = fillTime*1000;    //Convert fill time from seconds to milliseconds
 unsigned long newFillTime = fillTime;         //Using for Blynk settings
+unsigned long safetyDrainTime = 0; //Minimum drain time for overfill protection
+bool pumpRun = false;
+bool pumpLock = false;
+bool pumpRunEmergency = false;
+
+
+#if waterOverfillProtection
+bool waterOver(byte _pin) {
+  if (analogRead(_pin) > readThreshold) {
+    return true;
+  } else {
+    return false;
+  }
+}
+#endif
+
+#if !waterOverfillProtection //If not using overfill protection just return a false safe all the time
+bool waterOver(byte _pin) {
+  return false;
+}
+#endif
 
 
 
+void pumpController() {
+  if ((pumpRun || pumpRunEmergency) && !pumpLock ) {
+    analogWrite(pumpControl,255);
+
+      if (waterOver(waterOverfull)) {
+        timerReset(8);
+        Serial.println("Water OVERFILL!");
+      }
+  }
+    if ((!pumpRun && !pumpRunEmergency) || pumpLock) {
+      analogWrite(pumpControl,0);
+      Serial.println("Pump Off");
+    }
+}
+
+bool waterOverCheck() {
+  if (waterOver(waterOverfull)) {
+    pumpRunEmergency = true;
+      
+  } else {
+    if (timer(emergencyDrainTime,8)) {    
+      pumpRunEmergency = false;
+    }
+  }
+
+  Serial.print("Over: "); Serial.println(analogRead(waterOverfull));
+}
 
 bool waterSafe() { //Return true if water safety not tripped
   return !waterFail;
@@ -49,7 +97,13 @@ void waterSetup() {
 }
 
 
+
+
+
 void waterRun() { //Function to run in loop
+
+  pumpController(); //Run the pump Controller
+  waterOverCheck();
 
    if(newDrainTime != drainTime) {
     drainTime = newDrainTime;
@@ -62,7 +116,8 @@ void waterRun() { //Function to run in loop
    }
 
   if (waterSafe() == false) { //If water is not safe then force pins to low
-    analogWrite(pumpControl,0);
+    pumpRun = false;
+    pumpLock = true;
     analogWrite(waterFill,0); 
   }
 
@@ -81,13 +136,13 @@ void waterRun() { //Function to run in loop
     convDrainTime = drainTime*1000;
     Serial.print("VAL: ");
     Serial.println(convDrainTime);
-    analogWrite(pumpControl, 255); //Run the pump
+    pumpRun = true; //Run the pump
 
   if (senseMode == 1) { //Single Sensor mode will use a timer
     if (timer(convDrainTime,6) == true) {
       waterStage++;
       timerReset(6);
-      analogWrite(pumpControl, 0); //Stop the pump
+      pumpRun = false; //Stop the pump
 
       if (debugMe == true) { Serial.println("[Water] Water Filling");}
       
@@ -97,14 +152,14 @@ void waterRun() { //Function to run in loop
     }
     
   } else {
-    analogWrite(pumpControl,0); //Make sure pump is turned off
+    pumpRun = false; //Make sure pump is turned off
   }
 
   if (senseMode == 2) {
       if (waterLevelCheck(waterSenseLo) == true || timer(convDrainTime,6) == true) { //Timer overide in case of sensor failure
         waterStage++; //Go to fill stage
         timerReset(6); //Reset timer
-        analogWrite(pumpControl, 0); //Stop the pump
+        pumpRun = false; //Stop the pump
 
         if (debugMe == true) { Serial.println("[Water] Water Filling");}
         
@@ -126,7 +181,7 @@ void waterRun() { //Function to run in loop
  //----Next Stage
 
   if (waterSafe() == true && waterStage == 3) {
-    analogWrite(pumpControl,0); //Double sure pump is off
+    pumpRun = false; //Double sure pump is off
     analogWrite(waterFill, 255);
 
     if (waterLevelCheck(waterSenseHi) == true || timer(convFillTime,6) == true) {

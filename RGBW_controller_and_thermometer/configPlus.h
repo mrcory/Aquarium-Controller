@@ -46,7 +46,7 @@ int connectTimeout = 15; //Timeout to limit reconnection attempts by blynk. (Doe
 //Blynk server and port
 #define blynk_server "blynk.mrcory.net"
 //#define blynk_ip IPAddress(192,168,254,1)
-#define blynk_port 8080 //8442 if using Blynk Cloud
+#define blynk_port 8081 //8442 if using Blynk Cloud
 
 //Disable or Enable Temperature warning
 #define tempWarnEnable false
@@ -67,7 +67,11 @@ void additionalWarn() {
 #define waterFill A2 //Water control pin
 #define waterSenseLo 10 //Water sensor pin
 #define waterSenseHi A9 //Upper water sensor
+#define waterOverfull A8 //Overfill sensor pin
+#define waterOverfillProtection true //Uncomment to use a sensor to protect against overfilling
 const int senseMode = 1; //1 for single sensor (Upper) 2 for dual sensor mode (Upper and lower)
+
+const unsigned long emergencyDrainTime = 5000; //Minimum milliseconds to drain for overflow protection
 
 #define pumpControl A1 //Pump control pin
 
