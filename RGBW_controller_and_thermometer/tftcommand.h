@@ -205,14 +205,14 @@ bool fpsControl(unsigned long _rate) { //Return true after _rate
     static byte lastDrawn = 0;
     static bool drawn = false;
 
-    if (waterStage == 1 && lastDrawn != 1) {
+    if (waterStage == 1) {
       display.drawBitmap(90,90,blankMap,30,15,backGround);
       display.drawBitmap(90,90,downMap,30,15,iconColor);
       lastDrawn = 1;
       drawn = true;
     }
 
-    if (waterStage == 2 && lastDrawn != 2) {
+    if (waterStage == 2) {
       display.drawBitmap(90,90,blankMap,30,15,backGround);
       display.drawBitmap(90,90,upMap,30,15,iconColor);
       lastDrawn = 2;
